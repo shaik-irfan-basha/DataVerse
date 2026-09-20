@@ -1,494 +1,583 @@
 """
-main.py - NL to SQL Converter with Python GUI
+main.py - NL to SQL Converter with Universal Dataset Support & Clarification Engine
 
-Phase 1: Data Preparation and LLM SQL Generation
-- WikiSQL dataset integration
-- SQL structure parsing (sel, conds, agg)
-- LLM-based SQL generation via Groq API
-
-Run with: python main.py
+Phase 3:
+- Modern UI using CustomTkinter
+- Clarification Engine for handling ambiguous questions
 """
 
+import customtkinter as ctk
 import tkinter as tk
-from tkinter import ttk, scrolledtext, messagebox
+from tkinter import ttk, messagebox, filedialog
 import threading
-import json
+import os
 
 from dotenv import load_dotenv
 load_dotenv()
 
-from data_loader import WikiSQLLoader, get_schema_string, AGG_OPS, COND_OPS
-from prompt_builder import build_sql_prompt
+from data_connector import DataConnector
 from llm_client import LLMClient
+from sql_executor import SQLExecutor
+import config
+
+# Set modern theme
+ctk.set_appearance_mode("dark")
+ctk.set_default_color_theme("blue")
 
 
 class NLtoSQLApp:
-    """
-    Natural Language to SQL Converter - Python GUI
-    
-    Features:
-    - Input your own question and table schema
-    - Load examples from WikiSQL dataset
-    - View SQL structure (sel, conds, agg)
-    - Generate SQL using Groq LLM
-    """
-    
     def __init__(self, root):
         self.root = root
-        self.root.title("NL to SQL Generator - Phase 1")
-        self.root.geometry("800x700")
-        self.root.minsize(600, 500)
-        self.root.configure(bg="#0f0f1a")
+        self.root.title("🔮 NL to SQL — Ask Your Data Anything")
+        self.root.geometry("1000x850")
+        self.root.minsize(800, 700)
         
-        # Data
+        # Core components
+        self.connector = DataConnector()
+        self.executor = SQLExecutor()
         self.llm_client = None
-        self.loader = None
-        self.current_example = None
-        self.example_index = 0
         
-        # Create UI
+        # Build UI
         self.create_widgets()
-        
-        # Load initial data
-        self.root.after(100, self.load_dataset)
+    
+    # =========================================================================
+    # UI CREATION
+    # =========================================================================
     
     def create_widgets(self):
-        """Create all UI widgets."""
-        # Main container with padding
-        main_frame = tk.Frame(self.root, bg="#0f0f1a", padx=25, pady=20)
-        main_frame.pack(fill=tk.BOTH, expand=True)
+        # Main container
+        self.main_frame = ctk.CTkScrollableFrame(self.root, fg_color="transparent")
+        self.main_frame.pack(fill="both", expand=True, padx=20, pady=15)
         
-        # =====================================================================
-        # HEADER
-        # =====================================================================
-        header_frame = tk.Frame(main_frame, bg="#0f0f1a")
-        header_frame.pack(fill=tk.X, pady=(0, 15))
+        # -- HEADER --
+        self._create_header(self.main_frame)
         
-        title = tk.Label(
-            header_frame,
-            text="🔮 Natural Language to SQL",
-            font=("Segoe UI", 22, "bold"),
-            fg="#00d9ff",
-            bg="#0f0f1a"
+        # -- SECTION 1: DATA SOURCE --
+        self._create_data_section(self.main_frame)
+        
+        # -- SECTION 2: QUESTION & GENERATE --
+        self._create_query_section(self.main_frame)
+        
+        # -- SECTION 3: GENERATED SQL --
+        self._create_sql_section(self.main_frame)
+        
+        # -- SECTION 4: RESULTS --
+        self._create_results_section(self.main_frame)
+        
+        # -- STATUS BAR --
+        self._create_status_bar(self.root)
+    
+    def _create_header(self, parent):
+        header = ctk.CTkFrame(parent, fg_color="transparent")
+        header.pack(fill="x", pady=(0, 20))
+        
+        title = ctk.CTkLabel(
+            header,
+            text="🔮 NL to SQL",
+            font=ctk.CTkFont(family="Segoe UI", size=28, weight="bold"),
+            text_color="#00d9ff"
         )
-        title.pack(side=tk.LEFT)
+        title.pack(side="left")
+    
+    def _create_data_section(self, parent):
+        frame = ctk.CTkFrame(parent, corner_radius=10)
+        frame.pack(fill="x", pady=(0, 15), ipady=5)
         
-        phase_label = tk.Label(
-            header_frame,
-            text="Phase 1",
-            font=("Segoe UI", 10),
-            fg="#00ff88",
-            bg="#1a1a3e",
-            padx=10,
-            pady=3
+        top_row = ctk.CTkFrame(frame, fg_color="transparent")
+        top_row.pack(fill="x", padx=15, pady=(15, 5))
+        
+        ctk.CTkLabel(
+            top_row,
+            text="📂 Data Source",
+            font=ctk.CTkFont(size=16, weight="bold"),
+            text_color="#00d9ff"
+        ).pack(side="left")
+        
+        self.upload_btn = ctk.CTkButton(
+            top_row,
+            text="📁 Upload File",
+            font=ctk.CTkFont(weight="bold"),
+            command=self.upload_file,
+            width=120
         )
-        phase_label.pack(side=tk.RIGHT)
+        self.upload_btn.pack(side="right")
         
-        # =====================================================================
-        # INPUT SECTION
-        # =====================================================================
-        input_frame = tk.Frame(main_frame, bg="#1a1a2e", padx=15, pady=15)
-        input_frame.pack(fill=tk.X, pady=(0, 10))
-        
-        # Question
-        q_label = tk.Label(
-            input_frame,
-            text="💬 Question (Natural Language)",
-            font=("Segoe UI", 10, "bold"),
-            fg="#00d9ff",
-            bg="#1a1a2e",
-            anchor="w"
+        self.file_label = ctk.CTkLabel(
+            frame,
+            text="No file loaded — upload a CSV, Excel, JSON, or SQLite file",
+            text_color="gray60",
+            anchor="w",
+            justify="left"
         )
-        q_label.pack(fill=tk.X)
+        self.file_label.pack(fill="x", padx=15, pady=(0, 5))
         
-        self.question_entry = tk.Text(
-            input_frame,
-            height=2,
-            font=("Segoe UI", 11),
-            bg="#2a2a4e",
-            fg="white",
-            insertbackground="white",
-            relief="flat",
-            padx=10,
-            pady=8,
-            wrap=tk.WORD
-        )
-        self.question_entry.pack(fill=tk.X, pady=(5, 12))
-        
-        # Columns and Table in same row
-        col_table_frame = tk.Frame(input_frame, bg="#1a1a2e")
-        col_table_frame.pack(fill=tk.X)
-        
-        # Columns
-        col_frame = tk.Frame(col_table_frame, bg="#1a1a2e")
-        col_frame.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(0, 10))
-        
-        col_label = tk.Label(
-            col_frame,
-            text="📊 Table Schema (comma-separated columns)",
-            font=("Segoe UI", 10, "bold"),
-            fg="#00d9ff",
-            bg="#1a1a2e",
-            anchor="w"
-        )
-        col_label.pack(fill=tk.X)
-        
-        self.columns_entry = tk.Entry(
-            col_frame,
-            font=("Segoe UI", 10),
-            bg="#2a2a4e",
-            fg="white",
-            insertbackground="white",
-            relief="flat"
-        )
-        self.columns_entry.pack(fill=tk.X, pady=(5, 0), ipady=6)
-        
-        # Table name
-        table_frame = tk.Frame(col_table_frame, bg="#1a1a2e", width=150)
-        table_frame.pack(side=tk.RIGHT)
-        table_frame.pack_propagate(False)
-        
-        table_label = tk.Label(
-            table_frame,
-            text="📁 Table",
-            font=("Segoe UI", 10, "bold"),
-            fg="#00d9ff",
-            bg="#1a1a2e",
-            anchor="w"
-        )
-        table_label.pack(fill=tk.X)
-        
-        self.table_entry = tk.Entry(
-            table_frame,
-            font=("Segoe UI", 10),
-            bg="#2a2a4e",
-            fg="white",
-            insertbackground="white",
-            relief="flat"
-        )
-        self.table_entry.insert(0, "table")
-        self.table_entry.pack(fill=tk.X, pady=(5, 0), ipady=6)
-        
-        # =====================================================================
-        # SQL STRUCTURE (from dataset)
-        # =====================================================================
-        struct_frame = tk.Frame(main_frame, bg="#1a1a2e", padx=15, pady=10)
-        struct_frame.pack(fill=tk.X, pady=(0, 10))
-        
-        struct_header = tk.Frame(struct_frame, bg="#1a1a2e")
-        struct_header.pack(fill=tk.X)
-        
-        struct_label = tk.Label(
-            struct_header,
-            text="🔧 SQL Structure (from WikiSQL)",
-            font=("Segoe UI", 10, "bold"),
-            fg="#ffaa00",
-            bg="#1a1a2e"
-        )
-        struct_label.pack(side=tk.LEFT)
-        
-        self.struct_text = tk.Label(
-            struct_frame,
-            text="sel: - | agg: - | conds: -",
-            font=("Consolas", 10),
-            fg="#888",
-            bg="#1a1a2e",
-            anchor="w"
-        )
-        self.struct_text.pack(fill=tk.X, pady=(5, 0))
-        
-        # =====================================================================
-        # INFO LABEL
-        # =====================================================================
-        info_label = tk.Label(
-            main_frame,
-            text="ℹ️ Schema and question are passed as text to LLM (database stays local)",
-            font=("Segoe UI", 9, "italic"),
-            fg="#6a8a9a",
-            bg="#0f0f1a"
-        )
-        info_label.pack(fill=tk.X, pady=(0, 8))
-        
-        # =====================================================================
-        # BUTTONS
-        # =====================================================================
-        btn_frame = tk.Frame(main_frame, bg="#0f0f1a")
-        btn_frame.pack(fill=tk.X, pady=(5, 10))
-        
-        # Generate button
-        self.generate_btn = tk.Button(
-            btn_frame,
-            text="⚡ Generate SQL",
-            font=("Segoe UI", 11, "bold"),
-            bg="#00d9ff",
-            fg="#0f0f1a",
-            activebackground="#00ff88",
-            activeforeground="#0f0f1a",
-            relief="flat",
-            cursor="hand2",
-            width=20,
-            command=self.generate_sql
-        )
-        self.generate_btn.pack(side=tk.LEFT, ipady=8)
-        
-        # Load next example button
-        self.next_btn = tk.Button(
-            btn_frame,
-            text="📥 Load Next Example",
-            font=("Segoe UI", 10),
-            bg="#2a2a4e",
-            fg="white",
-            activebackground="#3a3a5e",
-            relief="flat",
-            cursor="hand2",
-            command=self.load_next_example
-        )
-        self.next_btn.pack(side=tk.LEFT, padx=(10, 0), ipady=6)
-        
-        # Clear button
-        clear_btn = tk.Button(
-            btn_frame,
-            text="🗑️ Clear",
-            font=("Segoe UI", 10),
-            bg="#2a2a4e",
-            fg="white",
-            activebackground="#3a3a5e",
-            relief="flat",
-            cursor="hand2",
-            command=self.clear_all
-        )
-        clear_btn.pack(side=tk.RIGHT, ipady=6)
-        
-        # =====================================================================
-        # RESULTS SECTION
-        # =====================================================================
-        result_frame = tk.Frame(main_frame, bg="#0f0f1a")
-        result_frame.pack(fill=tk.BOTH, expand=True)
-        
-        # Generated SQL
-        gen_label = tk.Label(
-            result_frame,
-            text="🤖 Generated SQL (from LLM)",
-            font=("Segoe UI", 10, "bold"),
-            fg="#00ff88",
-            bg="#0f0f1a",
-            anchor="w"
-        )
-        gen_label.pack(fill=tk.X)
-        
-        self.result_text = scrolledtext.ScrolledText(
-            result_frame,
-            height=4,
-            font=("Consolas", 12),
-            bg="#0d1117",
-            fg="#00ff88",
-            insertbackground="white",
-            relief="flat",
-            padx=12,
-            pady=10
-        )
-        self.result_text.pack(fill=tk.X, pady=(5, 10))
-        
-        # Reference SQL (for comparison only - not used by model)
-        ref_label = tk.Label(
-            result_frame,
-            text="📚 Reference SQL (for comparison only - not sent to LLM)",
-            font=("Segoe UI", 9),
-            fg="#5a5a6a",
-            bg="#0f0f1a",
-            anchor="w"
-        )
-        ref_label.pack(fill=tk.X)
-        
-        self.ref_text = scrolledtext.ScrolledText(
-            result_frame,
-            height=2,
-            font=("Consolas", 10),
-            bg="#15151a",
-            fg="#666",
-            insertbackground="white",
-            relief="flat",
-            padx=12,
-            pady=8
-        )
-        self.ref_text.pack(fill=tk.X, pady=(3, 0))
-        
-        # =====================================================================
-        # STATUS BAR
-        # =====================================================================
-        status_frame = tk.Frame(main_frame, bg="#0f0f1a")
-        status_frame.pack(fill=tk.X, pady=(10, 0))
-        
-        self.status_label = tk.Label(
-            status_frame,
-            text="Initializing...",
-            font=("Segoe UI", 9),
-            fg="#5a6a8a",
-            bg="#0f0f1a",
-            anchor="w"
-        )
-        self.status_label.pack(side=tk.LEFT)
-        
-        self.example_label = tk.Label(
-            status_frame,
+        self.schema_text = ctk.CTkLabel(
+            frame,
             text="",
-            font=("Segoe UI", 9),
-            fg="#5a6a8a",
-            bg="#0f0f1a",
-            anchor="e"
+            font=ctk.CTkFont(family="Consolas", size=12),
+            text_color="gray75",
+            anchor="w",
+            justify="left",
+            wraplength=850
         )
-        self.example_label.pack(side=tk.RIGHT)
+        self.schema_text.pack(fill="x", padx=15, pady=(0, 15))
     
-    def load_dataset(self):
-        """Load WikiSQL dataset."""
-        try:
-            self.status_label.config(text="Loading WikiSQL dataset...")
-            self.root.update()
-            
-            self.loader = WikiSQLLoader()
-            examples = self.loader.load_jsonl("train")
-            
-            self.status_label.config(text=f"Dataset loaded: {len(examples):,} examples")
-            self.load_example(0)
-            
-        except Exception as e:
-            self.status_label.config(text=f"Dataset load failed: {str(e)[:40]}")
+    def _create_query_section(self, parent):
+        frame = ctk.CTkFrame(parent, corner_radius=10)
+        frame.pack(fill="x", pady=(0, 15), ipady=5)
+        
+        ctk.CTkLabel(
+            frame,
+            text="💬 Ask a Question",
+            font=ctk.CTkFont(size=16, weight="bold"),
+            text_color="#00d9ff",
+            anchor="w"
+        ).pack(fill="x", padx=15, pady=(15, 5))
+        
+        self.question_entry = ctk.CTkTextbox(
+            frame,
+            height=80,
+            font=ctk.CTkFont(size=14),
+            border_width=1,
+            corner_radius=8
+        )
+        self.question_entry.pack(fill="x", padx=15, pady=(5, 15))
+        self.question_entry.insert("1.0", "e.g. Who is our best customer?")
+        self.question_entry.bind("<FocusIn>", self._on_question_focus_in)
+        self.question_entry.bind("<FocusOut>", self._on_question_focus_out)
+        
+        btn_row = ctk.CTkFrame(frame, fg_color="transparent")
+        btn_row.pack(fill="x", padx=15, pady=(0, 15))
+        
+        self.generate_btn = ctk.CTkButton(
+            btn_row,
+            text="⚡ Generate SQL & Run",
+            font=ctk.CTkFont(size=14, weight="bold"),
+            fg_color="#00d9ff",
+            text_color="#0f0f1a",
+            hover_color="#00ff88",
+            height=40,
+            command=self.generate_and_run
+        )
+        self.generate_btn.pack(side="left")
+        
+        ctk.CTkButton(
+            btn_row,
+            text="🗑️ Clear",
+            fg_color="transparent",
+            border_width=1,
+            text_color="gray80",
+            hover_color="gray30",
+            command=self.clear_all,
+            width=80
+        ).pack(side="right")
     
-    def load_example(self, index):
-        """Load a specific example from the dataset."""
-        if not self.loader:
+    def _create_sql_section(self, parent):
+        frame = ctk.CTkFrame(parent, fg_color="transparent")
+        frame.pack(fill="x", pady=(0, 15))
+        
+        top_row = ctk.CTkFrame(frame, fg_color="transparent")
+        top_row.pack(fill="x", pady=(0, 5))
+        
+        ctk.CTkLabel(
+            top_row,
+            text="🤖 Generated SQL",
+            font=ctk.CTkFont(size=14, weight="bold"),
+            text_color="#00ff88"
+        ).pack(side="left")
+        
+        self.run_btn = ctk.CTkButton(
+            top_row,
+            text="▶️ Run SQL",
+            font=ctk.CTkFont(weight="bold"),
+            fg_color="#1f538d",
+            width=100,
+            command=self.run_sql
+        )
+        self.run_btn.pack(side="right")
+        
+        self.sql_text = ctk.CTkTextbox(
+            frame,
+            height=100,
+            font=ctk.CTkFont(family="Consolas", size=14),
+            text_color="#00ff88",
+            fg_color="#0d1117",
+            border_width=1,
+            corner_radius=8
+        )
+        self.sql_text.pack(fill="x")
+    
+    def _create_results_section(self, parent):
+        frame = ctk.CTkFrame(parent, fg_color="transparent")
+        frame.pack(fill="both", expand=True)
+        
+        top_row = ctk.CTkFrame(frame, fg_color="transparent")
+        top_row.pack(fill="x", pady=(0, 5))
+        
+        ctk.CTkLabel(
+            top_row,
+            text="📊 Results",
+            font=ctk.CTkFont(size=14, weight="bold"),
+            text_color="#ffaa00"
+        ).pack(side="left")
+        
+        self.result_info = ctk.CTkLabel(
+            top_row,
+            text="",
+            text_color="gray60"
+        )
+        self.result_info.pack(side="right")
+        
+        # Style ttk.Treeview to match CustomTkinter
+        style = ttk.Style()
+        style.theme_use("default")
+        style.configure(
+            "Treeview",
+            background="#1e1e1e",
+            foreground="white",
+            fieldbackground="#1e1e1e",
+            borderwidth=0,
+            rowheight=30,
+            font=("Segoe UI", 11)
+        )
+        style.map('Treeview', background=[('selected', '#1f538d')])
+        style.configure(
+            "Treeview.Heading",
+            background="#2b2b2b",
+            foreground="white",
+            relief="flat",
+            font=("Segoe UI", 11, "bold"),
+            padding=5
+        )
+        style.map("Treeview.Heading", background=[('active', '#3b3b3b')])
+        
+        tree_frame = ctk.CTkFrame(frame, corner_radius=8)
+        tree_frame.pack(fill="both", expand=True)
+        
+        y_scroll = ttk.Scrollbar(tree_frame, orient="vertical")
+        x_scroll = ttk.Scrollbar(tree_frame, orient="horizontal")
+        
+        self.tree = ttk.Treeview(
+            tree_frame,
+            yscrollcommand=y_scroll.set,
+            xscrollcommand=x_scroll.set,
+            show="headings"
+        )
+        
+        y_scroll.config(command=self.tree.yview)
+        x_scroll.config(command=self.tree.xview)
+        
+        y_scroll.pack(side="right", fill="y")
+        x_scroll.pack(side="bottom", fill="x")
+        self.tree.pack(fill="both", expand=True, padx=2, pady=2)
+        
+        self.answer_label = ctk.CTkLabel(
+            frame,
+            text="",
+            font=ctk.CTkFont(size=20, weight="bold"),
+            text_color="#00ff88",
+            anchor="w",
+            justify="left"
+        )
+        self.answer_label.pack(fill="x", pady=(10, 0))
+    
+    def _create_status_bar(self, parent):
+        status_frame = ctk.CTkFrame(parent, height=30, corner_radius=0, fg_color="#1a1a2e")
+        status_frame.pack(fill="x", side="bottom")
+        
+        self.status_label = ctk.CTkLabel(
+            status_frame,
+            text="Ready — upload a file to get started",
+            text_color="gray60",
+            font=ctk.CTkFont(size=12)
+        )
+        self.status_label.pack(side="left", padx=20, pady=2)
+    
+    # =========================================================================
+    # LOGIC
+    # =========================================================================
+    
+    def _on_question_focus_in(self, event):
+        if self.question_entry.get("1.0", "end-1c").strip() == "e.g. Who is our best customer?":
+            self.question_entry.delete("1.0", "end")
+    
+    def _on_question_focus_out(self, event):
+        if not self.question_entry.get("1.0", "end-1c").strip():
+            self.question_entry.insert("1.0", "e.g. Who is our best customer?")
+    
+    def upload_file(self):
+        file_path = filedialog.askopenfilename(
+            title="Select a data file",
+            filetypes=DataConnector.get_filetypes()
+        )
+        if not file_path:
             return
         
-        try:
-            self.current_example = self.loader.get_example(index, "train")
-            self.example_index = index
-            
-            # Clear and fill inputs
-            self.question_entry.delete("1.0", tk.END)
-            self.question_entry.insert("1.0", self.current_example["question"])
-            
-            self.columns_entry.delete(0, tk.END)
-            self.columns_entry.insert(0, get_schema_string(self.current_example["table_schema"]))
-            
-            self.table_entry.delete(0, tk.END)
-            self.table_entry.insert(0, self.current_example["table_id"])
-            
-            # Show SQL structure
-            sql = self.current_example["sql"]
-            agg_str = AGG_OPS[sql.get("agg", 0)] or "None"
-            conds = sql.get("conds", [])
-            conds_str = f"{len(conds)} condition(s)" if conds else "None"
-            self.struct_text.config(
-                text=f"sel: {sql.get('sel', '-')} | agg: {agg_str} | conds: {conds_str}"
-            )
-            
-            # Show reference SQL
-            self.ref_text.delete("1.0", tk.END)
-            self.ref_text.insert("1.0", self.current_example["sql_readable"])
-            
-            # Clear generated result
-            self.result_text.delete("1.0", tk.END)
-            
-            self.example_label.config(text=f"Example #{index + 1}")
-            
-        except Exception as e:
-            self.status_label.config(text=f"Error loading example: {e}")
-    
-    def load_next_example(self):
-        """Load the next example from dataset."""
-        self.example_index += 1
-        if self.loader and self.example_index >= len(self.loader.examples.get("train", [])):
-            self.example_index = 0
-        self.load_example(self.example_index)
-    
-    def clear_all(self):
-        """Clear all inputs and outputs."""
-        self.question_entry.delete("1.0", tk.END)
-        self.columns_entry.delete(0, tk.END)
-        self.table_entry.delete(0, tk.END)
-        self.table_entry.insert(0, "table")
-        self.result_text.delete("1.0", tk.END)
-        self.ref_text.delete("1.0", tk.END)
-        self.struct_text.config(text="sel: - | agg: - | conds: -")
-        self.status_label.config(text="Cleared")
-    
-    def generate_sql(self):
-        """Generate SQL from the input using LLM."""
-        question = self.question_entry.get("1.0", tk.END).strip()
-        columns = self.columns_entry.get().strip()
-        table_name = self.table_entry.get().strip() or "table"
-        
-        if not question:
-            messagebox.showwarning("Input Required", "Please enter a question.")
-            return
-        
-        if not columns:
-            messagebox.showwarning("Input Required", "Please enter column names.")
-            return
-        
-        # Disable button
-        self.generate_btn.config(state=tk.DISABLED, text="Generating...")
-        self.status_label.config(text="Sending to LLM...")
-        self.result_text.delete("1.0", tk.END)
+        self.status_label.configure(text=f"Loading {os.path.basename(file_path)}...")
         self.root.update()
         
-        # Run in thread
-        thread = threading.Thread(
-            target=self._generate_sql_thread,
-            args=(question, columns, table_name)
-        )
-        thread.start()
+        threading.Thread(target=self._load_file_thread, args=(file_path,)).start()
     
-    def _generate_sql_thread(self, question, columns, table_name):
-        """Background thread for SQL generation."""
+    def _load_file_thread(self, file_path: str):
         try:
-            column_list = [c.strip() for c in columns.split(",") if c.strip()]
-            prompt = build_sql_prompt(question, column_list, table_name)
-            
+            table_names = self.connector.load_file(file_path)
+            self.root.after(0, lambda: self._on_file_loaded(file_path, table_names))
+        except Exception as e:
+            self.root.after(0, lambda err=str(e): self._on_file_error(err))
+    
+    def _on_file_loaded(self, file_path: str, table_names: list):
+        filename = os.path.basename(file_path)
+        total_rows = sum(self.connector.get_row_count(t) for t in table_names)
+        
+        self.file_label.configure(
+            text=f"✅ {filename}  ({self.connector.file_type})  —  {len(table_names)} table(s), {total_rows:,} rows",
+            text_color="#00ff88"
+        )
+        self.schema_text.configure(text=self.connector.get_schema_string())
+        self.status_label.configure(text=f"File loaded: {filename}")
+        self._clear_results()
+        self.sql_text.delete("1.0", "end")
+    
+    def _on_file_error(self, error_msg: str):
+        self.file_label.configure(text=f"❌ Error: {error_msg}", text_color="#ff4444")
+        self.status_label.configure(text="File load failed")
+        messagebox.showerror("Load Error", error_msg)
+    
+    def generate_and_run(self):
+        if not self.connector.is_loaded():
+            messagebox.showwarning("No Data", "Please upload a data file first.")
+            return
+        
+        question = self.question_entry.get("1.0", "end-1c").strip()
+        if not question or question.startswith("e.g."):
+            messagebox.showwarning("No Question", "Please enter a question.")
+            return
+        
+        self.generate_btn.configure(state="disabled", text="⏳ Working...")
+        self.status_label.configure(text="Analyzing intent...")
+        self.sql_text.delete("1.0", "end")
+        self._clear_results()
+        self.root.update()
+        
+        threading.Thread(target=self._generate_and_run_thread, args=(question,)).start()
+    
+    def _generate_and_run_thread(self, question: str):
+        from clarification_engine import build_analysis_prompt
+        
+        clarification_history = ""
+        try:
             if self.llm_client is None:
                 self.llm_client = LLMClient()
-            
-            sql = self.llm_client.generate_sql(prompt)
-            self.root.after(0, lambda: self._show_result(sql))
-            
-        except ValueError as e:
-            self.root.after(0, lambda: self._show_error(str(e)))
+                
+            schema_str = self.connector.get_schema_string()
+            sample_data = self.connector.get_sample_data_string(config.MAX_SAMPLE_ROWS)
+
+            while True:
+                prompt = build_analysis_prompt(question, schema_str, sample_data, clarification_history)
+                self.root.after(0, lambda: self.status_label.configure(text="Analyzing query intent..."))
+                
+                analysis = self.llm_client.generate_json(prompt)
+                
+                if analysis.get("is_ambiguous", False):
+                    cq = analysis.get("clarification_question", "Please clarify.")
+                    opts = analysis.get("options", [])
+                    
+                    user_choice = self._ask_user_clarification(cq, opts)
+                    if not user_choice:
+                        self.root.after(0, lambda: self.status_label.configure(text="Cancelled by user."))
+                        self.root.after(0, lambda: self.generate_btn.configure(state="normal", text="⚡ Generate SQL & Run"))
+                        return
+                    
+                    clarification_history += f"AI: {cq}\nUser: {user_choice}\n\n"
+                    continue
+                else:
+                    sql = analysis.get("sql_query", "")
+                    if not sql:
+                        raise ValueError("No SQL generated.")
+                    
+                    sql = self._clean_sql(sql)
+                    self.root.after(0, lambda: self._show_generated_sql(sql))
+                    self.root.after(0, lambda: self.status_label.configure(text="Executing query..."))
+                    
+                    result = self.executor.execute(self.connector.get_connection(), sql)
+                    self.root.after(0, lambda: self._show_results(result))
+                    break
+                    
         except Exception as e:
-            self.root.after(0, lambda: self._show_error(f"Error: {str(e)}"))
-    
-    def _show_result(self, sql):
-        """Display generated SQL."""
-        self.result_text.delete("1.0", tk.END)
-        self.result_text.insert("1.0", sql)
-        self.generate_btn.config(state=tk.NORMAL, text="⚡ Generate SQL")
-        self.status_label.config(text="✅ SQL generated successfully!")
-    
-    def _show_error(self, error_msg):
-        """Display error message."""
-        self.result_text.delete("1.0", tk.END)
-        self.result_text.insert("1.0", f"Error: {error_msg}")
-        self.generate_btn.config(state=tk.NORMAL, text="⚡ Generate SQL")
-        self.status_label.config(text="❌ Generation failed")
+            self.root.after(0, lambda err=str(e): self._show_error(err))
+
+    def _ask_user_clarification(self, question: str, options: list) -> str:
+        event = threading.Event()
+        result = [None]
+        self.root.after(0, lambda: ClarificationDialog(self.root, question, options, event, result))
+        event.wait()
+        return result[0]
         
-        if "API key" in error_msg:
-            messagebox.showerror(
-                "API Key Required",
-                "Create a .env file with:\nGROQ_API_KEY=your_key\n\n"
-                "Get free key: console.groq.com"
-            )
-
-
-def main():
-    """Launch the NL to SQL application."""
-    print("=" * 50)
-    print("  NL to SQL - Phase 1")
-    print("  Starting GUI...")
-    print("=" * 50)
+    def run_sql(self):
+        if not self.connector.is_loaded():
+            return
+        sql = self.sql_text.get("1.0", "end-1c").strip()
+        if not sql:
+            return
+        
+        self._clear_results()
+        self.status_label.configure(text="Executing SQL...")
+        result = self.executor.execute(self.connector.get_connection(), sql)
+        self._show_results(result)
     
-    root = tk.Tk()
-    app = NLtoSQLApp(root)
-    root.mainloop()
+    def _show_generated_sql(self, sql: str):
+        self.sql_text.delete("1.0", "end")
+        self.sql_text.insert("1.0", sql)
+        self.status_label.configure(text="SQL generated — executing query...")
+    
+    def _show_results(self, result: dict):
+        self.generate_btn.configure(state="normal", text="⚡ Generate SQL & Run")
+        
+        if not result["success"]:
+            self.status_label.configure(text="❌ Query failed")
+            self.answer_label.configure(text=f"❌ {result['error']}", text_color="#ff4444")
+            return
+        
+        self._clear_results()
+        cols, rows = result["columns"], result["rows"]
+        
+        if not cols:
+            self.status_label.configure(text="✅ Query executed (no results)")
+            self.answer_label.configure(text="Query executed successfully — no rows returned.", text_color="#ffaa00")
+            return
+        
+        self.tree["columns"] = cols
+        for col in cols:
+            self.tree.heading(col, text=col)
+            self.tree.column(col, width=120, anchor="w")
+        
+        for row in rows[:config.MAX_DISPLAY_ROWS]:
+            self.tree.insert("", "end", values=row)
+        
+        info = f"{min(result['row_count'], config.MAX_DISPLAY_ROWS)} of {result['row_count']:,} rows — {result['execution_time']}s"
+        self.result_info.configure(text=info)
+        self.status_label.configure(text="✅ Query executed successfully!")
+        
+        if result["row_count"] == 1 and len(cols) <= 3:
+            parts = [f"{cols[i]}: {rows[0][i]}" for i in range(len(cols))]
+            self.answer_label.configure(text=f"📌 {' | '.join(parts)}", text_color="#00ff88")
+    
+    def _show_error(self, error_msg: str):
+        self.generate_btn.configure(state="normal", text="⚡ Generate SQL & Run")
+        self.status_label.configure(text="❌ Generation failed")
+        self.answer_label.configure(text=f"❌ {error_msg}", text_color="#ff4444")
+    
+    def _clear_results(self):
+        self.tree.delete(*self.tree.get_children())
+        self.tree["columns"] = []
+        self.result_info.configure(text="")
+        self.answer_label.configure(text="")
+    
+    def clear_all(self):
+        self.question_entry.delete("1.0", "end")
+        self.question_entry.insert("1.0", "e.g. Who is our best customer?")
+        self.sql_text.delete("1.0", "end")
+        self._clear_results()
+        self.status_label.configure(text="Cleared")
+    
+    @staticmethod
+    def _clean_sql(sql: str) -> str:
+        sql = sql.strip()
+        if sql.startswith("```sql"): sql = sql[6:]
+        elif sql.startswith("```"): sql = sql[3:]
+        if sql.endswith("```"): sql = sql[:-3]
+        sql = sql.strip()
+        if ";" in sql: sql = sql[:sql.index(";") + 1]
+        return sql.strip()
 
+
+class ClarificationDialog(ctk.CTkToplevel):
+    def __init__(self, parent, question: str, options: list, event, result_container):
+        super().__init__(parent)
+        self.title("🤔 Clarification Needed")
+        self.geometry("550x400")
+        self.attributes('-topmost', 'true')
+        
+        # Center dialog
+        self.update_idletasks()
+        x = parent.winfo_x() + (parent.winfo_width() // 2) - (550 // 2)
+        y = parent.winfo_y() + (parent.winfo_height() // 2) - (400 // 2)
+        self.geometry(f"+{x}+{y}")
+        
+        self.event = event
+        self.result_container = result_container
+        self.protocol("WM_DELETE_WINDOW", self._on_close)
+        
+        frame = ctk.CTkFrame(self, corner_radius=15)
+        frame.pack(fill="both", expand=True, padx=20, pady=20)
+        
+        ctk.CTkLabel(
+            frame, 
+            text="⚠️ Clarification Required", 
+            font=ctk.CTkFont(size=20, weight="bold"),
+            text_color="#ffaa00"
+        ).pack(fill="x", pady=(15, 10))
+        
+        ctk.CTkLabel(
+            frame, 
+            text=question, 
+            font=ctk.CTkFont(size=14),
+            wraplength=480,
+            justify="left"
+        ).pack(fill="x", padx=20, pady=(0, 20))
+        
+        self.radio_var = tk.StringVar(value="")
+        for opt in options:
+            ctk.CTkRadioButton(
+                frame, 
+                text=opt, 
+                variable=self.radio_var, 
+                value=opt,
+                font=ctk.CTkFont(size=14)
+            ).pack(anchor="w", padx=40, pady=8)
+            
+        self.custom_entry = ctk.CTkEntry(
+            frame, 
+            placeholder_text="Or type something else...",
+            height=35
+        )
+        self.custom_entry.pack(fill="x", padx=40, pady=(15, 20))
+        
+        btn_frame = ctk.CTkFrame(frame, fg_color="transparent")
+        btn_frame.pack(fill="x", padx=40, pady=(0, 20))
+        
+        ctk.CTkButton(
+            btn_frame, 
+            text="Cancel", 
+            fg_color="gray30", 
+            hover_color="gray40",
+            command=self._on_close
+        ).pack(side="left", expand=True, padx=5)
+        
+        ctk.CTkButton(
+            btn_frame, 
+            text="Submit", 
+            fg_color="#00d9ff",
+            text_color="#0f0f1a",
+            hover_color="#00ff88",
+            command=self._on_submit
+        ).pack(side="right", expand=True, padx=5)
+        
+    def _on_submit(self):
+        val = self.custom_entry.get().strip()
+        choice = val if val else self.radio_var.get()
+        if not choice:
+            return
+        self.result_container[0] = choice
+        self.event.set()
+        self.destroy()
+        
+    def _on_close(self):
+        self.result_container[0] = None
+        self.event.set()
+        self.destroy()
 
 if __name__ == "__main__":
-    main()
+    app = ctk.CTk()
+    NLtoSQLApp(app)
+    app.mainloop()
