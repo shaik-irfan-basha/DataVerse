@@ -2,9 +2,9 @@
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Tests: 99 Passed](https://img.shields.io/badge/Tests-99%20Passing-brightgreen.svg)]()
-[![Benchmark: 80%](https://img.shields.io/badge/Benchmark%20Accuracy-80.0%25-cyan.svg)]()
-[![Security: 100% Block](https://img.shields.io/badge/Security%20Deflection-100%25-red.svg)]()
+[![Tests: 108 Passed](https://img.shields.io/badge/Tests-108%20Passing-brightgreen.svg)]()
+[![Benchmark: 82.9%](https://img.shields.io/badge/Benchmark%20Accuracy-82.9%25-cyan.svg)]()
+[![Security: Active Authorizer](https://img.shields.io/badge/Security-Active%20Authorizer-red.svg)]()
 
 > **Transform unstructured natural-language questions into safe, validated SQL and publication-grade visualizations across any dataset in seconds.**
 
@@ -237,8 +237,8 @@ DataVerse/
 Ensure you have Python 3.10 or later installed:
 
 ```bash
-git clone https://github.com/your-username/dataverse.git
-cd dataverse
+git clone https://github.com/shaik-irfan-basha/NL-to-SQL.git
+cd NL-to-SQL
 
 # Install production dependencies
 pip install -r requirements.txt
