@@ -13,6 +13,10 @@ Supported providers:
 import os
 import requests
 import config
+import logging
+from typing import Optional, Dict
+
+logger = logging.getLogger("dataverse.llm")
 
 
 class LLMClient:
@@ -23,18 +27,21 @@ class LLMClient:
     API keys are read from environment variables for security.
     """
     
-    def __init__(self, provider: str = None):
+    def __init__(self, provider: str = None, model: str = None, api_key: str = None):
         """
         Initialize the LLM client.
         
         Args:
             provider: LLM provider name ("groq", "together", "openai")
                      If None, uses the default from config.py
+            model: Specific model name to override default
+            api_key: Explicit API key if not loading from env
         """
         self.provider = provider or config.LLM_PROVIDER
-        self.model = config.MODEL_NAMES.get(self.provider)
+        self.model = model or config.MODEL_NAMES.get(self.provider)
         self.endpoint = config.API_ENDPOINTS.get(self.provider)
-        self.api_key = self._get_api_key()
+        self.api_key = api_key or self._get_api_key()
+        self.last_usage = {}
         
         if not self.model:
             raise ValueError(f"Unknown provider: {self.provider}")
@@ -96,7 +103,9 @@ class LLMClient:
         
         try:
             # Make the API request
-            print(f"Sending request to {self.provider} ({self.model})...")
+            import time
+            start_time = time.time()
+            logger.info(f"Sending SQL request to {self.provider} ({self.model}). Prompt length: {len(prompt)} chars.")
             response = requests.post(
                 self.endpoint,
                 headers=headers,
@@ -109,16 +118,77 @@ class LLMClient:
             
             # Parse the response
             result = response.json()
+            self.last_usage = result.get("usage", {})
             
             # Extract the generated text
             sql = result["choices"][0]["message"]["content"].strip()
             
+            duration = round(time.time() - start_time, 2)
+            logger.info(f"Received SQL response from {self.provider}. Duration: {duration}s. Payload length: {len(sql)} chars.")
+            
             return sql
             
         except requests.exceptions.RequestException as e:
-            print(f"Error calling LLM API: {e}")
+            logger.error(f"Error calling LLM API (SQL mode): {e}")
             if hasattr(e, 'response') and e.response is not None:
-                print(f"Response: {e.response.text}")
+                logger.error(f"Response: {e.response.text}")
+            raise
+
+    def generate_json(self, prompt: str) -> dict:
+        """
+        Send a prompt to the LLM and get a structured JSON response.
+        Uses response_format = {"type": "json_object"}.
+        """
+        import json
+        import time
+        
+        headers = {
+            "Authorization": f"Bearer {self.api_key}",
+            "Content-Type": "application/json",
+        }
+        
+        payload = {
+            "model": self.model,
+            "messages": [
+                {
+                    "role": "system",
+                    "content": "You are a helpful data analyst. Always output valid JSON."
+                },
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ],
+            "response_format": {"type": "json_object"},
+            "max_tokens": config.MAX_TOKENS * 2,  # Increase tokens for JSON payload
+            "temperature": config.TEMPERATURE,
+        }
+        
+        try:
+            logger.info(f"Sending JSON request to {self.provider} ({self.model})...")
+            response = requests.post(
+                self.endpoint,
+                headers=headers,
+                json=payload,
+                timeout=30
+            )
+            response.raise_for_status()
+            
+            result = response.json()
+            self.last_usage = result.get("usage", {})
+            content = result["choices"][0]["message"]["content"].strip()
+            
+            # Try to parse the JSON returned
+            return json.loads(content)
+            
+        except json.JSONDecodeError as e:
+            logger.error(f"Error decoding JSON: {e}\nContent was: {content}")
+            raise ValueError("The LLM did not return a valid JSON object.")
+        except requests.exceptions.RequestException as e:
+            logger.error(f"Error calling LLM API: {e}")
+            if hasattr(e, 'response') and e.response is not None:
+                logger.error(f"{self.provider} HTTP Status: {e.response.status_code}")
+                logger.error(f"{self.provider} Response Body: {e.response.text}")
             raise
 
 

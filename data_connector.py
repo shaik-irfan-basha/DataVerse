@@ -12,6 +12,9 @@ from pathlib import Path
 from typing import Dict, List, Optional
 import re
 import threading
+import logging
+
+logger = logging.getLogger("dataverse.data")
 
 try:
     import pandas as pd
@@ -84,7 +87,7 @@ class DataConnector:
         self.file_type = file_type
         added_tables = []
         
-        print(f"Loading {file_type} file: {file_path}")
+        logger.info(f"Loading {file_type} file: {file_path}")
         
         # Route to loader
         if file_type == "CSV":
@@ -99,6 +102,9 @@ class DataConnector:
             added_tables = self._load_document(file_path, ext)
             
         self.file_tables[file_path] = added_tables
+        
+        total_rows = sum(self.get_row_count(t) for t in added_tables)
+        logger.info(f"Successfully loaded {len(added_tables)} table(s) with {total_rows} total rows.")
         return added_tables
 
     def _load_csv(self, file_path: str) -> List[str]:

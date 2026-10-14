@@ -6,13 +6,21 @@ __pycache__/
 *.pyc
 *.pyo
 
+# Local databases & history
+*.db
+*.sqlite
+*.sqlite3
+
 # Data files (large, local-only)
 data/
 
-# Generated files
+# Generated files & exports
 logs/
 exports/
 *.log
+
+# Archived legacy scripts
+archive/
 
 # OS files
 .DS_Store

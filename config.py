@@ -1,5 +1,5 @@
 """
-config.py - Configuration settings for NL to SQL project
+config.py - Configuration settings for DataVerse
 
 This file contains all configuration parameters for the LLM client.
 API keys should be stored in environment variables, NOT hardcoded here.
@@ -15,10 +15,13 @@ LLM_PROVIDER = "groq"
 
 # Model names per provider
 MODEL_NAMES = {
-    "groq": "llama-3.1-8b-instant",      # Free, fast Groq model
+    "groq": "openai/gpt-oss-20b",      # Verified Groq model supporting json_mode for this key
     "together": "meta-llama/Llama-3-8b-chat-hf",  # Together AI model
     "openai": "gpt-3.5-turbo",            # OpenAI (paid)
 }
+
+# Phase 5: SQL Recovery
+MAX_SQL_RETRIES = 2
 
 # Environment variable names for API keys
 API_KEY_ENV_VARS = {
@@ -49,7 +52,31 @@ TEMPERATURE = 0.1
 # DATASET CONFIGURATION
 # =============================================================================
 
-# WikiSQL dataset configuration
-# Note: Using standard 'wikisql' as WikiSQL_VALUE uses deprecated scripts
+# Supported file types for universal data loading
+SUPPORTED_FILE_TYPES = [".csv", ".xlsx", ".xls", ".json", ".db", ".sqlite", ".sqlite3", ".pdf", ".docx", ".doc", ".pptx", ".ppt"]
+
+# Number of sample rows to include in LLM prompt for context
+MAX_SAMPLE_ROWS = 3
+
+# =============================================================================
+# Logging Configuration
+# =============================================================================
+LOG_LEVEL = "INFO"
+LOG_FILE = "logs/dataverse.log"
+
+# Maximum rows to display in the results table
+MAX_DISPLAY_ROWS = 500
+
+# =============================================================================
+# HISTORY & VISUALIZATION CONFIGURATION
+# =============================================================================
+HISTORY_DB_PATH = "dataverse_history.db"
+MAX_HISTORY_ENTRIES = 100
+DEFAULT_CHART_DPI = 150
+
+# =============================================================================
+# LEGACY - WikiSQL (kept for backward compatibility)
+# =============================================================================
+
 DATASET_NAME = "wikisql"
-DATASET_SPLIT = "train"   # Using train split
+DATASET_SPLIT = "train"
