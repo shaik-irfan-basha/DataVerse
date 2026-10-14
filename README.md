@@ -237,8 +237,8 @@ DataVerse/
 Ensure you have Python 3.10 or later installed:
 
 ```bash
-git clone https://github.com/shaik-irfan-basha/NL-to-SQL.git
-cd NL-to-SQL
+git clone https://github.com/shaik-irfan-basha/DataVerse.git
+cd DataVerse
 
 # Install production dependencies
 pip install -r requirements.txt
