@@ -1,0 +1,20 @@
+# =============================================================================
+# Netlify Configuration - DataVerse Web Studio
+# =============================================================================
+
+[build]
+  # Publish directory containing static HTML, CSS, JS, and PWA assets
+  publish = "frontend"
+
+# -----------------------------------------------------------------------------
+# API Gateway Proxy to Render Live Backend
+#
+# Proxies all /api/v1/* requests from Netlify to the live Render FastAPI backend,
+# ensuring same-origin execution in the browser with zero CORS latency and
+# preserving the existing relative API paths in the frontend client.
+# -----------------------------------------------------------------------------
+[[redirects]]
+  from = "/api/v1/*"
+  to = "https://dataverse-bphf.onrender.com/api/v1/:splat"
+  status = 200
+  force = true
