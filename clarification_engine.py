@@ -14,7 +14,7 @@ import json
 class QueryAnalysis(BaseModel):
     """Structured output schema for the LLM to analyze the user's intent."""
     is_ambiguous: bool = Field(
-        description="True if the question uses subjective words (e.g., 'best', 'top', 'recent', 'active') and could have multiple interpretations based on the schema."
+        description="True if the question uses subjective words (e.g., 'good', 'bad', 'best', 'top', 'important', 'valuable', 'recent', 'active') without a measurable criterion, has multiple possible metrics or dimensions, or references nonexistent columns."
     )
     reasoning: str = Field(
         description="Short explanation of why the question is or isn't ambiguous."
@@ -25,7 +25,7 @@ class QueryAnalysis(BaseModel):
     )
     options: Optional[List[str]] = Field(
         None,
-        description="If ambiguous, provide 2 to 4 concrete options (e.g., ['By Revenue', 'By Number of Orders'])."
+        description="If ambiguous, provide 2 to 4 concrete options (e.g., ['Highest sales by product', 'Lowest sales by product', 'Products ranked by sales descending'])."
     )
     sql_query: Optional[str] = Field(
         None,
@@ -68,15 +68,18 @@ INSTRUCTIONS:
 2. CLEAR REQUESTS (EXECUTE DIRECTLY WITHOUT CLARIFICATION):
    - Row-limit, preview, and pagination requests such as "Show the top 5 rows", "Show the first 5 rows", "Show 5 rows", "Display 10 rows", or "Show all data" are CLEAR. Do NOT ask for clarification.
      Set `is_ambiguous` to false and generate `SELECT * FROM <table> LIMIT 5;` (or the requested limit using the loaded table).
-   - Unambiguous aggregations, groupings, or filters where intent and columns are straightforward (e.g., "What are the average sales by region?", "Total sales by product", "List products in South region") are CLEAR.
+   - Unambiguous aggregations, groupings, or filters where intent, metric columns, and target dimensions are straightforward (e.g., "What are total sales by region?", "What are the average sales by region?", "Total sales by product", "List products in South region", "Show products ordered by sales descending") are CLEAR.
      Set `is_ambiguous` to false and generate the SQLite SELECT query in `sql_query`.
 
-3. GENUINE AMBIGUITY (WHEN TO CLARIFY):
-   - When a question uses subjective or comparative words (e.g., "best", "best-performing", "top performing", "most active", "worst") without a specified calculation formula, and the schema supports multiple possible metrics or dimensions:
+3. GENUINE AMBIGUITY & SUBJECTIVE DESCRIPTORS (WHEN TO CLARIFY):
+   - Subjective, qualitative, or unquantified descriptors (such as "good", "bad", "best", "worst", "important", "significant", "valuable", "top performing", "most active", "successful", "underperforming", "popular", "key") without an explicit mathematical formula, threshold, or ranking metric are AMBIGUOUS.
+   - Qualitative words like "good" or "important" have no intrinsic definition in the database. Even when there is only one numeric metric (e.g. `sales`), the user has not specified whether "good" means highest sales, lowest sales, sales above average, or products ranked by sales descending.
+   - In all such cases:
      - Set `is_ambiguous` to true.
-     - Set `reasoning` to explain why the question is ambiguous.
-     - Set `clarification_question` to ask a concise follow-up question.
-     - Set `options` to 2 to 4 concrete, actionable interpretations grounded strictly in existing schema columns.
+     - Set `reasoning` to explain that the subjective descriptor (e.g. "good", "important") lacks a defined threshold or measurable ranking metric in the schema.
+     - Set `clarification_question` to ask a concise follow-up question (e.g. "How should good products be evaluated?").
+     - TARGET ENTITY GROUNDING: All generated `options` MUST strictly preserve and focus on the entity requested in the USER QUESTION. For example, if the user asks for "good products", every option MUST rank, filter, or evaluate products (e.g. ["Highest sales by product", "Lowest sales by product", "Products ranked by sales descending", "Products with sales above average"]).
+     - STRICT PROHIBITION AGAINST TOPIC DRIFT: NEVER drift or pivot to an unrelated dimension or entity (e.g., NEVER generate or execute "Sales by region" when the user asked about products).
 
 4. SCHEMA GROUNDING & NONEXISTENT COLUMNS/TABLES:
    - Base all queries strictly on existing table names and column names in the DATABASE SCHEMA.
@@ -87,10 +90,13 @@ INSTRUCTIONS:
      - Set `clarification_question` to explain that the column does not exist in the database, list the available columns, and ask how the user would like to proceed.
      - Set `options` to 2 to 4 valid alternative queries using existing schema columns.
 
-5. CLARIFICATION RESOLUTION:
-   - If CLARIFICATION HISTORY is provided and resolves the ambiguity, or specifies the user's chosen interpretation:
+5. CLARIFICATION RESOLUTION & HISTORY SCOPE:
+   - CLARIFICATION HISTORY is only valid if it directly pertains to and clarifies the CURRENT USER QUESTION and target entity.
+   - If CLARIFICATION HISTORY is from an unrelated topic, mentions a different entity, or contradicts the current user question (for example, if the current question is about "products" but the history mentions "Sales by region" or an older query), IGNORE the history completely and evaluate the USER QUESTION independently.
+   - When CLARIFICATION HISTORY genuinely resolves the current question (e.g., the user answered a clarification prompt for this question by choosing "Highest sales by product"):
      - Set `is_ambiguous` to false.
-     - Generate the final SQLite query in `sql_query` incorporating the user's choice.
+     - Generate the SQLite SELECT query in `sql_query` that directly and faithfully implements the user's chosen interpretation for the requested entity (e.g., `SELECT product, SUM(sales) AS total_sales FROM sample_sales GROUP BY product ORDER BY total_sales DESC;`).
+     - Do NOT alter the entity or dimension chosen by the user.
 
 6. OUTPUT FORMAT:
 You MUST output a valid JSON object that strictly matches the following JSON Schema:

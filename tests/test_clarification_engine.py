@@ -61,3 +61,100 @@ def test_query_analysis_pydantic_models():
     assert obj_ambig.is_ambiguous is True
     assert len(obj_ambig.options) == 2
     assert "Total Sales" in obj_ambig.options[0]
+
+
+def test_build_analysis_prompt_subjective_modifiers_and_entity_grounding():
+    """
+    Regression test: Verify that prompt instructions mandate:
+    1. Detecting subjective descriptors ('good', 'important', 'best', etc.) as ambiguous.
+    2. Enforcing target entity grounding (e.g., options must focus on products when asked about products).
+    3. Strictly prohibiting topic drift (e.g., pivoting to 'Sales by region' for a product query).
+    4. Scoping clarification history to prevent stale previous context from overriding new entities.
+    5. Direct execution for baseline clear queries ('What are total sales by region?').
+    """
+    schema = "TABLE: sample_sales (product TEXT, sales INTEGER, region TEXT)"
+    prompt = build_analysis_prompt("Show me the good products", schema)
+
+    # Subjective modifiers guideline
+    assert "SUBJECTIVE DESCRIPTORS" in prompt
+    assert '"good"' in prompt
+    assert '"important"' in prompt
+
+    # Target entity grounding & anti-topic-drift
+    assert "TARGET ENTITY GROUNDING" in prompt
+    assert "STRICT PROHIBITION AGAINST TOPIC DRIFT" in prompt
+    assert "Sales by region" in prompt
+
+    # Clarification history scope
+    assert "CLARIFICATION RESOLUTION & HISTORY SCOPE" in prompt
+    assert "IGNORE the history completely" in prompt
+
+    # Clear baseline aggregations
+    assert "What are total sales by region?" in prompt
+
+
+def test_query_analysis_good_products_schema_grounding():
+    """
+    Verify QueryAnalysis correctly models ambiguous 'Show me the good products'
+    with options grounded strictly in the product entity and sales metric.
+    """
+    data = {
+        "is_ambiguous": True,
+        "reasoning": "The qualitative term 'good' does not specify a measurable ranking criterion (e.g., highest sales, sales above average, or volume).",
+        "clarification_question": "How should good products be measured?",
+        "options": [
+            "Highest sales by product",
+            "Lowest sales by product",
+            "Products ranked by sales descending",
+            "Products with sales above average"
+        ]
+    }
+    analysis = QueryAnalysis(**data)
+    assert analysis.is_ambiguous is True
+    assert "good" in analysis.reasoning
+    assert analysis.clarification_question == "How should good products be measured?"
+    assert len(analysis.options) == 4
+    # Ensure every option is grounded in the product entity
+    for opt in analysis.options:
+        assert "product" in opt.lower()
+    assert analysis.sql_query is None
+
+
+def test_query_analysis_important_sales():
+    """
+    Verify QueryAnalysis models ambiguous 'Show me the important sales'
+    requiring clarification for undefined importance thresholds.
+    """
+    data = {
+        "is_ambiguous": True,
+        "reasoning": "The term 'important' is subjective without a defined sales threshold or criteria.",
+        "clarification_question": "How should important sales be defined?",
+        "options": [
+            "Transactions with highest sales",
+            "Sales above the average value",
+            "Total sales by product",
+            "Total sales by region"
+        ]
+    }
+    analysis = QueryAnalysis(**data)
+    assert analysis.is_ambiguous is True
+    assert len(analysis.options) >= 2
+    assert analysis.sql_query is None
+
+
+def test_query_analysis_clear_baseline_sales_by_region():
+    """
+    Verify QueryAnalysis models unambiguous baseline 'What are total sales by region?'
+    with is_ambiguous=False and direct SQLite aggregation.
+    """
+    data = {
+        "is_ambiguous": False,
+        "reasoning": "Straightforward grouping and aggregation of sales by region.",
+        "sql_query": "SELECT region, SUM(sales) AS total_sales FROM sample_sales GROUP BY region ORDER BY total_sales DESC;"
+    }
+    analysis = QueryAnalysis(**data)
+    assert analysis.is_ambiguous is False
+    assert analysis.clarification_question is None
+    assert analysis.options is None
+    assert "SELECT region" in analysis.sql_query
+    assert "SUM(sales)" in analysis.sql_query

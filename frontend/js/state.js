@@ -145,6 +145,7 @@ export class AppState {
     if (!isClarificationTurn) {
       this.query.clarificationHistory = '';
       this.query.clarificationInterpretation = '';
+      this.conversation.dialogueHistory = '';
 
       // Record user query into conversational stream
       if (cleanQ) {
@@ -183,6 +184,7 @@ export class AppState {
     } else {
       this.query.clarificationHistory = '';
       this.query.clarificationInterpretation = '';
+      this.conversation.dialogueHistory = '';
     }
 
     if (question && question.trim()) {

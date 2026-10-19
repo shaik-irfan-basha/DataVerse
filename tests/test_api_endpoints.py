@@ -728,3 +728,266 @@ def test_history_ui_markup_presence(client):
     assert 'data-status-filter="all"' in html
     assert 'data-status-filter="success"' in html
     assert 'data-status-filter="failed"' in html
+
+
+# =============================================================================
+# 9. Clarification Engine Regression Tests (Intent Resolution & Entity Grounding)
+# =============================================================================
+
+def test_good_products_ambiguity_and_clarification_resolution(client, auth_session):
+    """
+    Regression test for User Request 10:
+    Dataset: sample_sales.csv (product, sales, region)
+    Query: 'Show me the good products.'
+    Expected:
+    1. Detects ambiguity ('good' has no defined metric/threshold).
+    2. Does NOT hijack the goal with 'Sales by region' or execute prematurely.
+    3. Returns product-grounded options (e.g., 'Highest sales by product', 'Lowest sales by product').
+    4. Waits for user selection.
+    5. Preserves original_question throughout clarification and SQL execution.
+    6. Generates SQL strictly matching user's selected choice.
+    """
+    class GoodProductsStubLLM:
+        def generate_json(self, prompt: str) -> dict:
+            p_lower = prompt.lower()
+            if "user: highest sales by product" in p_lower:
+                return {
+                    "is_ambiguous": False,
+                    "reasoning": "User specified highest sales by product.",
+                    "sql_query": "SELECT product, SUM(sales) AS total_sales FROM sample_sales GROUP BY product ORDER BY total_sales DESC;"
+                }
+            if "user: lowest sales by product" in p_lower:
+                return {
+                    "is_ambiguous": False,
+                    "reasoning": "User specified lowest sales by product.",
+                    "sql_query": "SELECT product, SUM(sales) AS total_sales FROM sample_sales GROUP BY product ORDER BY total_sales ASC;"
+                }
+            # Initial ambiguous question
+            return {
+                "is_ambiguous": True,
+                "reasoning": "The qualitative term 'good' lacks a defined threshold or ranking metric in the schema.",
+                "clarification_question": "How should good products be evaluated?",
+                "options": [
+                    "Highest sales by product",
+                    "Lowest sales by product",
+                    "Products ranked by sales descending",
+                    "Products with sales above average"
+                ]
+            }
+
+        def generate_sql(self, prompt: str) -> str:
+            if "lowest sales" in prompt.lower():
+                return "SELECT product, SUM(sales) AS total_sales FROM sample_sales GROUP BY product ORDER BY total_sales ASC;"
+            return "SELECT product, SUM(sales) AS total_sales FROM sample_sales GROUP BY product ORDER BY total_sales DESC;"
+
+    sid, _, headers = auth_session
+    csv_content = b"product,sales,region\nLaptop,1200,North\nPhone,800,South\nTablet,400,East\nMonitor,300,West"
+    files = {"file": ("sample_sales.csv", io.BytesIO(csv_content), "text/csv")}
+    upload_res = client.post("/api/v1/upload", headers=headers, files=files)
+    assert upload_res.status_code == 200
+
+    session_obj = session_manager.get_session(sid)
+    session_obj.query_service.llm_client = GoodProductsStubLLM()
+
+    # Step 1: Submit ambiguous query "Show me the good products."
+    q_res = client.post(
+        "/api/v1/query",
+        headers=headers,
+        json={"question": "Show me the good products."}
+    )
+    assert q_res.status_code == 200
+    q_data = q_res.json()
+
+    # Verify ambiguity detected and no premature execution
+    assert q_data["status"] == "CLARIFICATION_REQUIRED"
+    assert q_data["original_question"] == "Show me the good products."
+    assert "good" in q_data["reasoning"].lower()
+    assert q_data["clarification_question"] == "How should good products be evaluated?"
+    assert len(q_data["clarification_options"]) == 4
+
+    # Verify target entity grounding: all options must target products, NOT regions
+    for opt in q_data["clarification_options"]:
+        assert "product" in opt.lower()
+        assert "region" not in opt.lower()
+    assert q_data["data"] is None
+
+    # Step 2: Choose Option 1: "Highest sales by product"
+    clarify_res1 = client.post(
+        "/api/v1/clarify",
+        headers=headers,
+        json={
+            "original_question": "Show me the good products.",
+            "clarification_question": q_data["clarification_question"],
+            "user_response": "Highest sales by product"
+        }
+    )
+    assert clarify_res1.status_code == 200
+    res1_data = clarify_res1.json()
+    assert res1_data["status"] == "SUCCESS"
+    assert res1_data["original_question"] == "Show me the good products."
+    assert "SELECT product" in res1_data["sql"]
+    assert "ORDER BY total_sales DESC" in res1_data["sql"]
+    assert res1_data["data"]["columns"] == ["product", "total_sales"]
+    assert res1_data["data"]["rows"][0] == ["Laptop", 1200]
+
+    # Step 3: Choose Option 2: "Lowest sales by product"
+    clarify_res2 = client.post(
+        "/api/v1/clarify",
+        headers=headers,
+        json={
+            "original_question": "Show me the good products.",
+            "clarification_question": q_data["clarification_question"],
+            "user_response": "Lowest sales by product"
+        }
+    )
+    assert clarify_res2.status_code == 200
+    res2_data = clarify_res2.json()
+    assert res2_data["status"] == "SUCCESS"
+    assert res2_data["original_question"] == "Show me the good products."
+    assert "SELECT product" in res2_data["sql"]
+    assert "ORDER BY total_sales ASC" in res2_data["sql"]
+    assert res2_data["data"]["columns"] == ["product", "total_sales"]
+    assert res2_data["data"]["rows"][0] == ["Monitor", 300]
+
+
+def test_important_sales_ambiguity_detection(client, auth_session):
+    """
+    Regression test: 'Show me the important sales' has undefined subjective importance
+    and must return CLARIFICATION_REQUIRED with sales-grounded options.
+    """
+    class ImportantSalesStubLLM:
+        def generate_json(self, prompt: str) -> dict:
+            return {
+                "is_ambiguous": True,
+                "reasoning": "The qualitative term 'important' is subjective without a defined threshold in schema.",
+                "clarification_question": "How should important sales be defined?",
+                "options": [
+                    "Transactions with highest sales",
+                    "Sales above average transaction value",
+                    "Total sales by product",
+                    "Total sales by region"
+                ]
+            }
+
+        def generate_sql(self, prompt: str) -> str:
+            return ""
+
+    sid, _, headers = auth_session
+    csv_content = b"product,sales,region\nLaptop,1200,North\nPhone,800,South"
+    files = {"file": ("sample_sales2.csv", io.BytesIO(csv_content), "text/csv")}
+    client.post("/api/v1/upload", headers=headers, files=files)
+
+    session_obj = session_manager.get_session(sid)
+    session_obj.query_service.llm_client = ImportantSalesStubLLM()
+
+    res = client.post(
+        "/api/v1/query",
+        headers=headers,
+        json={"question": "Show me the important sales."}
+    )
+    assert res.status_code == 200
+    data = res.json()
+    assert data["status"] == "CLARIFICATION_REQUIRED"
+    assert data["original_question"] == "Show me the important sales."
+    assert "important" in data["reasoning"].lower()
+    assert data["clarification_question"] == "How should important sales be defined?"
+    assert len(data["clarification_options"]) >= 2
+    assert data["data"] is None
+
+
+def test_baseline_query_total_sales_by_region_direct_execution(client, auth_session):
+    """
+    Regression test: Baseline clear query 'What are total sales by region?'
+    must execute directly without clarification.
+    """
+    class BaselineSalesByRegionStubLLM:
+        def generate_json(self, prompt: str) -> dict:
+            return {
+                "is_ambiguous": False,
+                "reasoning": "Direct aggregation and grouping of sales by region.",
+                "sql_query": "SELECT region, SUM(sales) AS total_sales FROM sample_sales GROUP BY region ORDER BY total_sales DESC;"
+            }
+
+        def generate_sql(self, prompt: str) -> str:
+            return "SELECT region, SUM(sales) AS total_sales FROM sample_sales GROUP BY region ORDER BY total_sales DESC;"
+
+    sid, _, headers = auth_session
+    csv_content = b"product,sales,region\nLaptop,1200,North\nPhone,800,South\nTablet,400,North"
+    files = {"file": ("sample_sales.csv", io.BytesIO(csv_content), "text/csv")}
+    client.post("/api/v1/upload", headers=headers, files=files)
+
+    session_obj = session_manager.get_session(sid)
+    session_obj.query_service.llm_client = BaselineSalesByRegionStubLLM()
+
+    res = client.post(
+        "/api/v1/query",
+        headers=headers,
+        json={"question": "What are total sales by region?"}
+    )
+    assert res.status_code == 200
+    data = res.json()
+    assert data["status"] == "SUCCESS"
+    assert data["original_question"] == "What are total sales by region?"
+    assert "SELECT region" in data["sql"]
+    assert "SUM(sales)" in data["sql"]
+    assert data["data"]["row_count"] == 2
+    # Verify regional aggregations (North = 1600, South = 800)
+    assert data["data"]["rows"][0] == ["North", 1600]
+    assert data["data"]["rows"][1] == ["South", 800]
+
+
+def test_stale_history_does_not_override_new_product_query(client, auth_session):
+    """
+    Regression test: Verify that if a previous query turn touched 'Sales by region',
+    a new natural language query 'Show me the good products.' does not inherit
+    that context or erroneously execute a regional sales aggregation.
+    """
+    class HistoryScopingStubLLM:
+        def generate_json(self, prompt: str) -> dict:
+            p_lower = prompt.lower()
+            # If the engine correctly prioritizes the current question and ignores unrelated history:
+            if "show me the good products" in p_lower and "user: highest sales by product" not in p_lower:
+                return {
+                    "is_ambiguous": True,
+                    "reasoning": "The qualitative term 'good' lacks a defined threshold or ranking metric.",
+                    "clarification_question": "How should good products be evaluated?",
+                    "options": ["Highest sales by product", "Lowest sales by product"]
+                }
+            # If the user explicitly clarified this question:
+            if "user: highest sales by product" in p_lower:
+                return {
+                    "is_ambiguous": False,
+                    "reasoning": "User clarified by highest sales.",
+                    "sql_query": "SELECT product, SUM(sales) AS total_sales FROM sample_sales GROUP BY product ORDER BY total_sales DESC;"
+                }
+            # Fallback
+            return {
+                "is_ambiguous": False,
+                "reasoning": "Regional aggregation",
+                "sql_query": "SELECT region, SUM(sales) AS total_sales FROM sample_sales GROUP BY region;"
+            }
+
+        def generate_sql(self, prompt: str) -> str:
+            return "SELECT product, SUM(sales) AS total_sales FROM sample_sales GROUP BY product ORDER BY total_sales DESC;"
+
+    sid, _, headers = auth_session
+    csv_content = b"product,sales,region\nLaptop,1200,North\nPhone,800,South"
+    files = {"file": ("sample_sales.csv", io.BytesIO(csv_content), "text/csv")}
+    client.post("/api/v1/upload", headers=headers, files=files)
+
+    session_obj = session_manager.get_session(sid)
+    session_obj.query_service.llm_client = HistoryScopingStubLLM()
+
+    # Send a new query with NO clarification history (clean top-level query)
+    res = client.post(
+        "/api/v1/query",
+        headers=headers,
+        json={"question": "Show me the good products."}
+    )
+    assert res.status_code == 200
+    data = res.json()
+    assert data["status"] == "CLARIFICATION_REQUIRED"
+    assert data["original_question"] == "Show me the good products."
+    assert "product" in data["clarification_options"][0].lower()
+    # It must NOT return regional sales
+    assert "region" not in data.get("sql", "").lower()

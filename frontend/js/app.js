@@ -964,7 +964,7 @@ async function executeNaturalLanguageQuery(questionText, priorHistory = '') {
   if (elements.sqlErrorBanner) elements.sqlErrorBanner.style.display = 'none';
 
   try {
-    const historyToSend = priorHistory || state.conversation.dialogueHistory || '';
+    const historyToSend = priorHistory || '';
     const response = await api.submitQuery(question, historyToSend);
     ui.setConversationAnalyzing(false);
     handleQueryResponse(response, question, historyToSend);
@@ -985,7 +985,7 @@ function handleClarificationEngineSend() {
   if (state.query.clarification && state.query.status === 'clarification') {
     submitClarificationResponse(text);
   } else {
-    executeNaturalLanguageQuery(text, state.conversation.dialogueHistory || '');
+    executeNaturalLanguageQuery(text, '');
   }
 }
 
