@@ -61,8 +61,10 @@ MAX_SAMPLE_ROWS = 3
 # =============================================================================
 # Logging Configuration
 # =============================================================================
+from paths import get_log_file_path, get_history_db_path, get_metadata_db_path
+
 LOG_LEVEL = "INFO"
-LOG_FILE = "logs/dataverse.log"
+LOG_FILE = str(get_log_file_path())
 
 # Maximum rows to display in the results table
 MAX_DISPLAY_ROWS = 500
@@ -70,7 +72,8 @@ MAX_DISPLAY_ROWS = 500
 # =============================================================================
 # HISTORY & VISUALIZATION CONFIGURATION
 # =============================================================================
-HISTORY_DB_PATH = "dataverse_history.db"
+HISTORY_DB_PATH = str(get_history_db_path())
+METADATA_DB_PATH = str(get_metadata_db_path())
 MAX_HISTORY_ENTRIES = 100
 DEFAULT_CHART_DPI = 150
 

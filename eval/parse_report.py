@@ -1,6 +1,17 @@
 import json
+import sys
+import glob
 
-with open('eval/reports/benchmark_20260920_141035.json', 'r') as f:
+report_path = sys.argv[1] if len(sys.argv) > 1 else None
+if not report_path:
+    reports = sorted(glob.glob('eval/reports/benchmark_*.json'), reverse=True)
+    if not reports:
+        print("No benchmark reports found in eval/reports/")
+        sys.exit(0)
+    report_path = reports[0]
+
+print(f"Loading benchmark report: {report_path}")
+with open(report_path, 'r', encoding='utf-8') as f:
     report = json.load(f)
 
 metadata = report['metadata']

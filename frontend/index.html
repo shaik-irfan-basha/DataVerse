@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+  <meta name="theme-color" content="#080a11" />
+  <meta name="description" content="DataVerse — Natural language to SQL analytics workspace" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="DataVerse" />
+  <title>DataVerse</title>
+
+  <!-- PWA Manifest & App Icons -->
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="icon" type="image/x-icon" href="/icons/dataverse.ico" />
+  <link rel="icon" type="image/svg+xml" href="/icons/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon-16.png" />
+  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheets (Versioned for Instant Cache Invalidation) -->
+  <link rel="stylesheet" href="/css/style.css?v=13.3.0" />
+  <link rel="stylesheet" href="/css/components.css?v=13.3.0" />
+</head>
+<body>
+  <div id="app-container">
+    <!-- Top Navigation Header -->
+    <header class="top-nav">
+      <div class="nav-brand-cluster">
+        <button type="button" class="mobile-menu-btn" id="btn-mobile-menu" aria-label="Toggle navigation drawer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+        <a href="/" class="brand" title="DataVerse">
+          <svg class="brand-icon" width="22" height="22" viewBox="0 0 512 512" fill="none">
+            <defs>
+              <linearGradient id="header-dv-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#00F5FF"/>
+                <stop offset="35%" stop-color="#00C8FF"/>
+                <stop offset="70%" stop-color="#0080FF"/>
+                <stop offset="100%" stop-color="#0052D4"/>
+              </linearGradient>
+              <linearGradient id="header-b1" x1="0%" y1="100%" x2="0%" y2="0%">
+                <stop offset="0%" stop-color="#0044B8"/>
+                <stop offset="100%" stop-color="#0077FF"/>
+              </linearGradient>
+              <linearGradient id="header-b2" x1="0%" y1="100%" x2="0%" y2="0%">
+                <stop offset="0%" stop-color="#0066E6"/>
+                <stop offset="100%" stop-color="#00B8FF"/>
+              </linearGradient>
+              <linearGradient id="header-b3" x1="0%" y1="100%" x2="0%" y2="0%">
+                <stop offset="0%" stop-color="#0099FF"/>
+                <stop offset="100%" stop-color="#00F5FF"/>
+              </linearGradient>
+            </defs>
+            <path d="M 88,64 L 264,64 C 374,64 444,136 444,256 C 444,376 374,448 264,448 L 88,448 C 74,448 64,438 64,424 L 64,88 C 64,74 74,64 88,64 Z M 124,120 L 124,392 L 258,392 C 334,392 384,336 384,256 C 384,176 334,120 258,120 Z" fill="url(#header-dv-grad)" fill-rule="evenodd"/>
+            <rect x="154" y="272" width="40" height="120" rx="8" fill="url(#header-b1)"/>
+            <rect x="214" y="200" width="40" height="192" rx="8" fill="url(#header-b2)"/>
+            <rect x="274" y="128" width="40" height="264" rx="8" fill="url(#header-b3)"/>
+            <circle cx="294" cy="128" r="7" fill="#FFFFFF"/>
+            <circle cx="294" cy="128" r="4" fill="#00F5FF"/>
+          </svg>
+          <span class="brand-name">DataVerse</span>
+        </a>
+      </div>
+
+      <!-- Primary Navigation Tabs -->
+      <nav class="studio-nav" aria-label="Main Navigation">
+        <button type="button" class="studio-nav-btn active" id="nav-btn-sql-lab" data-tab="sql-lab" title="Natural Language to SQL Composer & Editor">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+          <span>SQL Lab</span>
+        </button>
+        <button type="button" class="studio-nav-btn" id="nav-btn-schema" data-tab="schema" title="Interactive Relational Schema & ER Diagram">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="8.5" y="14" width="7" height="7" rx="1.5"></rect><path d="M6.5 10v2a2 2 0 0 0 2 2h3.5M17.5 10v2a2 2 0 0 1-2 2H12"></path></svg>
+          <span>Schema Studio</span>
+        </button>
+        <button type="button" class="studio-nav-btn" id="nav-btn-clarification" data-tab="clarification" title="Interactive Conversational Clarification Engine">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+          <span>Clarification Engine</span>
+          <span class="nav-pulse-dot" id="nav-clarification-dot" style="display: none;" title="Clarification Pending"></span>
+        </button>
+        <button type="button" class="studio-nav-btn" id="nav-btn-insights" data-tab="insights" title="Data Tables, Charts, Diagnostics & Export Hub">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"></path></svg>
+          <span>Insights</span>
+        </button>
+      </nav>
+
+      <!-- Active Dataset Context Pill -->
+      <div class="nav-context-pill hide-mobile" id="header-dataset-pill">
+        <span class="context-dot" id="header-context-dot"></span>
+        <span id="header-dataset-name">No dataset loaded</span>
+      </div>
+
+      <div class="nav-actions">
+        <div id="connection-status" class="status-indicator" title="DataVerse Engine Status">
+          <span class="status-dot"></span>
+          <span>Engine Online</span>
+        </div>
+        <button type="button" class="btn btn-secondary btn-sm" id="btn-open-settings" title="AI Provider Settings (BYOK)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+          <span class="hide-mobile">Settings</span>
+          <span id="nav-key-badge" class="nav-key-dot" style="display: none;" title="BYOK Key Active"></span>
+        </button>
+        <button type="button" class="btn btn-secondary btn-sm" id="btn-open-history" title="Query History (Ctrl+H)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          <span class="hide-mobile">History</span>
+        </button>
+        <button type="button" class="btn btn-primary btn-sm" id="btn-install-pwa" style="display: none;" title="Install DataVerse">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          <span>Install</span>
+        </button>
+        <button type="button" class="btn btn-secondary btn-sm" id="btn-open-docs" title="Interactive Platform & API Documentation">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+          <span class="hide-mobile">Docs</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Left Sidebar: Data Explorer -->
+    <aside class="sidebar" id="sidebar">
+      <!-- Section 1: Ingestion Dropzone -->
+      <div class="sidebar-section">
+        <div class="sidebar-header">
+          <div class="sidebar-title-cluster">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"></path><path d="M12 12v9"></path><path d="m16 16-4-4-4 4"></path></svg>
+            <span class="sidebar-title">Data Explorer</span>
+          </div>
+        </div>
+        <input type="file" id="file-input" accept=".csv,.xlsx,.xls,.sqlite,.db" style="display: none;" />
+
+        <div class="upload-dropzone" id="upload-dropzone" tabindex="0" role="button" aria-label="Upload dataset file">
+          <div class="upload-icon-circle">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00d2c4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"></path>
+              <path d="M12 12v9"></path>
+              <path d="m16 16-4-4-4 4"></path>
+            </svg>
+          </div>
+          <div class="upload-text-group">
+            <span class="upload-text">Drop data file here</span>
+            <span class="upload-subtext">CSV, Excel (.xlsx), or SQLite (.db)</span>
+          </div>
+          <button type="button" class="btn btn-secondary btn-xs" id="btn-browse-file">
+            Browse Files
+          </button>
+        </div>
+
+        <!-- Loaded Dataset Status Card -->
+        <div id="dataset-info" style="display: none;">
+          <div class="loaded-file-header">
+            <div class="loaded-file-left">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00d2c4" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+              <strong id="loaded-filename" class="loaded-filename"></strong>
+            </div>
+            <span id="loaded-filetype" class="badge badge-cyan"></span>
+          </div>
+          <div id="loaded-stats" class="loaded-stats"></div>
+        </div>
+      </div>
+
+      <!-- Section 2: Tables & Schemas -->
+      <div class="sidebar-section sidebar-section-grow">
+        <div class="sidebar-header">
+          <div class="sidebar-title-cluster">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18"></path><path d="M9 21V9"></path></svg>
+            <span class="sidebar-title">Tables & Schemas</span>
+          </div>
+          <span id="tables-count" class="badge badge-cyan" style="display: none;">0</span>
+        </div>
+        <div class="table-list" id="sidebar-tables">
+          <div class="empty-tables-hint">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1.5"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18"></path><path d="M9 21V9"></path></svg>
+            <span>No tables loaded yet.<br/>Upload a file to explore schema.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3: Keyboard Shortcuts Legend -->
+      <div class="sidebar-section sidebar-footer">
+        <div class="sidebar-header">
+          <div class="sidebar-title-cluster">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="12" x="3" y="6" rx="2"></rect><path d="M7 10h.01M11 10h.01M15 10h.01M7 14h10"/></svg>
+            <span class="sidebar-title">Shortcuts</span>
+          </div>
+        </div>
+        <div class="shortcuts-grid">
+          <div class="shortcut-row">
+            <span>Run Query</span>
+            <kbd>Ctrl+Enter</kbd>
+          </div>
+          <div class="shortcut-row">
+            <span>Execute SQL</span>
+            <kbd>Ctrl+R</kbd>
+          </div>
+          <div class="shortcut-row">
+            <span>Upload File</span>
+            <kbd>Ctrl+O</kbd>
+          </div>
+          <div class="shortcut-row">
+            <span>Clear Query</span>
+            <kbd>Ctrl+L</kbd>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Studio Workspace -->
+    <main class="workspace" id="workspace">
+      <!-- 1. Studio View: SQL Lab -->
+      <div class="studio-view active" id="studio-view-sql-lab">
+        <!-- Hero Bar -->
+        <section class="studio-hero">
+          <div class="hero-left-cluster">
+            <h1 class="hero-headline">
+              <svg class="hero-icon" width="15" height="15" viewBox="0 0 24 24" fill="#00F5FF"><path d="M12 2l2.4 7.2L21.6 12l-7.2 2.8L12 22l-2.4-7.2L2.4 12l7.2-2.8L12 2z"/></svg>
+              <span>DataVerse</span>
+            </h1>
+            <span class="hero-badge">AI Analyst Active</span>
+            <span class="badge badge-violet hide-mobile">Schema Grounded</span>
+          </div>
+          <p class="hero-subtext">Natural language to SQL analytics</p>
+        </section>
+
+        <!-- 1. Hero Natural Language Query Composer -->
+        <section class="query-card">
+          <div class="query-card-header">
+            <div class="query-title-group">
+              <div class="query-icon-mark">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2l2.4 7.2L21.6 12l-7.2 2.8L12 22l-2.4-7.2L2.4 12l7.2-2.8L12 2z"/>
+                </svg>
+              </div>
+              <div>
+                <h2 class="query-main-title">Natural Language Query Composer</h2>
+              </div>
+            </div>
+            <span id="query-char-count" class="char-count">0 chars</span>
+          </div>
+
+          <div class="query-input-wrapper">
+            <textarea
+              id="query-input"
+              class="query-textarea"
+              placeholder="e.g., 'What are the top 5 highest grossing products in each region?' or 'Show monthly sales trends'"
+              rows="2"
+            ></textarea>
+          </div>
+
+          <!-- Curated Realistic Example Prompts (Clean Selectable Cards Grid) -->
+          <div class="example-prompts-wrapper" id="example-prompts-wrapper">
+            <div class="prompts-label">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              <span>Try asking:</span>
+            </div>
+            <div class="example-prompts-grid">
+              <button type="button" class="prompt-chip" data-prompt="Show the top 5 rows" title="Click to ask this query">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00F5FF" stroke-width="2"><path d="M3 3h18v18H3zM3 9h18M3 15h18M9 3v18"/></svg>
+                <span class="prompt-text">Show the top 5 rows</span>
+                <span class="prompt-arrow">→</span>
+              </button>
+              <button type="button" class="prompt-chip" data-prompt="Which products have the highest sales?" title="Click to ask this query">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9D4DFF" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+                <span class="prompt-text">Which products have the highest sales?</span>
+                <span class="prompt-arrow">→</span>
+              </button>
+              <button type="button" class="prompt-chip" data-prompt="Summarize sales by region" title="Click to ask this query">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00F5FF" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                <span class="prompt-text">Summarize sales by region</span>
+                <span class="prompt-arrow">→</span>
+              </button>
+              <button type="button" class="prompt-chip" data-prompt="Find missing values in each column" title="Click to ask this query">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9D4DFF" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+                <span class="prompt-text">Find missing values in each column</span>
+                <span class="prompt-arrow">→</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Dynamic Suggested Prompts Bar (Loaded from backend schema) -->
+          <div class="suggestions-container" id="suggestions-bar" style="display: none;"></div>
+
+          <!-- Query Action Bar -->
+          <div class="query-actions-bar">
+            <div class="query-shortcut-tip hide-mobile">
+              <button type="button" class="btn btn-secondary btn-sm" id="btn-clear-query" title="Clear Question (Ctrl+L)">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                <span>Clear</span>
+              </button>
+              <span class="hint-text">Press <kbd>Ctrl + Enter</kbd> to generate & execute</span>
+            </div>
+
+            <div class="query-actions-right">
+              <button type="button" class="btn btn-primary btn-run" id="btn-run-query">
+                <span id="btn-run-spinner" style="display: none;">
+                  <svg class="spin-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+                </span>
+                <span id="btn-run-icon">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.2L21.6 12l-7.2 2.8L12 22l-2.4-7.2L2.4 12l7.2-2.8L12 2z"/></svg>
+                </span>
+                <span id="btn-run-text">Generate & Run SQL</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 1.5 SQL Lab Ambiguity Alert Banner -->
+        <div class="sql-clarification-banner" id="sql-clarification-banner" style="display: none;">
+          <div class="sql-clarification-banner-left">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FF3CAC" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            <span class="badge badge-magenta">Ambiguity Detected</span>
+            <span id="sql-clarification-banner-desc" class="sql-clarification-desc">The AI Data Scientist requires clarification to disambiguate your question.</span>
+          </div>
+          <button type="button" class="btn btn-primary btn-xs" id="btn-goto-clarification-workspace" title="Open Dedicated Clarification Engine">
+            <span>Clarification Engine →</span>
+          </button>
+        </div>
+
+        <!-- In-Page Clarification Container (Integrated fallback) -->
+        <div class="inpage-clarification-card" id="inpage-clarification-card" style="display: none;">
+          <div class="inpage-clarification-header">
+            <div class="inpage-clarification-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+              <span>Clarify your question</span>
+            </div>
+            <div class="inpage-clarification-actions">
+              <button type="button" class="btn btn-secondary btn-xs" id="inpage-clarification-edit-btn">Edit Query</button>
+              <button type="button" class="btn btn-secondary btn-xs" id="inpage-clarification-dismiss-btn">Dismiss</button>
+            </div>
+          </div>
+          <div class="inpage-clarification-question" id="inpage-clarification-question"></div>
+          <div class="inpage-clarification-reasoning" id="inpage-clarification-reasoning" style="display: none;"></div>
+          <div class="inpage-clarification-options" id="inpage-clarification-options"></div>
+          <div class="inpage-custom-input-group">
+            <input type="text" id="inpage-custom-clarification-input" class="inpage-custom-input" placeholder="Or type a custom clarification response..." />
+            <button type="button" class="btn btn-primary btn-xs" id="inpage-custom-clarification-btn">Submit</button>
+          </div>
+        </div>
+
+      <!-- 2. Generated SQL Inspector Bar -->
+      <section class="sql-card">
+        <div class="sql-header">
+          <div class="sql-header-left">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00d2c4" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+            <span class="sql-title">Generated SQL</span>
+            <span id="sql-execution-status" class="badge badge-cyan">Ready</span>
+            <span id="sql-clarification-tag" class="badge badge-amber" style="display: none; cursor: default;" title="Clarified query interpretation"></span>
+          </div>
+          <div class="sql-actions">
+            <button type="button" class="btn btn-secondary btn-xs" id="btn-save-sql" title="Bookmark & Save Query">
+              <span style="color: #00F5FF;">★</span>
+              <span>Save</span>
+            </button>
+            <button type="button" class="btn btn-secondary btn-xs" id="btn-copy-sql" title="Copy SQL to Clipboard">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <span>Copy</span>
+            </button>
+            <button type="button" class="btn btn-secondary btn-xs btn-run-sql" id="btn-run-sql" title="Execute SQL (Ctrl+R)">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              <span>Run SQL</span>
+            </button>
+          </div>
+        </div>
+        <textarea id="sql-editor" class="sql-editor" placeholder="-- SQL query will appear here. You can also edit and execute custom SQL" spellcheck="false" rows="1"></textarea>
+        <div id="sql-error-banner" style="display: none;"></div>
+      </section>
+
+      <!-- 3. Results, Charts & Diagnostics Stage -->
+      <section class="results-section">
+        <div class="results-nav">
+          <div class="tab-group">
+            <button type="button" class="tab-btn active" id="tab-table" data-view="table">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18v18H3zM3 9h18M3 15h18M9 3v18"/></svg>
+              <span>Table</span>
+            </button>
+            <button type="button" class="tab-btn" id="tab-chart" data-view="chart">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+              <span>Chart</span>
+            </button>
+            <button type="button" class="tab-btn" id="tab-profile" data-view="profile">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              <span>Diagnostics</span>
+            </button>
+          </div>
+
+          <div class="results-meta-cluster">
+            <span id="results-meta" class="results-meta-badge">0 rows • 0.000s</span>
+            <div class="export-button-group">
+              <button type="button" class="btn btn-secondary btn-xs" id="btn-export-csv" title="Export as CSV">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                <span>CSV</span>
+              </button>
+              <button type="button" class="btn btn-secondary btn-xs" id="btn-export-excel" title="Export as Excel">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                <span>Excel</span>
+              </button>
+              <button type="button" class="btn btn-secondary btn-xs" id="btn-export-json" title="Export as JSON">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                <span>JSON</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- View 1: Results Table & Studio Workflow Canvas -->
+        <div id="view-table" class="view-panel active">
+          <div class="table-responsive-wrapper" id="table-wrapper">
+            <!-- Query Workflow Guide -->
+            <div class="studio-workflow-canvas">
+              <div class="workflow-header">
+                <span class="workflow-kicker">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#00F5FF" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                  <span>Query Workflow • Ready for Analysis</span>
+                </span>
+                <h3 class="workflow-title">Natural Language to SQL Analytics</h3>
+                <p class="workflow-subtitle">Ask questions in plain English to execute verified SQLite queries with real-time ambiguity detection, multi-turn clarification, and automated visual charts.</p>
+              </div>
+
+              <div class="workflow-steps-grid">
+                <div class="workflow-step-card">
+                  <div class="step-icon-box step-icon-teal">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"></path><path d="M12 12v9"></path><path d="m16 16-4-4-4 4"></path></svg>
+                  </div>
+                  <span class="step-num">01 • Ingest & Profile</span>
+                  <h4 class="step-title">Multi-Format Ingestion</h4>
+                  <p class="step-desc">Drop CSV, Excel, or SQLite files. Instant schema extraction, column distribution diagnostics, and null profiling.</p>
+                </div>
+
+                <div class="workflow-step-card">
+                  <div class="step-icon-box step-icon-indigo">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                  </div>
+                  <span class="step-num">02 • Ambiguity Resolution</span>
+                  <h4 class="step-title">Ambiguity Detection</h4>
+                  <p class="step-desc">When queries contain subjective terms like <em>"best-performing"</em>, the assistant explains rationale and offers schema-grounded choices.</p>
+                </div>
+
+                <div class="workflow-step-card">
+                  <div class="step-icon-box step-icon-green">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+                  </div>
+                  <span class="step-num">03 • Execution & Charts</span>
+                  <h4 class="step-title">Verified Execution</h4>
+                  <p class="step-desc">Review verified SQL syntax, sortable data tables, automatic statistical charts, and one-click CSV/Excel/JSON exports.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="pagination-bar" id="pagination-controls" style="display: none;"></div>
+        </div>
+
+        <!-- View 2: Auto Chart -->
+        <div id="view-chart" class="view-panel" style="display: none;">
+          <div class="chart-container" id="chart-container">
+            <div class="empty-view-placeholder">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.75"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+              <strong>No chart generated</strong>
+              <p>Execute a query returning categorical or numeric series to auto-generate a visual chart.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- View 3: Data Diagnostics / Profiler -->
+        <div id="view-profile" class="view-panel" style="display: none;">
+          <div class="profile-container" id="profile-container">
+            <div class="empty-view-placeholder">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.75"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              <strong>Select a table to inspect data diagnostics</strong>
+              <p>Click any table in the left explorer to review column distributions, types, and null ratios.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- 2. Studio View: Dedicated Clarification Engine -->
+    <div class="studio-view" id="studio-view-clarification" style="display: none;">
+      <div class="clarification-engine-panel">
+        <!-- 1. Assistant Identity & Status Bar -->
+        <div class="ce-identity-bar">
+          <div class="ce-identity-left">
+            <div class="ce-avatar" title="Data Scientist Assistant">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2l2.4 7.2L21.6 12l-7.2 2.8L12 22l-2.4-7.2L2.4 12l7.2-2.8L12 2z"></path>
+              </svg>
+            </div>
+            <div class="ce-identity-meta">
+              <span class="ce-assistant-title">Data Scientist Assistant</span>
+              <span class="ce-status-badge" id="ce-status-badge">
+                <span class="status-dot"></span>
+                <span id="ce-status-text">Online • Grounded in Schema</span>
+              </span>
+            </div>
+          </div>
+          <div class="ce-identity-context hide-mobile">
+            <span class="ce-context-pill" id="ce-context-pill">
+              <span class="context-dot" id="ce-context-dot"></span>
+              <span id="ce-context-text">No dataset active</span>
+            </span>
+          </div>
+          <div class="ce-identity-actions">
+            <button type="button" class="btn btn-secondary btn-xs" id="ce-btn-clear-chat" title="Reset conversation dialogue">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+              <span>Reset Dialogue</span>
+            </button>
+            <button type="button" class="btn btn-secondary btn-xs" id="ce-btn-goto-sql" title="Return to SQL Lab">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+              <span>Return to SQL Lab</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 2. Analysis Intent Summary Bar -->
+        <div class="ce-intent-summary" id="ce-intent-summary">
+          <div class="ce-intent-item">
+            <span class="ce-intent-label">Original Query:</span>
+            <span class="ce-intent-val" id="ce-intent-original">None active</span>
+          </div>
+          <div class="ce-intent-item">
+            <span class="ce-intent-label">Ambiguity Status:</span>
+            <span class="badge badge-cyan" id="ce-intent-status">Ready</span>
+          </div>
+          <div class="ce-intent-item">
+            <span class="ce-intent-label">Interpreted Goal:</span>
+            <span class="ce-intent-val" id="ce-intent-goal">Awaiting question</span>
+          </div>
+        </div>
+
+        <!-- 3. Conversational Message Stream -->
+        <div class="ce-message-stream" id="ce-message-stream">
+          <!-- Populated dynamically by UI controller with Welcome card, chat messages, and typing indicator -->
+        </div>
+
+        <!-- 4. Follow-up Composer Bar -->
+        <div class="ce-composer-bar">
+          <div class="ce-schema-hints" id="ce-schema-hints">
+            <span style="font-weight: 500; color: var(--text-muted); font-size: 10px;">Schema Columns:</span>
+            <div id="ce-schema-tags" style="display: inline-flex; gap: 4px; overflow-x: auto;">
+              <span class="ce-schema-hint-tag">Upload dataset to view columns</span>
+            </div>
+          </div>
+          <div class="ce-input-wrapper">
+            <textarea
+              id="ce-followup-input"
+              class="ce-textarea"
+              rows="1"
+              placeholder="Ask a question, select an interpretation, or type follow-up... (Enter to send, Shift+Enter for newline)"
+              autocomplete="off"
+            ></textarea>
+            <button type="button" class="btn btn-primary btn-sm" id="ce-btn-send" title="Send message (Enter)">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+              <span>Send</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Studio View: Insights & Analytics Hub -->
+    <div class="studio-view" id="studio-view-insights" style="display: none;">
+      <div class="insights-hub-panel" id="insights-hub-panel" style="display: flex; flex-direction: column; flex: 1; height: 100%; min-height: 0; background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); overflow: hidden;">
+        <div class="insights-hub-header" style="display: flex; align-items: center; justify-content: space-between; padding: 6px 12px; background: #0c0e18; border-bottom: 1px solid var(--border-subtle); flex-shrink: 0;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00F5FF" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"></path></svg>
+            <span style="font-size: 12.5px; font-weight: 500; color: var(--text-primary);">Data Insights</span>
+            <span class="badge badge-cyan" id="insights-dataset-badge">Active Dataset</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <button type="button" class="btn btn-secondary btn-xs" id="insights-btn-view-table" style="color: var(--neon-cyan);">Table View</button>
+            <button type="button" class="btn btn-secondary btn-xs" id="insights-btn-view-chart">Visual Charts</button>
+            <button type="button" class="btn btn-secondary btn-xs" id="insights-btn-view-profile">Diagnostics</button>
+          </div>
+        </div>
+        <div class="insights-hub-body" id="insights-hub-body" style="flex: 1; min-height: 0; display: flex; flex-direction: column; padding: 10px; overflow-y: auto;">
+          <div class="insights-placeholder" id="insights-placeholder" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; gap: 8px; text-align: center; color: var(--text-muted);">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="rgba(0, 245, 255, 0.4)" stroke-width="1.7"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+            <strong style="color: var(--text-primary); font-size: 13.5px;">Ready for Deep Data Analytics</strong>
+            <p style="font-size: 12px; max-width: 440px; line-height: 1.45;">Execute queries in SQL Lab or converse with the Clarification Engine to unlock rich multidimensional insights, automatic charts, and distribution diagnostics.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. Studio View: Relational Schema Visualizer & ER Diagram (Phase 4) -->
+    <div class="studio-view" id="studio-view-schema" style="display: none;">
+      <div class="schema-studio-panel" id="schema-studio-panel">
+        <!-- Schema Studio Toolbar -->
+        <div class="schema-toolbar">
+          <div class="schema-toolbar-left">
+            <div class="schema-brand-cluster">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#00F5FF" stroke-width="2">
+                <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+                <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+                <rect x="8.5" y="14" width="7" height="7" rx="1.5"></rect>
+                <path d="M6.5 10v2a2 2 0 0 0 2 2h3.5M17.5 10v2a2 2 0 0 1-2 2H12"></path>
+              </svg>
+              <span class="schema-studio-title">Relational Visualizer</span>
+            </div>
+            <div class="schema-meta-cluster hide-mobile">
+              <span class="badge badge-cyan" id="schema-table-count-badge">0 Tables</span>
+              <span class="badge badge-violet" id="schema-rel-count-badge">0 Relationships</span>
+            </div>
+          </div>
+
+          <div class="schema-toolbar-center">
+            <!-- Canvas Scale & Navigation Controls -->
+            <div class="schema-canvas-controls">
+              <button type="button" class="btn btn-secondary btn-xs" id="btn-schema-zoom-in" title="Zoom In (+)">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+              </button>
+              <span id="schema-zoom-level" class="schema-zoom-text">100%</span>
+              <button type="button" class="btn btn-secondary btn-xs" id="btn-schema-zoom-out" title="Zoom Out (-)">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+              </button>
+              <button type="button" class="btn btn-secondary btn-xs" id="btn-schema-reset-view" title="Reset View & Scale">Reset</button>
+              <button type="button" class="btn btn-secondary btn-xs" id="btn-schema-fit-view" title="Fit All Tables to Screen">Fit Screen</button>
+              <button type="button" class="btn btn-secondary btn-xs" id="btn-schema-auto-arrange" title="Auto-Arrange Diagram Nodes">Auto Arrange</button>
+            </div>
+          </div>
+
+          <div class="schema-toolbar-right">
+            <button type="button" class="btn btn-secondary btn-xs" id="btn-schema-add-relation" title="Define Custom Table Relationship">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              <span>Link Tables</span>
+            </button>
+            <button type="button" class="btn btn-primary btn-xs" id="btn-schema-generate-join" title="Generate Validated SQL JOIN Query">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+              <span>Generate JOIN SQL</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Schema Studio Workspace: Canvas & Inspector -->
+        <div class="schema-workspace-body">
+          <!-- Canvas Viewport -->
+          <div class="schema-viewport" id="schema-viewport">
+            <div class="schema-canvas" id="schema-canvas">
+              <!-- SVG Layer for Connection Paths & Labels -->
+              <svg class="schema-svg-layer" id="schema-svg-layer">
+                <defs>
+                  <marker id="marker-arrow-cyan" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#00F5FF" />
+                  </marker>
+                  <marker id="marker-arrow-violet" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 10 5 L 0 9 z" fill="#9D4DFF" />
+                  </marker>
+                  <filter id="neon-glow-cyan" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#00F5FF" flood-opacity="0.6"/>
+                  </filter>
+                  <filter id="neon-glow-violet" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="0" stdDeviation="2.5" flood-color="#9D4DFF" flood-opacity="0.5"/>
+                  </filter>
+                </defs>
+                <g id="schema-svg-connections"></g>
+              </svg>
+
+              <!-- HTML Layer for Draggable Table Nodes -->
+              <div class="schema-nodes-layer" id="schema-nodes-layer">
+                <!-- Rendered dynamically -->
+              </div>
+            </div>
+
+            <!-- Canvas Empty State -->
+            <div class="schema-canvas-empty" id="schema-canvas-empty" style="display: none;">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(0, 245, 255, 0.4)" stroke-width="1.6"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18"></path><path d="M9 21V9"></path></svg>
+              <strong>No Multi-Table Schema Available</strong>
+              <p>Upload a database or multi-sheet dataset to visualize relational tables, primary keys, and candidate foreign keys.</p>
+            </div>
+          </div>
+
+          <!-- Right Collapsible Inspector & Management Drawer -->
+          <aside class="schema-inspector" id="schema-inspector">
+            <div class="schema-inspector-nav">
+              <button type="button" class="schema-tab-btn active" id="tab-inspector-details" data-subtab="details">Details</button>
+              <button type="button" class="schema-tab-btn" id="tab-inspector-relationships" data-subtab="relationships">Relationships</button>
+              <button type="button" class="schema-tab-btn" id="tab-inspector-join-builder" data-subtab="join">JOIN Builder</button>
+            </div>
+
+            <div class="schema-inspector-body" id="schema-inspector-body">
+              <!-- Subtab 1: Details (Table or Relationship) -->
+              <div class="inspector-subtab-pane active" id="pane-inspector-details">
+                <div class="inspector-empty-hint" id="inspector-empty-hint">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                  <span>Click any table or relationship line to inspect columns, cardinality, null ratios, and value overlap.</span>
+                </div>
+                <div id="inspector-selection-content" style="display: none;"></div>
+              </div>
+
+              <!-- Subtab 2: Relationship Manager -->
+              <div class="inspector-subtab-pane" id="pane-inspector-relationships" style="display: none;">
+                <div class="relationship-manager-filter">
+                  <button type="button" class="rel-filter-btn active" data-filter="all">All</button>
+                  <button type="button" class="rel-filter-btn" data-filter="confirmed">Confirmed</button>
+                  <button type="button" class="rel-filter-btn" data-filter="inferred">Inferred</button>
+                  <button type="button" class="rel-filter-btn" data-filter="rejected">Rejected</button>
+                </div>
+                <div class="relationship-manager-list" id="relationship-manager-list"></div>
+              </div>
+
+              <!-- Subtab 3: JOIN Builder -->
+              <div class="inspector-subtab-pane" id="pane-inspector-join" style="display: none;">
+                <div class="join-builder-form">
+                  <div class="join-form-row">
+                    <label class="join-form-label">Table A (Left Table):</label>
+                    <select id="join-table-a-select" class="join-form-select"></select>
+                  </div>
+                  <div class="join-form-row">
+                    <label class="join-form-label">Join Operator:</label>
+                    <select id="join-type-select" class="join-form-select">
+                      <option value="INNER JOIN">INNER JOIN (Matching records only)</option>
+                      <option value="LEFT JOIN">LEFT JOIN (All Left + Matching Right)</option>
+                      <option value="CROSS JOIN">CROSS JOIN (Cartesian product)</option>
+                    </select>
+                  </div>
+                  <div class="join-form-row">
+                    <label class="join-form-label">Table B (Right Table):</label>
+                    <select id="join-table-b-select" class="join-form-select"></select>
+                  </div>
+                  <div class="join-form-row" id="join-custom-cols-row" style="display: none;">
+                    <label class="join-form-label">Custom Join Columns (Optional):</label>
+                    <div style="display: flex; gap: 6px;">
+                      <select id="join-col-a-select" class="join-form-select" style="flex: 1;"></select>
+                      <span style="align-self: center; color: var(--text-muted); font-size: 11px;">=</span>
+                      <select id="join-col-b-select" class="join-form-select" style="flex: 1;"></select>
+                    </div>
+                  </div>
+                  <div style="display: flex; gap: 6px; margin-top: 8px;">
+                    <button type="button" class="btn btn-secondary btn-xs" id="btn-toggle-custom-join-cols" style="flex: 1;">Custom Columns</button>
+                    <button type="button" class="btn btn-primary btn-xs" id="btn-execute-join-proposal" style="flex: 1.4;">Propose JOIN Query</button>
+                  </div>
+
+                  <div class="join-preview-box" id="join-preview-box" style="display: none; margin-top: 12px;">
+                    <div class="join-preview-header">
+                      <span class="join-preview-title">Proposed JOIN SQL</span>
+                      <button type="button" class="btn btn-secondary btn-xs" id="btn-copy-join-sql">Copy</button>
+                    </div>
+                    <pre class="join-sql-code" id="join-sql-code"></pre>
+                    <div class="join-explanation-text" id="join-explanation-text"></div>
+                    <button type="button" class="btn btn-primary btn-sm btn-block" id="btn-send-join-to-sql-lab" style="margin-top: 8px;">
+                      <span>Open & Execute in SQL Lab →</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+    </main>
+  </div>
+
+  <!-- Mobile Drawer Backdrop -->
+  <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+  <!-- Query History Modal -->
+  <div class="modal-backdrop" id="history-modal">
+    <div class="modal-card modal-card-history">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#00F5FF" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          <h3 style="font-size: 0.9375rem; font-weight: 500; color: var(--text-primary);">Query History</h3>
+          <span id="history-count-badge" class="badge badge-cyan">0</span>
+        </div>
+        <button type="button" class="btn btn-secondary btn-icon" id="btn-close-history" title="Close dialog (Esc)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <!-- History Controls: Search Bar & Status Filters -->
+      <div class="history-toolbar">
+        <div class="history-search-wrapper">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="history-search-icon"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="history-search-input" class="history-search-input" placeholder="Search by question, SQL, or dataset..." autocomplete="off" spellcheck="false" />
+          <button type="button" id="btn-clear-history-search" class="history-search-clear" title="Clear search" style="display: none;">&times;</button>
+        </div>
+        <div class="history-filters" role="group" aria-label="Filter queries by status">
+          <button type="button" class="history-filter-pill active" data-status-filter="all">All</button>
+          <button type="button" class="history-filter-pill" data-status-filter="success">Success</button>
+          <button type="button" class="history-filter-pill" data-status-filter="failed">Failed</button>
+          <button type="button" class="history-filter-pill" data-status-filter="bookmarks" style="color: #00F5FF;">★ Saved Queries</button>
+        </div>
+      </div>
+
+      <div id="history-list" class="history-list">
+        <div style="text-align: center; color: var(--text-muted); padding: 24px 0; font-size: 0.8125rem;">No query history recorded yet in this session.</div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="btn-clear-history-confirm" style="color: var(--accent-coral); border-color: rgba(244, 63, 94, 0.25);">
+          Clear History
+        </button>
+        <button type="button" class="btn btn-primary" id="btn-close-history-action">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Provider Settings Modal (BYOK) -->
+  <div class="modal-backdrop" id="settings-modal">
+    <div class="modal-card modal-card-settings">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00d2c4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+          <h3 style="font-size: 0.9375rem; font-weight: 500; color: var(--text-primary);">AI Provider Settings</h3>
+          <span class="badge badge-cyan">BYOK</span>
+        </div>
+        <button type="button" class="btn btn-secondary btn-icon" id="btn-close-settings" title="Close settings (Esc)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <div class="settings-modal-body">
+        <div class="settings-byok-notice">
+          <div class="notice-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00d2c4" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          </div>
+          <div class="notice-text">
+            <strong>Bring Your Own Key (BYOK)</strong>
+            <p>DataVerse requires each user to provide their own AI API key. You are responsible for your own provider usage and API costs. Your key is stored in memory for this session only and never logged or exposed to other users.</p>
+          </div>
+        </div>
+
+        <div class="settings-form-group">
+          <label class="form-label" for="settings-provider-select">AI Provider</label>
+          <select id="settings-provider-select" class="form-select">
+            <option value="groq" selected>Groq Cloud (Fast AI Inference)</option>
+          </select>
+        </div>
+
+        <div class="settings-form-group">
+          <label class="form-label" for="settings-model-select">Model</label>
+          <select id="settings-model-select" class="form-select">
+            <option value="openai/gpt-oss-20b" selected>GPT-OSS 20B (Recommended / Verified)</option>
+            <option value="openai/gpt-oss-120b">GPT-OSS 120B (High Capacity)</option>
+            <option value="qwen/qwen3.8-27b">Qwen 3.8 27B (Instruction / Versatile)</option>
+            <option value="llama-3.3-70b-versatile">Llama 3.3 70B (Versatile - Account Permitted)</option>
+            <option value="llama-3.1-8b-instant">Llama 3.1 8B (Instant - Account Permitted)</option>
+            <option value="mixtral-8x7b-32768">Mixtral 8x7B (32k Context - Account Permitted)</option>
+          </select>
+        </div>
+
+        <div class="settings-form-group">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+            <label class="form-label" for="settings-api-key-input" style="margin-bottom: 0;">Groq API Key</label>
+            <span id="settings-key-status" class="key-status-tag">No key saved</span>
+          </div>
+          <div class="api-key-input-wrapper">
+            <input
+              type="password"
+              id="settings-api-key-input"
+              class="form-input"
+              placeholder="Enter gsk_..."
+              autocomplete="off"
+              spellcheck="false"
+            />
+            <button type="button" class="btn btn-secondary btn-icon" id="btn-toggle-key-visibility" title="Show or hide API key">
+              <svg id="icon-eye-show" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              <svg id="icon-eye-hide" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+            </button>
+          </div>
+          <div class="form-helper-row">
+            <span class="helper-text">Get a free key at <a href="https://console.groq.com/keys" target="_blank" rel="noopener noreferrer" style="color: var(--accent-cyan); text-decoration: underline;">console.groq.com/keys</a></span>
+          </div>
+        </div>
+
+        <div id="settings-test-result" class="settings-test-banner" style="display: none;"></div>
+      </div>
+
+      <div class="modal-footer" style="justify-content: space-between;">
+        <button type="button" class="btn btn-secondary" id="btn-remove-key" style="color: var(--accent-coral); border-color: rgba(244, 63, 94, 0.25);" disabled>
+          Remove Key
+        </button>
+        <div style="display: flex; gap: 8px;">
+          <button type="button" class="btn btn-secondary" id="btn-test-connection">
+            <span id="btn-test-spinner" style="display: none;">⏳</span>
+            <span>Test Connection</span>
+          </button>
+          <button type="button" class="btn btn-primary" id="btn-save-settings">
+            Save & Apply
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Platform & API Documentation Modal -->
+  <div class="modal-backdrop" id="docs-modal">
+    <div class="modal-card modal-card-docs">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00F5FF" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+          <h3 style="font-size: 0.9375rem; font-weight: 500; color: var(--text-primary);">DataVerse Documentation</h3>
+          <span class="badge badge-cyan">v1.0</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <a href="/docs" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-xs" title="Open Interactive OpenAPI Swagger UI in browser">
+            <span>Open Swagger UI ↗</span>
+          </a>
+          <button type="button" class="btn btn-secondary btn-icon" id="btn-close-docs" title="Close dialog (Esc)">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="docs-modal-body" id="docs-modal-body">
+        <div class="docs-section">
+          <div class="docs-section-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.2L21.6 12l-7.2 2.8L12 22l-2.4-7.2L2.4 12l7.2-2.8L12 2z"/></svg>
+            <span>1. Natural Language SQL Lab</span>
+          </div>
+          <p class="docs-section-desc">
+            Type questions in natural human language (e.g. <em>"Show top 5 customers by sales in California"</em>). DataVerse analyzes your loaded tables and schema, constructs grounded prompts, generates verified SQLite SQL via your configured AI model, and executes the query with zero-bypass multi-stage security validation.
+          </p>
+          <div class="docs-code-snippet">SELECT state, COUNT(*) as customer_count FROM customers GROUP BY state ORDER BY customer_count DESC LIMIT 5;</div>
+        </div>
+
+        <div class="docs-section">
+          <div class="docs-section-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="8.5" y="14" width="7" height="7" rx="1.5"></rect><path d="M6.5 10v2a2 2 0 0 0 2 2h3.5M17.5 10v2a2 2 0 0 1-2 2H12"></path></svg>
+            <span>2. Schema Studio & Relational ER Diagrams</span>
+          </div>
+          <p class="docs-section-desc">
+            Visualizes foreign keys, primary keys, and inferred relational bridges between tables on an interactive canvas. Use the canvas controls to pan, zoom, auto-arrange nodes, or construct multi-table JOINs using the Join Builder in the right-hand Inspector.
+          </p>
+        </div>
+
+        <div class="docs-section">
+          <div class="docs-section-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            <span>3. Conversational Clarification Engine</span>
+          </div>
+          <p class="docs-section-desc">
+            When ambiguous terms like <em>"best-performing"</em>, <em>"active"</em>, or <em>"top tier"</em> are detected, DataVerse asks proactive clarification questions. Clarifications can be answered with quick suggestion chips or custom responses to steer SQL generation.
+          </p>
+        </div>
+
+        <div class="docs-section">
+          <div class="docs-section-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            <span>4. Bring Your Own Key (BYOK) & Privacy</span>
+          </div>
+          <p class="docs-section-desc">
+            DataVerse operates with zero central cloud logging of your datasets. Your data files and in-memory SQLite tables never leave your local machine. API keys configured in Settings are encrypted in SQLite WAL metadata and utilized solely for schema-grounded SQL translation.
+          </p>
+        </div>
+
+        <div class="docs-section">
+          <div class="docs-section-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 7 4 4 20 4 20 7"></polyline><line x1="9" y1="20" x2="15" y2="20"></line><line x1="12" y1="4" x2="12" y2="20"></line></svg>
+            <span>5. Keyboard Shortcuts</span>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 8px; margin-top: 4px;">
+            <div><kbd>Ctrl + Enter</kbd> Run Query</div>
+            <div><kbd>Ctrl + R</kbd> Re-run SQL</div>
+            <div><kbd>Ctrl + L</kbd> Clear Query</div>
+            <div><kbd>Ctrl + H</kbd> Open History</div>
+            <div><kbd>Esc</kbd> Close Dialogs</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer" style="justify-content: flex-end;">
+        <button type="button" class="btn btn-primary" id="btn-done-docs">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Application Bootstrap (ES Module) -->
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>

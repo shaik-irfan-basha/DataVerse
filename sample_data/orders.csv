@@ -1,0 +1,251 @@
+order_id,customer_id,product_id,order_date,quantity,unit_price,total_amount,status,payment_method,shipping_city
+1001,1,16,2023-06-01,4,88.00,352.00,Completed,Credit Card,San Diego
+1002,2,32,2023-06-02,3,38.50,115.50,Refunded,Apple Pay,Seattle
+1003,3,9,2023-06-03,1,299.99,299.99,Shipped,Apple Pay,Los Angeles
+1004,4,11,2023-06-04,1,69.99,69.99,Refunded,Apple Pay,Dallas
+1005,5,28,2023-06-05,5,27.99,139.95,Processing,PayPal,Denver
+1006,6,20,2023-06-06,1,75.00,75.00,Cancelled,Bank Transfer,Chicago
+1007,7,29,2023-06-07,4,21.99,87.96,Shipped,Credit Card,San Jose
+1008,8,16,2023-06-08,1,88.00,88.00,Completed,Credit Card,Boston
+1009,9,38,2023-06-09,2,18.99,37.98,Processing,PayPal,Houston
+1010,10,1,2023-06-10,1,199.99,199.99,Cancelled,Credit Card,Austin
+1011,11,15,2023-06-11,1,54.99,54.99,Completed,Bank Transfer,Miami
+1012,12,5,2023-06-12,2,39.99,79.98,Completed,Gift Card,Phoenix
+1013,13,14,2023-06-13,2,68.00,136.00,Cancelled,Apple Pay,Jacksonville
+1014,14,37,2023-06-14,1,34.99,34.99,Refunded,Gift Card,Atlanta
+1015,15,27,2023-06-15,1,32.00,32.00,Completed,Gift Card,Philadelphia
+1016,16,23,2023-06-16,1,42.50,42.50,Shipped,Credit Card,San Francisco
+1017,17,7,2023-06-17,1,79.99,79.99,Cancelled,Bank Transfer,Portland
+1018,18,7,2023-06-18,1,79.99,79.99,Completed,,San Antonio
+1019,19,35,2023-06-19,1,39.99,39.99,Shipped,PayPal,Columbus
+1020,20,18,2023-06-20,1,59.99,59.99,Refunded,Credit Card,New York
+1021,21,29,2023-06-21,3,21.99,65.97,Refunded,Apple Pay,San Diego
+1022,22,7,2023-06-22,1,79.99,79.99,Processing,Credit Card,Seattle
+1023,23,6,2023-06-23,4,59.99,239.96,Refunded,PayPal,Los Angeles
+1024,24,11,2023-06-24,1,69.99,69.99,Shipped,PayPal,Dallas
+1025,25,26,2023-06-25,4,79.99,319.96,Completed,Gift Card,Denver
+1026,26,1,2023-06-26,5,199.99,999.95,Completed,Gift Card,Chicago
+1027,27,19,2023-06-27,1,34.50,34.50,Cancelled,Apple Pay,San Jose
+1028,28,32,2023-06-28,1,38.50,38.50,Completed,PayPal,Boston
+1029,29,4,2023-06-29,2,129.99,259.98,Processing,Credit Card,Houston
+1030,30,21,2023-06-30,1,29.99,29.99,Processing,Gift Card,Austin
+1031,31,33,2023-07-01,4,16.99,67.96,Processing,PayPal,Miami
+1032,32,4,2023-07-02,5,129.99,649.95,Completed,PayPal,Phoenix
+1033,33,5,2023-07-03,2,39.99,79.98,Cancelled,PayPal,Jacksonville
+1034,34,26,2023-07-04,1,79.99,79.99,Processing,PayPal,Atlanta
+1035,35,38,2023-07-05,2,18.99,37.98,Processing,Credit Card,Philadelphia
+1036,36,27,2023-07-06,2,32.00,64.00,Processing,Apple Pay,San Francisco
+1037,37,21,2023-07-07,4,29.99,119.96,Completed,Bank Transfer,Portland
+1038,38,16,2023-07-08,1,88.00,88.00,Completed,Bank Transfer,San Antonio
+1039,39,30,2023-07-09,1,29.99,29.99,Refunded,Credit Card,Columbus
+1040,40,1,2023-07-10,1,199.99,199.99,Processing,Credit Card,New York
+1041,41,5,2023-07-11,2,39.99,79.98,Processing,Bank Transfer,San Diego
+1042,42,9,2023-07-12,25,299.99,7499.75,Completed,Credit Card,Seattle
+1043,43,16,2023-07-13,1,88.00,88.00,Completed,Gift Card,Los Angeles
+1044,44,35,2023-07-14,2,39.99,79.98,Processing,Apple Pay,Dallas
+1045,45,1,2023-07-15,2,199.99,399.98,Processing,Bank Transfer,Denver
+1046,46,7,2023-07-16,4,79.99,319.96,Completed,Bank Transfer,Chicago
+1047,47,8,2023-07-17,4,29.99,119.96,Cancelled,Apple Pay,San Jose
+1048,48,10,2023-07-18,1,34.99,34.99,Processing,PayPal,Boston
+1049,49,22,2023-07-19,1,19.99,19.99,Cancelled,Bank Transfer,Houston
+1050,50,33,2023-07-20,1,16.99,16.99,Refunded,Credit Card,Austin
+1051,51,6,2023-07-21,2,59.99,119.98,Refunded,Bank Transfer,Miami
+1052,52,3,2023-07-22,1,49.99,49.99,Refunded,PayPal,Phoenix
+1053,53,17,2023-07-23,1,119.99,119.99,Shipped,Apple Pay,Jacksonville
+1054,54,28,2023-07-24,2,27.99,55.98,Completed,Credit Card,Atlanta
+1055,55,10,2023-07-25,2,34.99,69.98,Refunded,Bank Transfer,Philadelphia
+1056,56,38,2023-07-26,2,18.99,37.98,Shipped,PayPal,San Francisco
+1057,57,3,2023-07-27,1,49.99,49.99,Refunded,Credit Card,Portland
+1058,58,23,2023-07-28,1,42.50,42.50,Completed,Credit Card,San Antonio
+1059,59,23,2023-07-29,3,42.50,127.50,Refunded,Gift Card,Columbus
+1060,60,40,2023-07-30,2,89.99,179.98,Completed,PayPal,New York
+1061,61,12,2023-07-31,4,44.99,179.96,Completed,PayPal,San Diego
+1062,62,22,2023-08-01,3,19.99,59.97,Shipped,PayPal,Seattle
+1063,63,18,2023-08-02,1,59.99,59.99,Cancelled,Credit Card,Los Angeles
+1064,64,25,2023-08-03,4,24.99,99.96,Refunded,Gift Card,Dallas
+1065,65,15,2023-08-04,1,54.99,54.99,Shipped,Bank Transfer,Denver
+1066,66,20,2023-08-05,3,75.00,225.00,Refunded,PayPal,Chicago
+1067,67,15,2023-08-06,1,54.99,54.99,Completed,Gift Card,San Jose
+1068,68,22,2023-08-07,1,19.99,19.99,Completed,Bank Transfer,Boston
+1069,69,23,2023-08-08,2,42.50,85.00,Shipped,Apple Pay,Houston
+1070,70,22,2023-08-09,4,19.99,79.96,Completed,Bank Transfer,Austin
+1071,71,12,2023-08-10,2,44.99,89.98,Completed,Credit Card,Miami
+1072,72,7,2023-08-11,2,79.99,159.98,Completed,Bank Transfer,Phoenix
+1073,73,28,2023-08-12,2,27.99,55.98,Processing,Credit Card,Jacksonville
+1074,74,25,2023-08-13,4,24.99,99.96,Completed,Bank Transfer,Atlanta
+1075,75,3,2023-08-14,2,49.99,99.98,Completed,Apple Pay,Philadelphia
+1076,76,35,2023-08-15,2,39.99,79.98,Cancelled,PayPal,San Francisco
+1077,77,24,2023-08-16,1,36.99,36.99,Cancelled,,Portland
+1078,78,22,2023-08-17,2,19.99,39.98,Cancelled,Credit Card,San Antonio
+1079,79,20,2023-08-18,2,75.00,150.00,Cancelled,Gift Card,Columbus
+1080,80,21,2023-08-19,1,29.99,29.99,Completed,Apple Pay,New York
+1081,81,9,2023-08-20,1,299.99,299.99,Cancelled,Gift Card,San Diego
+1082,82,12,2023-08-21,2,44.99,89.98,Completed,Gift Card,Seattle
+1083,83,36,2023-08-22,3,26.99,80.97,Completed,Bank Transfer,Los Angeles
+1084,84,14,2023-08-23,1,68.00,68.00,Processing,Apple Pay,Dallas
+1085,85,21,2023-08-24,1,29.99,29.99,Shipped,PayPal,Denver
+1086,86,33,2023-08-25,1,16.99,16.99,Refunded,PayPal,Chicago
+1087,87,6,2023-08-26,1,59.99,59.99,Cancelled,Apple Pay,San Jose
+1088,88,22,2023-08-27,1,19.99,19.99,Refunded,PayPal,Boston
+1089,89,20,2023-08-28,1,75.00,75.00,Completed,PayPal,Houston
+1090,4,31,2023-08-29,2,58.00,116.00,Refunded,Credit Card,Dallas
+1091,81,37,2023-08-30,1,34.99,34.99,Cancelled,Gift Card,San Diego
+1092,32,10,2023-08-31,2,34.99,69.98,Completed,Credit Card,Phoenix
+1093,29,12,2023-09-01,3,44.99,134.97,Cancelled,Apple Pay,Houston
+1094,72,16,2023-09-02,4,88.00,352.00,Completed,Gift Card,Phoenix
+1095,8,34,2023-09-03,5,22.00,110.00,Processing,Bank Transfer,Boston
+1096,57,40,2023-09-04,3,89.99,269.97,Processing,Gift Card,Portland
+1097,71,29,2023-09-05,4,21.99,87.96,Cancelled,Gift Card,Miami
+1098,32,18,2023-09-06,3,59.99,179.97,Processing,Gift Card,Phoenix
+1099,36,29,2023-09-07,1,21.99,21.99,Completed,PayPal,San Francisco
+1100,6,35,2023-09-08,1,39.99,39.99,Completed,PayPal,Chicago
+1101,20,14,2023-09-09,1,68.00,68.00,Shipped,Bank Transfer,New York
+1102,54,4,2023-09-10,1,129.99,129.99,Shipped,Gift Card,Atlanta
+1103,75,2,2023-09-11,3,89.99,269.97,Refunded,Apple Pay,Philadelphia
+1104,1,23,2023-09-12,1,42.50,42.50,Shipped,Gift Card,San Diego
+1105,70,39,2023-09-13,4,48.00,192.00,Shipped,PayPal,Austin
+1106,8,2,2023-09-14,1,89.99,89.99,Cancelled,Gift Card,Boston
+1107,60,9,2023-09-15,5,299.99,1499.95,Processing,Credit Card,New York
+1108,76,37,2023-09-16,2,34.99,69.98,Completed,Gift Card,San Francisco
+1109,8,12,2023-09-17,1,44.99,44.99,Shipped,Bank Transfer,Boston
+1110,6,22,2023-09-18,3,19.99,59.97,Shipped,Bank Transfer,Chicago
+1111,54,17,2023-09-19,3,119.99,359.97,Shipped,Credit Card,Atlanta
+1112,7,23,2023-09-20,1,42.50,42.50,Completed,Credit Card,San Jose
+1113,32,13,2023-09-21,3,24.99,74.97,Processing,PayPal,Phoenix
+1114,8,8,2023-09-22,2,29.99,59.98,Completed,Gift Card,Boston
+1115,48,11,2023-09-23,2,69.99,139.98,Cancelled,Credit Card,Boston
+1116,21,20,2023-09-24,1,75.00,75.00,Completed,Bank Transfer,San Diego
+1117,49,26,2023-09-25,4,79.99,319.96,Completed,Credit Card,Houston
+1118,81,16,2023-09-26,1,88.00,88.00,Refunded,Bank Transfer,San Diego
+1119,77,8,2023-09-27,3,29.99,89.97,Processing,Credit Card,Portland
+1120,7,24,2023-09-28,1,36.99,36.99,Cancelled,Bank Transfer,San Jose
+1121,7,32,2023-09-29,1,38.50,38.50,Completed,Gift Card,San Jose
+1122,56,12,2023-09-30,2,44.99,89.98,Cancelled,Bank Transfer,San Francisco
+1123,69,31,2023-10-01,1,58.00,58.00,Refunded,Apple Pay,Houston
+1124,14,16,2023-10-02,3,88.00,264.00,Completed,Bank Transfer,Atlanta
+1125,32,30,2023-10-03,2,29.99,59.98,Cancelled,Gift Card,Phoenix
+1126,8,21,2023-10-04,1,29.99,29.99,Completed,Bank Transfer,Boston
+1127,44,18,2023-10-05,4,59.99,239.96,Cancelled,Bank Transfer,Dallas
+1128,67,13,2023-10-06,1,24.99,24.99,Cancelled,Gift Card,San Jose
+1129,31,31,2023-10-07,2,58.00,116.00,Shipped,Gift Card,Miami
+1130,12,19,2023-10-08,1,34.50,34.50,Cancelled,PayPal,Phoenix
+1131,10,24,2023-10-09,1,36.99,36.99,Processing,Bank Transfer,Austin
+1132,71,22,2023-10-10,1,19.99,19.99,Shipped,Bank Transfer,Miami
+1133,4,8,2023-10-11,2,29.99,59.98,Completed,Credit Card,Dallas
+1134,89,12,2023-10-12,1,44.99,44.99,Cancelled,Gift Card,Houston
+1135,10,34,2023-10-13,2,22.00,44.00,Completed,PayPal,Austin
+1136,6,12,2023-10-14,1,44.99,44.99,Cancelled,Apple Pay,Chicago
+1137,1,4,2023-10-15,2,129.99,259.98,Cancelled,PayPal,San Diego
+1138,63,7,2023-10-16,4,79.99,319.96,Processing,Bank Transfer,Los Angeles
+1139,57,22,2023-10-17,1,19.99,19.99,Completed,Bank Transfer,Portland
+1140,62,8,2023-10-18,3,29.99,89.97,Shipped,Gift Card,Seattle
+1141,11,4,2023-10-19,1,129.99,129.99,Refunded,Apple Pay,Miami
+1142,11,16,2023-10-20,1,88.00,88.00,Refunded,Gift Card,Miami
+1143,80,15,2023-10-21,3,54.99,164.97,Shipped,Gift Card,New York
+1144,39,38,2023-10-22,5,18.99,94.95,Completed,,Columbus
+1145,8,40,2023-10-23,5,89.99,449.95,Completed,PayPal,Boston
+1146,34,6,2023-10-24,1,59.99,59.99,Completed,Apple Pay,Atlanta
+1147,1,27,2023-10-25,1,32.00,32.00,Processing,Gift Card,San Diego
+1148,4,19,2023-10-26,2,34.50,69.00,Cancelled,Gift Card,Dallas
+1149,4,17,2023-10-27,3,119.99,359.97,Cancelled,Apple Pay,Dallas
+1150,26,28,2023-10-28,40,27.99,1119.60,Completed,Apple Pay,Chicago
+1151,3,18,2023-10-29,3,59.99,179.97,Completed,Credit Card,Los Angeles
+1152,5,39,2023-10-30,2,48.00,96.00,Processing,Bank Transfer,Denver
+1153,60,20,2023-10-31,2,75.00,150.00,Completed,Apple Pay,New York
+1154,57,6,2023-11-01,2,59.99,119.98,Shipped,Bank Transfer,Portland
+1155,4,6,2023-11-02,1,59.99,59.99,Cancelled,Apple Pay,Dallas
+1156,3,18,2023-11-03,2,59.99,119.98,Refunded,PayPal,Los Angeles
+1157,84,29,2023-11-04,4,21.99,87.96,Completed,Apple Pay,Dallas
+1158,63,6,2023-11-05,1,59.99,59.99,Shipped,Bank Transfer,Los Angeles
+1159,2,11,2023-11-06,1,69.99,69.99,Cancelled,Gift Card,Seattle
+1160,7,36,2023-11-07,1,26.99,26.99,Completed,Bank Transfer,San Jose
+1161,2,26,2023-11-08,3,79.99,239.97,Refunded,Credit Card,Seattle
+1162,70,30,2023-11-09,1,29.99,29.99,Completed,Apple Pay,Austin
+1163,64,29,2023-11-10,3,21.99,65.97,Completed,Bank Transfer,Dallas
+1164,37,29,2023-11-11,4,21.99,87.96,Shipped,Credit Card,Portland
+1165,11,39,2023-11-12,3,48.00,144.00,Cancelled,PayPal,Miami
+1166,1,36,2023-11-13,1,26.99,26.99,Completed,Credit Card,San Diego
+1167,16,10,2023-11-14,1,34.99,34.99,Cancelled,Bank Transfer,San Francisco
+1168,35,27,2023-11-15,3,32.00,96.00,Shipped,PayPal,Philadelphia
+1169,19,25,2023-11-16,1,24.99,24.99,Processing,Apple Pay,Columbus
+1170,18,5,2023-11-17,1,39.99,39.99,Refunded,Gift Card,San Antonio
+1171,13,33,2023-11-18,1,16.99,16.99,Completed,Bank Transfer,Jacksonville
+1172,76,38,2023-11-19,5,18.99,94.95,Shipped,PayPal,San Francisco
+1173,62,23,2023-11-20,1,42.50,42.50,Refunded,Apple Pay,Seattle
+1174,42,13,2023-11-21,5,24.99,124.95,Completed,Apple Pay,Seattle
+1175,53,3,2023-11-22,1,49.99,49.99,Shipped,Gift Card,Jacksonville
+1176,85,10,2023-11-23,1,34.99,34.99,Completed,PayPal,Denver
+1177,76,22,2023-11-24,3,19.99,59.97,Refunded,Gift Card,San Francisco
+1178,15,30,2023-11-25,1,29.99,29.99,Completed,Gift Card,Philadelphia
+1179,20,5,2023-11-26,1,39.99,39.99,Completed,Bank Transfer,New York
+1180,51,6,2023-11-27,3,59.99,179.97,Refunded,Apple Pay,Miami
+1181,41,32,2023-11-28,4,38.50,154.00,Completed,Apple Pay,San Diego
+1182,11,19,2023-11-29,5,34.50,172.50,Cancelled,Credit Card,Miami
+1183,13,7,2023-11-30,1,79.99,79.99,Cancelled,Bank Transfer,Jacksonville
+1184,6,21,2023-12-01,3,29.99,89.97,Completed,Bank Transfer,Chicago
+1185,19,16,2023-12-02,2,88.00,176.00,Processing,PayPal,Columbus
+1186,2,40,2023-12-03,4,89.99,359.96,Processing,PayPal,Seattle
+1187,75,10,2023-12-04,1,34.99,34.99,Cancelled,Bank Transfer,Philadelphia
+1188,86,1,2023-12-05,4,199.99,799.96,Shipped,Bank Transfer,Chicago
+1189,21,5,2023-12-06,1,39.99,39.99,Completed,Apple Pay,San Diego
+1190,7,17,2023-12-07,1,119.99,119.99,Completed,PayPal,San Jose
+1191,62,7,2023-12-08,1,79.99,79.99,Processing,Bank Transfer,Seattle
+1192,38,2,2023-12-09,5,89.99,449.95,Cancelled,Gift Card,San Antonio
+1193,10,4,2023-12-10,4,129.99,519.96,Cancelled,Gift Card,Austin
+1194,37,15,2023-12-11,2,54.99,109.98,Completed,PayPal,Portland
+1195,80,17,2023-12-12,2,119.99,239.98,Cancelled,,New York
+1196,88,9,2023-12-13,2,299.99,599.98,Cancelled,Credit Card,Boston
+1197,8,3,2023-12-14,2,49.99,99.98,Cancelled,PayPal,Boston
+1198,5,21,2023-12-15,2,29.99,59.98,Completed,PayPal,Denver
+1199,9,24,2023-12-16,2,36.99,73.98,Completed,PayPal,Houston
+1200,14,31,2023-12-17,5,58.00,290.00,Completed,Bank Transfer,Atlanta
+1201,60,5,2023-12-18,1,39.99,39.99,Completed,Gift Card,New York
+1202,72,24,2023-12-19,1,36.99,36.99,Shipped,Credit Card,Phoenix
+1203,2,30,2023-12-20,1,29.99,29.99,Cancelled,Bank Transfer,Seattle
+1204,82,24,2023-12-21,1,36.99,36.99,Completed,Gift Card,Seattle
+1205,15,36,2023-12-22,1,26.99,26.99,Processing,PayPal,Philadelphia
+1206,82,30,2023-12-23,4,29.99,119.96,Completed,Gift Card,Seattle
+1207,1,3,2023-12-24,1,49.99,49.99,Shipped,Credit Card,San Diego
+1208,15,35,2023-12-25,1,39.99,39.99,Shipped,Bank Transfer,Philadelphia
+1209,70,27,2023-12-26,2,32.00,64.00,Cancelled,PayPal,Austin
+1210,84,7,2023-12-27,3,79.99,239.97,Processing,Gift Card,Dallas
+1211,36,3,2023-12-28,2,49.99,99.98,Completed,Gift Card,San Francisco
+1212,31,24,2023-12-29,1,36.99,36.99,Cancelled,Bank Transfer,Miami
+1213,83,23,2023-12-30,1,42.50,42.50,Completed,PayPal,Los Angeles
+1214,59,6,2023-12-31,2,59.99,119.98,Cancelled,Apple Pay,Columbus
+1215,7,22,2024-01-01,30,19.99,599.70,Completed,PayPal,San Jose
+1216,27,5,2024-01-02,3,39.99,119.97,Processing,PayPal,San Jose
+1217,30,22,2024-01-03,3,19.99,59.97,Refunded,Apple Pay,Austin
+1218,14,10,2024-01-04,5,34.99,174.95,Processing,Bank Transfer,Atlanta
+1219,15,2,2024-01-05,1,89.99,89.99,Completed,PayPal,Philadelphia
+1220,3,12,2024-01-06,1,44.99,44.99,Completed,Gift Card,Los Angeles
+1221,9,31,2024-01-07,1,58.00,58.00,Completed,Apple Pay,Houston
+1222,58,33,2024-01-08,1,16.99,16.99,Processing,Credit Card,San Antonio
+1223,85,34,2024-01-09,1,22.00,22.00,Cancelled,Credit Card,Denver
+1224,8,26,2024-01-10,1,79.99,79.99,Completed,Gift Card,Boston
+1225,57,5,2024-01-11,4,39.99,159.96,Completed,Apple Pay,Portland
+1226,3,18,2024-01-12,2,59.99,119.98,Processing,Apple Pay,Los Angeles
+1227,49,39,2024-01-13,2,48.00,96.00,Shipped,Apple Pay,Houston
+1228,13,8,2024-01-14,3,29.99,89.97,Cancelled,Apple Pay,Jacksonville
+1229,28,28,2024-01-15,1,27.99,27.99,Completed,Gift Card,Boston
+1230,8,26,2024-01-16,1,79.99,79.99,Completed,Bank Transfer,Boston
+1231,86,17,2024-01-17,1,119.99,119.99,Completed,Gift Card,Chicago
+1232,14,6,2024-01-18,1,59.99,59.99,Completed,Bank Transfer,Atlanta
+1233,72,4,2024-01-19,2,129.99,259.98,Processing,Apple Pay,Phoenix
+1234,2,27,2024-01-20,1,32.00,32.00,Cancelled,Gift Card,Seattle
+1235,7,19,2024-01-21,2,34.50,69.00,Completed,Credit Card,San Jose
+1236,28,10,2024-01-22,2,34.99,69.98,Completed,Credit Card,Boston
+1237,72,24,2024-01-23,1,36.99,36.99,Completed,Apple Pay,Phoenix
+1238,7,36,2024-01-24,5,26.99,134.95,Refunded,,San Jose
+1239,87,36,2024-01-25,1,26.99,26.99,Cancelled,Bank Transfer,San Jose
+1240,5,20,2024-01-26,4,75.00,300.00,Completed,Credit Card,Denver
+1241,3,37,2024-01-27,2,34.99,69.98,Completed,PayPal,Los Angeles
+1242,4,6,2024-01-28,2,59.99,119.98,Completed,Gift Card,Dallas
+1243,44,11,2024-01-29,1,69.99,69.99,Cancelled,Bank Transfer,Dallas
+1244,73,39,2024-01-30,1,48.00,48.00,Completed,PayPal,Jacksonville
+1245,10,4,2024-01-31,2,129.99,259.98,Completed,Gift Card,Austin
+1246,63,39,2024-02-01,1,48.00,48.00,Completed,PayPal,Los Angeles
+1247,15,23,2024-02-02,1,42.50,42.50,Completed,Apple Pay,Philadelphia
+1248,86,20,2024-02-03,1,75.00,75.00,Shipped,Apple Pay,Chicago
+1249,4,20,2024-02-04,4,75.00,300.00,Refunded,PayPal,Dallas
+1250,38,21,2024-02-05,1,29.99,29.99,Shipped,Gift Card,San Antonio

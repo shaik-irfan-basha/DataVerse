@@ -1,0 +1,101 @@
+customer_id,first_name,last_name,email,phone,city,state,postal_code,signup_date,customer_segment
+1,James,Smith,james.smith1@example.com,+1-555-754-2824,San Diego,CA,92101,2023-01-18,VIP
+2,Mary,Johnson,mary.johnson2@example.com,+1-555-125-5506,Seattle,WA,98101,2023-01-21,VIP
+3,Robert,Williams,robert.williams3@example.com,+1-555-350-4657,Los Angeles,CA,90001,2023-01-24,VIP
+4,Patricia,Brown,patricia.brown4@example.com,+1-555-242-2679,Dallas,TX,75201,2023-01-27,VIP
+5,John,Jones,john.jones5@example.com,+1-555-792-9935,  Denver,CO,80201,2023-01-30,VIP
+6,Jennifer,Garcia,jennifer.garcia6@example.com,+1-555-189-7912,Chicago,IL,60601,2023-02-02,VIP
+7,Michael,Miller,michael.miller7@example.com,+1-555-132-1488,San Jose,CA,95101,2023-02-05,VIP
+8,Linda,Davis,linda.davis8@example.com,+1-555-195-4582,Boston,ma,02101,2023-02-08,VIP
+9,David,Rodriguez,david.rodriguez9@example.com,+1-555-338-9279,Houston,TX,77001,2023-02-11,VIP
+10,Elizabeth,Martinez,elizabeth.martinez10@example.com,+1-555-716-1434,Austin,TX,78701,2023-02-14,VIP
+11,William,Hernandez,william.hernandez11@example.com,+1-555-674-4257,Miami,FL,33101,2023-02-17,VIP
+12,Barbara,Lopez,barbara.lopez12@example.com,,Phoenix,AZ,85001,2023-02-20,VIP
+13,Richard,Gonzalez,richard.gonzalez13@example.com,+1-555-833-9928,Jacksonville,FL,32099,2023-02-23,VIP
+14,Susan,Wilson,susan.wilson14@example.com,+1-555-529-4611,Atlanta,GA,30301,2023-02-26,VIP
+15,Joseph,Anderson,joseph.anderson15@example.com,+1-555-559-5557,Philadelphia,PA,,2023-03-01,VIP
+16,Jessica,Thomas,jessica.thomas16@example.com,+1-555-928-1106,San Francisco,CA,94101,2023-03-04,Premium
+17,Thomas,Taylor,thomas.taylor17@example.com,+1-555-877-3615,Portland,OR,97201,2023-03-07,Premium
+18,Sarah,Moore,sarah.moore18@example.com,+1-555-814-7924,san antonio,TX,78201,2023-03-10,Premium
+19,Charles,Jackson,charles.jackson19@example.com,+1-555-448-5552,Columbus,OH,43201,2023-03-13,Premium
+20,Karen,Martin,karen.martin20@example.com,+1-555-259-4527,New York,NY,10001,2023-03-16,Premium
+21,Christopher,Lee,christopher.lee21@example.com,+1-555-881-6514,San Diego,CA,92101,2023-03-19,Premium
+22,Nancy,Perez,nancy.perez22@example.com,+1-555-204-2519,Seattle,WA,98101,2023-03-22,Premium
+23,Daniel,Thompson,daniel.thompson23@example.com,+1-555-489-2584,Los Angeles,CA,90001,2023-03-25,Premium
+24,Lisa,White,lisa.white24@example.com,+1-555-467-6635,Dallas,tx,75201,2023-03-28,Premium
+25,Matthew,Harris,matthew.harris25@example.com,+1-555-718-5333,Denver,CO,80201,2023-03-31,Premium
+26,Betty,Sanchez,betty.sanchez26@example.com,+1-555-926-1711,Chicago,IL,60601,2023-04-03,Premium
+27,Anthony,Clark,anthony.clark27@example.com,+1-555-847-8527,San Jose,CA,95101,2023-04-06,Premium
+28,Margaret,Ramirez,margaret.ramirez28@example.com,,Boston,MA,02101,2023-04-09,Premium
+29,Mark,Lewis,mark.lewis29@example.com,+1-555-649-3045,Houston,TX,77001,2023-04-12,Premium
+30,Sandra,Robinson,sandra.robinson30@example.com,+1-555-487-2291,Austin,TX,78701,2023-04-15,Premium
+31,Donald,Walker,donald.walker31@example.com,+1-555-665-5803,Miami,FL,33101,2023-04-18,Premium
+32,Ashley,Young,ashley.young32@example.com,+1-555-949-6925,Phoenix,AZ,85001,2023-04-21,Premium
+33,Steven,Allen,steven.allen33@example.com,+1-555-691-4150,Jacksonville  ,FL,32099,2023-04-24,Premium
+34,Kimberly,King,kimberly.king34@example.com,+1-555-821-2139,Atlanta,GA,30301,2023-04-27,Premium
+35,Paul,Wright,paul.wright35@example.com,+1-555-146-4733,Philadelphia,PA,19101,2023-04-30,Premium
+36,Emily,Scott,emily.scott36@example.com,+1-555-891-5741,San Francisco,CA,94101,2023-05-03,Premium
+37,Andrew,Torres,andrew.torres37@example.com,+1-555-181-4814,Portland,OR,97201,2023-05-06,Premium
+38,Donna,Nguyen,donna.nguyen38@example.com,+1-555-987-2654,San Antonio,TX,,2023-05-09,Premium
+39,Joshua,Hill,joshua.hill39@example.com,+1-555-489-5554,Columbus,OH,43201,2023-05-12,Premium
+40,Michelle,Flores,michelle.flores40@example.com,+1-555-564-6977,New York,NY,10001,2023-05-15,Premium
+41,Kenneth,Green,kenneth.green41@example.com,+1-555-266-7065,San Diego,CA,92101,2023-05-18,Standard
+42,Carol,Adams,carol.adams42@example.com,+1-555-463-4432,Seattle,WA,98101,2023-05-21,Standard
+43,Kevin,Nelson,kevin.nelson43@example.com,+1-555-786-5374,Los Angeles,CA,90001,2023-05-24,Standard
+44,Amanda,Baker,amanda.baker44@example.com,+1-555-818-2169,Dallas,TX,75201,2023-05-27,Standard
+45,Brian,Hall,brian.hall45@example.com,,Denver,CO,80201,2023-05-30,Standard
+46,Melissa,Rivera,melissa.rivera46@example.com,+1-555-723-3803,Chicago,IL,60601,2023-06-02,Standard
+47,George,Campbell,george.campbell47@example.com,+1-555-646-5010,San Jose,CA,95101,2023-06-05,Standard
+48,Deborah,Mitchell,deborah.mitchell48@example.com,+1-555-267-8573,Boston,MA,02101,2023-06-08,Standard
+49,Edward,Carter,edward.carter49@example.com,+1-555-488-5422,Houston,tx,77001,2023-06-11,Standard
+50,Stephanie,Roberts,stephanie.roberts50@example.com,+1-555-755-4598,Austin,TX,78701,2023-06-14,Standard
+51,Ronald,Gomez,ronald.gomez51@example.com,+1-555-801-6313,Miami,FL,33101,2023-06-17,Standard
+52,Rebecca,Phillips,rebecca.phillips52@example.com,+1-555-963-1916, phoenix ,AZ,85001,2023-06-20,Standard
+53,Timothy,Evans,timothy.evans53@example.com,+1-555-334-1525,Jacksonville,FL,32099,2023-06-23,Standard
+54,Sharon,Turner,sharon.turner54@example.com,+1-555-924-6168,Atlanta,GA,30301,2023-06-26,Standard
+55,Jason,Diaz,jason.diaz55@example.com,+1-555-510-5386,Philadelphia,PA,19101,2023-06-29,Standard
+56,Laura,Parker,laura.parker56@example.com,+1-555-167-4456,San Francisco,CA,94101,2023-07-02,Standard
+57,Jeffrey,Cruz,jeffrey.cruz57@example.com,+1-555-680-6155,Portland,OR,97201,2023-07-05,Standard
+58,Cynthia,Edwards,cynthia.edwards58@example.com,+1-555-317-9179,San Antonio,TX,78201,2023-07-08,Standard
+59,Ryan,Collins,ryan.collins59@example.com,+1-555-505-8517,Columbus,OH,43201,2023-07-11,Standard
+60,Kathleen,Reyes,kathleen.reyes60@example.com,+1-555-246-5339,New York,NY,10001,2023-07-14,Standard
+61,Jacob,Stewart,jacob.stewart61@example.com,+1-555-242-5040,San Diego,CA,92101,2023-07-17,Standard
+62,Amy,Morris,amy.morris62@example.com,+1-555-862-9830,Seattle,WA,98101,2023-07-20,Standard
+63,Gary,Morales,gary.morales63@example.com,,Los Angeles,CA,90001,2023-07-23,Standard
+64,Shirley,Murphy,shirley.murphy64@example.com,+1-555-369-8019,Dallas,TX,75201,2023-07-26,Standard
+65,Nicholas,Cook,nicholas.cook65@example.com,+1-555-697-7543,Denver,CO,80201,2023-07-29,Standard
+66,Angela,Rogers,angela.rogers66@example.com,+1-555-470-4593,Chicago,IL,60601,2023-08-01,Standard
+67,Eric,Gutierrez,eric.gutierrez67@example.com,+1-555-241-9348,San Jose,CA,,2023-08-04,Standard
+68,Helen,Ortiz,helen.ortiz68@example.com,+1-555-605-2489,Boston,MA,02101,2023-08-07,Standard
+69,Jonathan,Morgan,jonathan.morgan69@example.com,+1-555-873-1771,Houston,TX,77001,2023-08-10,Standard
+70,Anna,Cooper,anna.cooper70@example.com,+1-555-981-2796,Austin,TX,78701,2023-08-13,Standard
+71,Stephen,Peterson,stephen.peterson71@example.com,+1-555-256-3621,MIAMI,FL,33101,2023-08-16,Standard
+72,Brenda,Bailey,brenda.bailey72@example.com,+1-555-911-7916,Phoenix,AZ,85001,2023-08-19,Standard
+73,Larry,Reed,larry.reed73@example.com,+1-555-710-2040,Jacksonville,FL,32099,2023-08-22,Standard
+74,Pamela,Kelly,pamela.kelly74@example.com,+1-555-494-7252,Atlanta,GA,30301,2023-08-25,Standard
+75,Justin,Howard,justin.howard75@example.com,+1-555-710-8668,Philadelphia,PA,19101,2023-08-28,Standard
+76,Nicole,Ramos,nicole.ramos76@example.com,+1-555-641-5119,San Francisco,CA,94101,2023-08-31,Standard
+77,Scott,Kim,scott.kim77@example.com,+1-555-666-1188,Portland,OR,97201,2023-09-03,Standard
+78,Emma,Cox,emma.cox78@example.com,+1-555-796-2876,San Antonio,TX,78201,2023-09-06,Standard
+79,Brandon,Ward,brandon.ward79@example.com,,Columbus,OH,43201,2023-09-09,Standard
+80,Samantha,Richardson,samantha.richardson80@example.com,+1-555-798-9797,New York,NY,10001,2023-09-12,Standard
+81,Benjamin,Watson,benjamin.watson81@example.com,+1-555-868-5371,San Diego,CA,92101,2023-09-15,Standard
+82,Katherine,Brooks,katherine.brooks82@example.com,+1-555-887-6573,Seattle,wa,98101,2023-09-18,Standard
+83,Samuel,Chavez,samuel.chavez83@example.com,+1-555-214-5808,Los Angeles,CA,90001,2023-09-21,Standard
+84,Christine,Wood,christine.wood84@example.com,+1-555-545-3591,Dallas,TX,75201,2023-09-24,Standard
+85,Gregory,Bennett,gregory.bennett85@example.com,+1-555-564-1053,Denver,CO,80201,2023-09-27,Enterprise
+86,Debra,Gray,debra.gray86@example.com,+1-555-839-5315,Chicago,IL,60601,2023-09-30,Enterprise
+87,Frank,Mendoza,frank.mendoza87@example.com,+1-555-612-3927,San Jose,CA,95101,2023-10-03,Enterprise
+88,Rachel,Ruiz,rachel.ruiz88@example.com,+1-555-619-2743,Boston,MA,,2023-10-06,Enterprise
+89,Alexander,Hughes,alexander.hughes89@example.com,+1-555-991-5889,Houston,TX,77001,2023-10-09,Enterprise
+90,Catherine,Price,catherine.price90@example.com,+1-555-961-9317,Austin,TX,78701,2023-10-12,Enterprise
+91,Raymond,Alvarez,raymond.alvarez91@example.com,+1-555-723-4258,Miami,FL,33101,2023-10-15,Enterprise
+92,Carolyn,Castillo,carolyn.castillo92@example.com,+1-555-256-7126,Phoenix,AZ,85001,2023-10-18,Enterprise
+93,Patrick,Sanders,patrick.sanders93@example.com,+1-555-880-3646,Jacksonville,FL,32099,2023-10-21,Enterprise
+94,Janet,Patel,janet.patel94@example.com,,Atlanta,GA,30301,2023-10-24,Enterprise
+95,Jack,Myers,jack.myers95@example.com,+1-555-652-9689,Philadelphia,PA,19101,2023-10-27,Enterprise
+96,Ruth,Long,ruth.long96@example.com,+1-555-100-6310,San Francisco,CA,94101,2023-10-30,Enterprise
+97,Dennis,Ross,dennis.ross97@example.com,+1-555-600-1319,Portland,OR,97201,2023-11-02,Enterprise
+98,Maria,Foster,maria.foster98@example.com,+1-555-214-6947,San Antonio,TX,78201,2023-11-05,Enterprise
+99,Jerry,Jimenez,jerry.jimenez99@example.com,+1-555-999-6038,Columbus,OH,43201,2023-11-08,Enterprise
+100,Heather,Powell,heather.powell100@example.com,+1-555-345-1949,New York,NY,10001,2023-11-11,Enterprise

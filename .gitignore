@@ -8,8 +8,12 @@ __pycache__/
 
 # Local databases & history
 *.db
+*.db-journal
+*.db-wal
+*.db-shm
 *.sqlite
 *.sqlite3
+!sample_data/retail_demo.sqlite
 
 # Data files (large, local-only)
 data/
@@ -17,11 +21,21 @@ data/
 # Generated files & exports
 logs/
 exports/
+temp_sessions/
+eval/reports/
 *.log
 
 # Archived legacy scripts
 archive/
 
-# OS files
+# OS and IDE files
 .DS_Store
 Thumbs.db
+.vscode/
+.pytest_cache/
+
+# Build & Packaging Distribution
+dist/
+build/
+installer/output/
+*.spec.bak

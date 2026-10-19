@@ -1,0 +1,41 @@
+product_id,product_name,category,price,cost,stock_quantity,status
+1,Wireless Noise-Cancelling Headphones,Electronics,199.99,85.00,150,Active
+2,Ultra-Slim Mechanical Keyboard,Electronics,89.99,38.00,85,Active
+3,Ergonomic Wireless Mouse, Electronics ,49.99,18.50,210,Active
+4,4K Ultra HD Webcam,Electronics,129.99,55.00,60,Active
+5,USB-C Multi-Port Hub,Electronics,39.99,14.00,320,Active
+6,Portable Bluetooth Speaker,Electronics,59.99,24.00,110,Active
+7,Smart Home Security Camera,Electronics,79.99,,95,Active
+8,Fast Wireless Charging Pad,Electronics,29.99,9.50,180,Active
+9,Gaming Monitor 27-inch,Electronics,299.99,140.00,45,Active
+10,Noise-Isolating Earbuds,Electronics,34.99,11.00,240,Active
+11,Dual Monitor Arm Mount,Electronics,69.99,26.00,75,Active
+12,Compact Power Bank 20000mAh,Electronics,44.99,16.50,160,Active
+13,Classic Organic Cotton T-Shirt,Apparel,24.99,7.50,400,Active
+14,Slim-Fit Denim Jeans,apparel,68.00,22.00,190,Active
+15,Lightweight Zip Hoodie,Apparel,54.99,19.00,130,Active
+16,Merino Wool Crewneck Sweater,Apparel,88.00,31.00,70,Active
+17,Waterproof Breathable Rain Jacket,Apparel,119.99,42.00,50,Active
+18,Casual Canvas Sneakers,Apparel,59.99,20.00,120,Active
+19,Leather Everyday Belt,Apparel,34.50,11.00,85,Active
+20,Polarized Sunglasses,Apparel,75.00,18.00,95,Active
+21,Athletic Running Shorts,Apparel,29.99,,210,Active
+22,Thermal Winter Beanie,Apparel,19.99,5.00,0,Backorder
+23,Stainless Steel Pour-Over Kettle,Home & Kitchen,42.50,16.00,115,Active
+24,Cast Iron Skillet 10-inch,Home & Kitchen,36.99,13.50,140,Active
+25,Double-Walled Travel Mug,Home & Kitchen  ,24.99,7.00,260,Active
+26,Chef's Knife 8-inch,Home & Kitchen,79.99,28.00,65,Active
+27,Non-Stick Baking Sheet Set,Home & Kitchen,32.00,11.00,90,Active
+28,Bamboo Cutting Board Trio,Home & Kitchen,27.99,9.00,180,Active
+29,Electric Milk Frother,Home & Kitchen,21.99,6.50,150,Active
+30,Cold Brew Coffee Maker,Home & Kitchen,29.99,10.00,80,Active
+31,Ceramic Dinner Plate Set,Home & Kitchen,58.00,21.00,40,Active
+32,Airtight Food Storage Containers,Home & Kitchen,38.50,14.00,175,Active
+33,Hardcover Dotted Journal,Office Supplies,16.99,4.50,310,Active
+34,Premium Rollerball Pen Set,Office Supplies,22.00,6.00,250,Active
+35,Adjustable Aluminum Laptop Stand,Office Supplies,39.99,13.00,105,Active
+36,Desk Mat Blotter Leatherette,Office Supplies,26.99,,145,Active
+37,Ergonomic Memory Foam Cushion,Office Supplies,34.99,12.00,90,Active
+38,Cable Management Organizer Box,Office Supplies,18.99,5.50,200,Active
+39,Minimalist LED Desk Lamp,Office Supplies,48.00,17.00,70,Active
+40,Water-Resistant Commuter Backpack,Office Supplies,89.99,32.00,85,Discontinued
