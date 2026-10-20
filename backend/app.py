@@ -156,7 +156,16 @@ async def security_and_rate_limit_middleware(request: Request, call_next):
     # Cache control: Ensure Service Worker, App Shell, CSS, and JS assets are never held stale in HTTP cache
     path = request.url.path
     if (
-        path in ["/", "/index.html", "/sw.js", "/manifest.json"]
+        path in [
+            "/",
+            "/index.html",
+            "/sw.js",
+            "/manifest.json",
+            "/studio",
+            "/studio/",
+            "/site/demo/studio",
+            "/site/demo/studio/",
+        ]
         or path.startswith("/css/")
         or path.startswith("/js/")
     ):
@@ -190,19 +199,40 @@ FRONTEND_DIR = get_frontend_dir()
 
 
 
-@app.get("/", summary="Root Welcome & Service Metadata")
+@app.get("/studio", summary="DataVerse Web Studio Application Shell")
+@app.get("/studio/", summary="DataVerse Web Studio Application Shell")
+@app.get("/site/demo/studio", summary="DataVerse Web Studio Application Shell (Demo)")
+@app.get("/site/demo/studio/", summary="DataVerse Web Studio Application Shell (Demo)")
+def studio_shell(request: Request):
+    """
+    Returns the Web Studio application shell (index.html).
+    """
+    index_file = FRONTEND_DIR / "index.html"
+    if index_file.exists():
+        return FileResponse(
+            str(index_file),
+            headers={
+                "Cache-Control": "no-cache, no-store, must-revalidate",
+                "Pragma": "no-cache",
+                "Expires": "0"
+            }
+        )
+    return JSONResponse(status_code=404, content={"detail": "Studio frontend not found"})
+
+
+@app.get("/", summary="Root Welcome & Marketing Landing")
 def root_info(request: Request):
     """
-    Returns index.html when accessed via browser (Accept: text/html),
+    Returns marketing website (site/index.html) when accessed via browser (Accept: text/html),
     or baseline service metadata JSON when accessed via API/TestClient.
     """
     accept = request.headers.get("accept", "")
     sec_dest = request.headers.get("sec-fetch-dest", "")
     if ("text/html" in accept or sec_dest in ["document", "iframe"]) and FRONTEND_DIR.exists():
-        index_file = FRONTEND_DIR / "index.html"
-        if index_file.exists():
+        site_index = FRONTEND_DIR / "site" / "index.html"
+        if site_index.exists():
             return FileResponse(
-                str(index_file),
+                str(site_index),
                 headers={
                     "Cache-Control": "no-cache, no-store, must-revalidate",
                     "Pragma": "no-cache",

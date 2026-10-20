@@ -12,14 +12,40 @@ def client():
     return TestClient(app)
 
 
-def test_root_serves_html_for_browser(client):
-    """When a browser requests '/', text/html should be served containing the app shell."""
+def test_root_serves_marketing_html_for_browser(client):
+    """When a browser requests '/', text/html should be served containing the marketing landing page."""
     res = client.get("/", headers={"Accept": "text/html,application/xhtml+xml"})
+    assert res.status_code == 200
+    assert "text/html" in res.headers["content-type"]
+    assert "DataVerse" in res.text
+    assert "Ask your data in plain English" in res.text
+    assert '<div id="app-container">' not in res.text
+
+
+def test_studio_serves_app_shell_for_browser(client):
+    """When a browser requests '/studio/', text/html should be served containing the Web Studio app shell."""
+    res = client.get("/studio/", headers={"Accept": "text/html,application/xhtml+xml"})
     assert res.status_code == 200
     assert "text/html" in res.headers["content-type"]
     assert "DataVerse" in res.text
     assert '<div id="app-container">' in res.text
     assert '<script type="module" src="/js/app.js">' in res.text
+    # Website reciprocal link must open / in the same tab (no target="_blank")
+    website_line = [line for line in res.text.splitlines() if 'id="btn-product-site"' in line][0]
+    assert 'href="/"' in website_line
+    assert 'target="_blank"' not in website_line
+
+
+def test_nested_demo_studio_serves_app_shell_for_browser(client):
+    """When a browser requests '/site/demo/studio/' or '/site/demo/studio', text/html should be served containing the Web Studio app shell."""
+    for path in ["/site/demo/studio/", "/site/demo/studio"]:
+        res = client.get(path, headers={"Accept": "text/html,application/xhtml+xml"})
+        assert res.status_code == 200
+        assert "text/html" in res.headers["content-type"]
+        assert "DataVerse" in res.text
+        assert '<div id="app-container">' in res.text
+        assert '<script type="module" src="/js/app.js">' in res.text
+        assert res.headers.get("cache-control") == "no-cache, no-store, must-revalidate"
 
 
 def test_root_serves_json_for_api_clients(client):

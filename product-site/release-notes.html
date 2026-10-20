@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Release Notes &amp; Roadmap — DataVerse v1.0.0</title>
+  <meta name="description" content="Official release notes for DataVerse v1.0.0: key capabilities, verified installer checksum, 55-case semantic benchmark results, and upcoming product roadmap." />
+  <meta name="google-site-verification" content="N_0YgkrZaG-GsiVOXh9qH1raQb7GiT2dQWYxhd4t444" />
+  <link rel="canonical" href="https://dataverse-studio.netlify.app/release-notes.html" />
+
+  <!-- OpenGraph / Social Cards -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://dataverse-studio.netlify.app/release-notes.html" />
+  <meta property="og:title" content="DataVerse v1.0.0 Release Notes" />
+  <meta property="og:description" content="Explore v1.0.0 features, verified checksums, benchmark results, and the roadmap." />
+  <meta property="og:image" content="https://dataverse-studio.netlify.app/icons/icon-512.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="icons/favicon.svg" />
+  <link rel="icon" type="image/x-icon" href="icons/dataverse.ico" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+
+  <!-- Google Analytics Module -->
+  <script type="module" src="js/analytics.js"></script>
+</head>
+<body>
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+  <!-- Global Header -->
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="brand-link" title="DataVerse Home">
+        <img src="icons/dataverse_logo.svg" alt="DataVerse Logo" class="brand-logo-img" width="32" height="32" />
+        <span>DataVerse</span>
+      </a>
+
+      <nav class="site-nav" aria-label="Main Navigation">
+        <a href="index.html">Overview</a>
+        <a href="features.html">Features</a>
+        <a href="demo.html">Interactive Demo</a>
+        <a href="download.html">Download</a>
+        <a href="docs.html">Documentation</a>
+        <a href="faq.html">FAQ</a>
+        <a href="support.html">Support</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="demo.html" class="btn btn-primary btn-sm" data-track="demo-launch" data-track-source="nav-header">
+          <span>Try Demo</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </a>
+        <button type="button" class="menu-toggle" aria-label="Toggle Navigation Menu" aria-expanded="false">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main id="main-content">
+
+    <section class="section" style="padding-top: 50px; padding-bottom: 40px;">
+      <div class="container" style="max-width: 860px;">
+        <div class="section-header">
+          <div class="eyebrow">Production Milestone</div>
+          <h1>DataVerse <span class="gradient-text">v1.0.0 Release Notes</span></h1>
+          <p>
+            Official general-availability release of DataVerse — the natural-language data intelligence platform with zero-bypass SQL safety, proactive clarification, conversational cleaning, and dual-form factor deployment.
+          </p>
+        </div>
+
+        <!-- Release Metadata Card -->
+        <div class="card" style="background: linear-gradient(135deg, rgba(0, 245, 255, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%); border: 1px solid rgba(0, 245, 255, 0.25); padding: 28px 24px; border-radius: var(--radius-lg); margin-bottom: 36px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 20px;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <span class="badge badge-cyan" style="font-size: 0.875rem; padding: 6px 14px;">v1.0.0</span>
+              <span class="badge badge-green">Production Stable</span>
+              <span style="font-size: 0.8125rem; color: var(--text-muted);">Annotated Git Tag: <code>v1.0.0</code></span>
+            </div>
+            <a href="https://github.com/shaik-irfan-basha/DataVerse/releases/tag/v1.0.0" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+              <span>GitHub Release Page</span>
+            </a>
+          </div>
+
+          <!-- Installer Artifact Verification Details -->
+          <div style="background: #090d16; padding: 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); display: flex; flex-direction: column; gap: 8px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+              <span style="font-size: 0.8125rem; font-weight: 700; color: var(--text-primary);">Installer Asset: <code>DataVerse_Setup_v1.0.exe</code></span>
+              <span style="font-size: 0.8125rem; color: var(--accent-cyan); font-family: var(--font-mono);">Windows x64 Standalone</span>
+            </div>
+            <div style="font-size: 0.75rem; color: var(--accent-cyan); font-family: var(--font-mono); word-break: break-all;">
+              SHA-256: 61B41EA7B62CDBBDF1E70839D93A57D316175984888BBED710BF106858A5BBC7
+            </div>
+          </div>
+        </div>
+
+        <!-- Highlights & Changelog -->
+        <div class="card" style="margin-bottom: 36px; background: #0c1220; border: 1px solid var(--border-subtle); padding: 32px;">
+          <h2 style="font-size: 1.375rem; margin-bottom: 20px;">What's New in v1.0.0</h2>
+
+          <div style="display: flex; flex-direction: column; gap: 24px;">
+            <div>
+              <h3 style="font-size: 1.0625rem; color: var(--accent-cyan); margin-bottom: 6px;">Zero-Bypass Dual-Tier SQL Security</h3>
+              <p style="font-size: 0.875rem; color: var(--text-secondary); margin: 0;">
+                Engineered two independent security layers: SQLGlot AST validation enforcing 12 AST safety rules, and native C-level <code>sqlite3_set_authorizer</code> hooks blocking any DDL, DML, or PRAGMA commands at the database driver layer. 100% read-only invariant verified across test suites.
+              </p>
+            </div>
+
+            <div>
+              <h3 style="font-size: 1.0625rem; color: var(--warning); margin-bottom: 6px;">Clarification Engine for Subjective Queries</h3>
+              <p style="font-size: 0.875rem; color: var(--text-secondary); margin: 0;">
+                Queries with ambiguous or ungrounded phrasing (such as "Show me the good products") no longer trigger random guesses. The Clarification Engine calculates semantic confidence and surfaces schema-grounded choices before execution.
+              </p>
+            </div>
+
+            <div>
+              <h3 style="font-size: 1.0625rem; color: var(--success); margin-bottom: 6px;">Self-Healing SQL Error Recovery</h3>
+              <p style="font-size: 0.875rem; color: var(--text-secondary); margin: 0;">
+                Introduced an iterative 2-pass feedback loop. When SQLite throws syntax or schema exceptions, the engine captures the exact SQLite error message and schema definitions to re-generate an accurate statement automatically.
+              </p>
+            </div>
+
+            <div>
+              <h3 style="font-size: 1.0625rem; color: var(--accent-purple); margin-bottom: 6px;">Conversational Data Cleaning Studio</h3>
+              <p style="font-size: 0.875rem; color: var(--text-secondary); margin: 0;">
+                Transform, impute, deduplicate, and sanitize dirty tabular records using conversational commands with instant visual before/after diffs and one-click undo rollback.
+              </p>
+            </div>
+
+            <div>
+              <h3 style="font-size: 1.0625rem; color: var(--text-primary); margin-bottom: 6px;">Dual-Form Factor Deployment (Air-Gapped &amp; Web)</h3>
+              <p style="font-size: 0.875rem; color: var(--text-secondary); margin: 0;">
+                Packaged as a standalone Inno Setup Windows installer (<code>DataVerse_Setup_v1.0.exe</code>) with embedded Python runtime and WebView2 desktop window, alongside our public Netlify + Render cloud PWA.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Benchmark Summary -->
+        <div class="card" style="margin-bottom: 36px;">
+          <h2 style="font-size: 1.25rem; margin-bottom: 12px;">Verified Semantic Evaluation Benchmark Performance</h2>
+          <p style="color: var(--text-secondary); font-size: 0.875rem; margin-bottom: 16px;">
+            Audited against Groq (<code>openai/gpt-oss-20b</code>) across 55 real-world logistics evaluation cases (JSON trace artifact: <code>eval/reports/benchmark_20261014_180323.json</code>):
+          </p>
+          <div class="grid grid-3" style="text-align: center;">
+            <div style="background: #111827; padding: 18px; border-radius: var(--radius-sm);">
+              <div style="font-size: 1.75rem; font-weight: 800; color: var(--accent-cyan); font-family: var(--font-mono);">82.9%</div>
+              <div style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 4px;">Semantic Result Equivalence (29/35)</div>
+            </div>
+            <div style="background: #111827; padding: 18px; border-radius: var(--radius-sm);">
+              <div style="font-size: 1.75rem; font-weight: 800; color: var(--success); font-family: var(--font-mono);">94.3%</div>
+              <div style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 4px;">Execution Success Rate (33/35)</div>
+            </div>
+            <div style="background: #111827; padding: 18px; border-radius: var(--radius-sm);">
+              <div style="font-size: 1.75rem; font-weight: 800; color: var(--accent-purple); font-family: var(--font-mono);">1.42s</div>
+              <div style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 4px;">Median Latency (p50)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Roadmap -->
+        <div class="card" style="background: #0f172a; border: 1px solid var(--border-subtle); margin-bottom: 40px;">
+          <div class="eyebrow" style="color: var(--accent-purple);">What's Next</div>
+          <h2 style="font-size: 1.25rem; margin-bottom: 16px;">Upcoming Roadmap</h2>
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div style="display: flex; gap: 12px; align-items: flex-start;">
+              <span class="badge badge-purple" style="white-space: nowrap;">v1.1.0</span>
+              <div style="font-size: 0.875rem; color: var(--text-secondary);">
+                <strong style="color: var(--text-primary);">Remote Database Connectors:</strong> Direct connection strings for remote PostgreSQL, MySQL, and Snowflake instances.
+              </div>
+            </div>
+            <div style="display: flex; gap: 12px; align-items: flex-start;">
+              <span class="badge badge-cyan" style="white-space: nowrap;">v1.1.0</span>
+              <div style="font-size: 0.875rem; color: var(--text-secondary);">
+                <strong style="color: var(--text-primary);">DuckDB Engine:</strong> Native vectorized OLAP engine for querying millions of Parquet rows in milliseconds.
+              </div>
+            </div>
+            <div style="display: flex; gap: 12px; align-items: flex-start;">
+              <span class="badge badge-amber" style="white-space: nowrap;">v1.2.0</span>
+              <div style="font-size: 0.875rem; color: var(--text-secondary);">
+                <strong style="color: var(--text-primary);">Executive PDF Reports:</strong> Export complete conversational query histories, charts, and summary statistics to print-ready PDF reports.
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <img src="icons/dataverse_logo.svg" alt="DataVerse Logo" width="28" height="28" />
+            <span style="font-weight: 700; color: #fff; font-size: 1.125rem;">DataVerse</span>
+          </div>
+          <p>Enterprise natural-language data intelligence platform with zero-bypass SQL security, self-healing recovery, and conversational data preparation.</p>
+          <div style="display: flex; gap: 12px; margin-top: 16px;">
+            <a href="https://github.com/shaik-irfan-basha/DataVerse" target="_blank" rel="noopener noreferrer" title="GitHub Repository" style="color: var(--text-muted);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="features.html">Features</a></li>
+            <li><a href="demo.html">Interactive Demo</a></li>
+            <li><a href="download.html">Download Desktop</a></li>
+            <li><a href="release-notes.html">Release Notes</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="docs.html">Documentation</a></li>
+            <li><a href="docs.html#getting-started">Getting Started</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="https://github.com/shaik-irfan-basha/DataVerse" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Support &amp; Trust</h4>
+          <ul>
+            <li><a href="support.html">Contact &amp; Support</a></li>
+            <li><a href="support.html?type=bug">Report a Bug</a></li>
+            <li><a href="privacy.html">Privacy &amp; Data Trust</a></li>
+            <li><a href="docs.html#troubleshooting">Troubleshooting</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 DataVerse. Open-source under MIT License.</div>
+        <div class="footer-bottom-links">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="release-notes.html">v1.0.0 Release</a>
+          <a href="support.html">Formspree Support</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Documentation &amp; User Guide — DataVerse</title>
+  <meta name="description" content="Comprehensive documentation for DataVerse: data ingestion, natural-language querying, ambiguity clarification, data cleaning studio, ER canvas, and troubleshooting." />
+  <meta name="google-site-verification" content="N_0YgkrZaG-GsiVOXh9qH1raQb7GiT2dQWYxhd4t444" />
+  <link rel="canonical" href="https://dataverse-studio.netlify.app/docs.html" />
+
+  <!-- OpenGraph / Social Cards -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://dataverse-studio.netlify.app/docs.html" />
+  <meta property="og:title" content="DataVerse Documentation &amp; User Guide" />
+  <meta property="og:description" content="Learn how to ingest data, formulate queries, resolve ambiguities, clean datasets, and troubleshoot." />
+  <meta property="og:image" content="https://dataverse-studio.netlify.app/icons/icon-512.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="icons/favicon.svg" />
+  <link rel="icon" type="image/x-icon" href="icons/dataverse.ico" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+
+  <!-- Google Analytics Module -->
+  <script type="module" src="js/analytics.js"></script>
+</head>
+<body>
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+  <!-- Global Header -->
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="brand-link" title="DataVerse Home">
+        <img src="icons/dataverse_logo.svg" alt="DataVerse Logo" class="brand-logo-img" width="32" height="32" />
+        <span>DataVerse</span>
+      </a>
+
+      <nav class="site-nav" aria-label="Main Navigation">
+        <a href="index.html">Overview</a>
+        <a href="features.html">Features</a>
+        <a href="demo.html">Interactive Demo</a>
+        <a href="download.html">Download</a>
+        <a href="docs.html" class="active">Documentation</a>
+        <a href="faq.html">FAQ</a>
+        <a href="support.html">Support</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="demo.html" class="btn btn-primary btn-sm" data-track="demo-launch" data-track-source="nav-header">
+          <span>Try Demo</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </a>
+        <button type="button" class="menu-toggle" aria-label="Toggle Navigation Menu" aria-expanded="false">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main id="main-content">
+
+    <section class="section" style="padding-top: 50px; padding-bottom: 30px;">
+      <div class="container">
+        <div class="section-header" style="max-width: 820px;">
+          <div class="eyebrow">User Guide &amp; Technical Reference</div>
+          <h1>DataVerse <span class="gradient-text">Documentation</span></h1>
+          <p>
+            Everything you need to master DataVerse: from your first dataset ingestion to conversational cleaning workflows, schema relationship exploration, and troubleshooting.
+          </p>
+        </div>
+
+        <!-- Documentation Layout: Sidebar + Content -->
+        <div style="display: grid; grid-template-columns: 240px 1fr; gap: 40px; align-items: start;">
+
+          <!-- Sticky Docs Navigation -->
+          <aside style="position: sticky; top: 90px; background: #0c1220; border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 18px 14px;">
+            <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--accent-cyan); letter-spacing: 0.05em; margin-bottom: 12px; padding-left: 8px;">
+              Contents
+            </div>
+            <nav style="display: flex; flex-direction: column; gap: 4px; font-size: 0.875rem;">
+              <a href="#getting-started" style="padding: 6px 10px; border-radius: 4px; color: var(--text-secondary); text-decoration: none;">1. Getting Started</a>
+              <a href="#ingestion" style="padding: 6px 10px; border-radius: 4px; color: var(--text-secondary); text-decoration: none;">2. Data Ingestion</a>
+              <a href="#querying" style="padding: 6px 10px; border-radius: 4px; color: var(--text-secondary); text-decoration: none;">3. Natural Language Querying</a>
+              <a href="#clarification" style="padding: 6px 10px; border-radius: 4px; color: var(--text-secondary); text-decoration: none;">4. Clarification Engine</a>
+              <a href="#cleaning" style="padding: 6px 10px; border-radius: 4px; color: var(--text-secondary); text-decoration: none;">5. Conversational Cleaning</a>
+              <a href="#schema" style="padding: 6px 10px; border-radius: 4px; color: var(--text-secondary); text-decoration: none;">6. ER Canvas &amp; Schemas</a>
+              <a href="#profiler" style="padding: 6px 10px; border-radius: 4px; color: var(--text-secondary); text-decoration: none;">7. Profiling &amp; Quality</a>
+              <a href="#troubleshooting" style="padding: 6px 10px; border-radius: 4px; color: var(--text-secondary); text-decoration: none;">8. Troubleshooting</a>
+            </nav>
+          </aside>
+
+          <!-- Docs Main Articles -->
+          <div style="display: flex; flex-direction: column; gap: 40px;">
+
+            <!-- 1. Getting Started -->
+            <section id="getting-started" class="card">
+              <span class="badge badge-cyan" style="margin-bottom: 10px;">Quickstart</span>
+              <h2 style="font-size: 1.5rem; margin-bottom: 12px;">1. Getting Started in 3 Minutes</h2>
+              <p style="color: var(--text-secondary); margin-bottom: 16px;">
+                Whether you use the web studio or the Windows desktop application, the fundamental lifecycle consists of three steps:
+              </p>
+              <ol style="padding-left: 20px; color: var(--text-secondary); display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px;">
+                <li><strong>Ingest your data:</strong> Drag-and-drop a CSV file, an Excel workbook (<code>.xlsx</code>), or a SQLite database (<code>.db</code> / <code>.sqlite</code>). You can also click <em>"Load Sample Data"</em> to evaluate immediately.</li>
+                <li><strong>Inspect the schema:</strong> Review detected columns, sample records, and inferred relationships in the Schema panel.</li>
+                <li><strong>Ask a question:</strong> Type your question in plain English in the query input and press <kbd>Enter</kbd>.</li>
+              </ol>
+            </section>
+
+            <!-- 2. Data Ingestion -->
+            <section id="ingestion" class="card">
+              <span class="badge badge-purple" style="margin-bottom: 10px;">Storage &amp; Parsing</span>
+              <h2 style="font-size: 1.5rem; margin-bottom: 12px;">2. Data Ingestion Formats &amp; Limits</h2>
+              <p style="color: var(--text-secondary); margin-bottom: 16px;">
+                DataVerse includes native streaming loaders that sanitize column identifiers, detect date/numeric types, and index primary keys automatically:
+              </p>
+              <ul style="padding-left: 20px; color: var(--text-secondary); display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;">
+                <li><strong>CSV / TSV (Comma / Tab Separated):</strong> Automatically detects delimiters, header rows, and null string representations (<code>NA</code>, <code>null</code>, <code>-</code>).</li>
+                <li><strong>Excel (.xlsx, .xls):</strong> Extracts individual worksheets and creates discrete relational tables for each sheet.</li>
+                <li><strong>SQLite Database Files:</strong> Preserves existing schema constraints, composite indexes, and foreign key definitions.</li>
+              </ul>
+              <div style="background: rgba(0, 245, 255, 0.05); border-left: 3px solid var(--accent-cyan); padding: 12px 16px; border-radius: 4px; font-size: 0.875rem; color: var(--text-primary);">
+                <strong>Scale Recommendation:</strong> The desktop edition comfortably processes datasets up to 1,000,000 rows locally. In the cloud web studio, sessions are capped at 50 MB uploads to ensure fast browser response times.
+              </div>
+            </section>
+
+            <!-- 3. Querying -->
+            <section id="querying" class="card">
+              <span class="badge badge-cyan" style="margin-bottom: 10px;">Query Formulation</span>
+              <h2 style="font-size: 1.5rem; margin-bottom: 12px;">3. Natural Language Querying Tips</h2>
+              <p style="color: var(--text-secondary); margin-bottom: 16px;">
+                The Natural Language Engine understands synonyms, relative dates, aggregations, and business metrics without needing strict SQL terminology:
+              </p>
+              <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px;">
+                <div style="background: #111827; padding: 12px 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+                  <div style="font-size: 0.8125rem; font-weight: 700; color: var(--accent-cyan); margin-bottom: 4px;">Aggregations &amp; Summaries</div>
+                  <div style="font-size: 0.875rem; color: var(--text-primary); margin-bottom: 4px;">"What is the average transaction amount for each payment method in Q3?"</div>
+                  <div style="font-size: 0.75rem; color: var(--text-muted);">Generates <code>AVG(amount)</code> grouped by payment method with date interval filtering.</div>
+                </div>
+                <div style="background: #111827; padding: 12px 16px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+                  <div style="font-size: 0.8125rem; font-weight: 700; color: var(--accent-purple); margin-bottom: 4px;">Multi-Table Joins</div>
+                  <div style="font-size: 0.875rem; color: var(--text-primary); margin-bottom: 4px;">"List the top 10 customers by total spend who registered after January 2024"</div>
+                  <div style="font-size: 0.75rem; color: var(--text-muted);">Automatically joins <code>customers</code> with <code>orders</code> on primary/foreign key pairs.</div>
+                </div>
+              </div>
+            </section>
+
+            <!-- 4. Clarification Engine -->
+            <section id="clarification" class="card">
+              <span class="badge badge-amber" style="margin-bottom: 10px;">Ambiguity Resolution</span>
+              <h2 style="font-size: 1.5rem; margin-bottom: 12px;">4. Proactive Ambiguity Clarification</h2>
+              <p style="color: var(--text-secondary); margin-bottom: 16px;">
+                When a query contains subjective adjectives without measurable criteria (e.g. <em>"good products"</em>, <em>"valuable accounts"</em>, <em>"slow orders"</em>), DataVerse does not guess. It computes an ambiguity score and presents schema-grounded interpretations:
+              </p>
+              <div style="background: #090d16; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 16px; margin-bottom: 16px;">
+                <div style="color: var(--warning); font-size: 0.875rem; font-weight: 600; margin-bottom: 8px;">Ambiguity Card Displayed:</div>
+                <div style="color: var(--text-muted); font-size: 0.8125rem; margin-bottom: 12px;">"Good products" does not specify a quantifiable metric. Please select your intended goal:</div>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                  <button type="button" class="btn btn-secondary btn-sm" style="text-align: left; justify-content: flex-start;">1. Highest total sales volume by product</button>
+                  <button type="button" class="btn btn-secondary btn-sm" style="text-align: left; justify-content: flex-start;">2. Highest average customer rating by product</button>
+                  <button type="button" class="btn btn-secondary btn-sm" style="text-align: left; justify-content: flex-start;">3. Products with lowest return rate</button>
+                </div>
+              </div>
+              <p style="font-size: 0.875rem; color: var(--text-secondary); margin: 0;">
+                Clicking an option immediately binds that interpretation to the query pipeline, executing the exact SQL matching your decision without starting over.
+              </p>
+            </section>
+
+            <!-- 5. Conversational Cleaning -->
+            <section id="cleaning" class="card">
+              <span class="badge badge-green" style="margin-bottom: 10px;">Data Preparation</span>
+              <h2 style="font-size: 1.5rem; margin-bottom: 12px;">5. Conversational Cleaning Studio</h2>
+              <p style="color: var(--text-secondary); margin-bottom: 16px;">
+                Dirty data causes inaccurate SQL aggregations. Switch to the <strong>Cleaning Studio</strong> tab to perform live transformations using plain English:
+              </p>
+              <ul style="padding-left: 20px; color: var(--text-secondary); display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px;">
+                <li><code>"Trim whitespace in customer names and title-case them"</code></li>
+                <li><code>"Fill empty country codes with 'US'"</code></li>
+                <li><code>"Remove duplicate records based on email and phone"</code></li>
+                <li><code>"Parse dates in 'order_date' column to standard ISO YYYY-MM-DD"</code></li>
+              </ul>
+              <p style="font-size: 0.875rem; color: var(--text-secondary); margin: 0;">
+                Every transformation generates an interactive side-by-side diff. You can review the exact affected rows before accepting, and click <em>Undo</em> at any time to revert immediately.
+              </p>
+            </section>
+
+            <!-- 6. Schema ER Canvas -->
+            <section id="schema" class="card">
+              <span class="badge badge-purple" style="margin-bottom: 10px;">Relational Modeling</span>
+              <h2 style="font-size: 1.5rem; margin-bottom: 12px;">6. Interactive ER Canvas &amp; Schemas</h2>
+              <p style="color: var(--text-secondary); margin-bottom: 16px;">
+                DataVerse reconstructs relational graphs dynamically upon ingestion. On the <strong>Schema Canvas</strong> tab, you can:
+              </p>
+              <ul style="padding-left: 20px; color: var(--text-secondary); display: flex; flex-direction: column; gap: 8px; margin: 0;">
+                <li>Inspect tables as interactive cards displaying column names and inferred SQLite data types.</li>
+                <li>Trace connecting foreign-key lines showing parent-child relationships and join cardinalities.</li>
+                <li>Click any column to see value distribution hints and null percentages.</li>
+              </ul>
+            </section>
+
+            <!-- 7. Profiler -->
+            <section id="profiler" class="card">
+              <span class="badge badge-cyan" style="margin-bottom: 10px;">Quality &amp; Diagnostics</span>
+              <h2 style="font-size: 1.5rem; margin-bottom: 12px;">7. Profiling &amp; Anomaly Diagnostics</h2>
+              <p style="color: var(--text-secondary); margin-bottom: 16px;">
+                The <strong>Data Profiler</strong> audits your active dataset for structural defects:
+              </p>
+              <ul style="padding-left: 20px; color: var(--text-secondary); display: flex; flex-direction: column; gap: 8px; margin: 0;">
+                <li><strong>Null Rate Alerts:</strong> Columns with &gt; 15% missing data are flagged with warning badges.</li>
+                <li><strong>Cardinality Metrics:</strong> Identifies potential primary key candidates (100% uniqueness).</li>
+                <li><strong>Type Drift Warnings:</strong> Detects numeric columns contaminated with string values (e.g. <code>"N/A"</code>).</li>
+              </ul>
+            </section>
+
+            <!-- 8. Troubleshooting -->
+            <section id="troubleshooting" class="card">
+              <span class="badge badge-amber" style="margin-bottom: 10px;">Support &amp; Fixes</span>
+              <h2 style="font-size: 1.5rem; margin-bottom: 12px;">8. Troubleshooting &amp; Known Issues</h2>
+
+              <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 16px;">
+                <div>
+                  <h4 style="font-size: 1rem; color: var(--text-primary); margin-bottom: 4px;">Port 8000 already in use (Desktop Edition)</h4>
+                  <p style="font-size: 0.875rem; color: var(--text-secondary); margin: 0;">
+                    DataVerse automatically searches for an available alternate port (8001, 8002...) if 8000 is occupied by another local service. Check the desktop console log for the active assigned port.
+                  </p>
+                </div>
+
+                <div>
+                  <h4 style="font-size: 1rem; color: var(--text-primary); margin-bottom: 4px;">Microsoft Edge WebView2 Missing</h4>
+                  <p style="font-size: 0.875rem; color: var(--text-secondary); margin: 0;">
+                    Windows 10 and 11 usually have the Evergreen WebView2 runtime installed by default. If your Windows edition does not have it, download the free official WebView2 runtime from Microsoft's website.
+                  </p>
+                </div>
+
+                <div>
+                  <h4 style="font-size: 1rem; color: var(--text-primary); margin-bottom: 4px;">Query Timeout on Massive Databases</h4>
+                  <p style="font-size: 0.875rem; color: var(--text-secondary); margin: 0;">
+                    To protect application responsiveness, queries that exceed 15 seconds are halted automatically. Ensure the target columns in your join or filter clauses are indexed for peak performance.
+                  </p>
+                </div>
+              </div>
+            </section>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <img src="icons/dataverse_logo.svg" alt="DataVerse Logo" width="28" height="28" />
+            <span style="font-weight: 700; color: #fff; font-size: 1.125rem;">DataVerse</span>
+          </div>
+          <p>Enterprise natural-language data intelligence platform with zero-bypass SQL security, self-healing recovery, and conversational data preparation.</p>
+          <div style="display: flex; gap: 12px; margin-top: 16px;">
+            <a href="https://github.com/shaik-irfan-basha/DataVerse" target="_blank" rel="noopener noreferrer" title="GitHub Repository" style="color: var(--text-muted);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="features.html">Features</a></li>
+            <li><a href="demo.html">Interactive Demo</a></li>
+            <li><a href="download.html">Download Desktop</a></li>
+            <li><a href="release-notes.html">Release Notes</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="docs.html">Documentation</a></li>
+            <li><a href="docs.html#getting-started">Getting Started</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="https://github.com/shaik-irfan-basha/DataVerse" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Support &amp; Trust</h4>
+          <ul>
+            <li><a href="support.html">Contact &amp; Support</a></li>
+            <li><a href="support.html?type=bug">Report a Bug</a></li>
+            <li><a href="privacy.html">Privacy &amp; Data Trust</a></li>
+            <li><a href="docs.html#troubleshooting">Troubleshooting</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 DataVerse. Open-source under MIT License.</div>
+        <div class="footer-bottom-links">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="release-notes.html">v1.0.0 Release</a>
+          <a href="support.html">Formspree Support</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

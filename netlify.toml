@@ -1,5 +1,5 @@
 # =============================================================================
-# Netlify Configuration - DataVerse Web Studio
+# Netlify Configuration - DataVerse Platform & Web Studio
 # =============================================================================
 
 [build]
@@ -7,7 +7,7 @@
   publish = "frontend"
 
 # -----------------------------------------------------------------------------
-# API Gateway Proxy to Render Live Backend
+# 1. API Gateway Proxy to Render Live Backend
 #
 # Proxies all /api/v1/* requests from Netlify to the live Render FastAPI backend,
 # ensuring same-origin execution in the browser with zero CORS latency and
@@ -16,5 +16,44 @@
 [[redirects]]
   from = "/api/v1/*"
   to = "https://dataverse-bphf.onrender.com/api/v1/:splat"
+  status = 200
+  force = true
+
+# -----------------------------------------------------------------------------
+# 2. Nested Web Studio Route (/site/demo/studio -> frontend/index.html)
+# -----------------------------------------------------------------------------
+[[redirects]]
+  from = "/site/demo/studio"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/site/demo/studio/*"
+  to = "/index.html"
+  status = 200
+  force = true
+
+# -----------------------------------------------------------------------------
+# 3. Web Studio Application Shell Route (/studio -> frontend/index.html)
+# -----------------------------------------------------------------------------
+[[redirects]]
+  from = "/studio"
+  to = "/index.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/studio/*"
+  to = "/index.html"
+  status = 200
+  force = true
+
+# -----------------------------------------------------------------------------
+# 4. Marketing Website Default Landing Route (/ -> frontend/site/index.html)
+# -----------------------------------------------------------------------------
+[[redirects]]
+  from = "/"
+  to = "/site/index.html"
   status = 200
   force = true

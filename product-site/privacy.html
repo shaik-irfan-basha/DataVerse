@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy &amp; Data Trust — DataVerse</title>
+  <meta name="description" content="DataVerse's transparent privacy disclosures: 100% offline air-gapped desktop privacy, ephemeral cloud sessions, zero telemetry, and security invariants." />
+  <meta name="google-site-verification" content="N_0YgkrZaG-GsiVOXh9qH1raQb7GiT2dQWYxhd4t444" />
+  <link rel="canonical" href="https://dataverse-studio.netlify.app/privacy.html" />
+
+  <!-- OpenGraph / Social Cards -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://dataverse-studio.netlify.app/privacy.html" />
+  <meta property="og:title" content="DataVerse Privacy Policy &amp; Data Trust" />
+  <meta property="og:description" content="Learn how DataVerse protects your sensitive data with air-gapped desktop execution and ephemeral cloud sessions." />
+  <meta property="og:image" content="https://dataverse-studio.netlify.app/icons/icon-512.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="icons/favicon.svg" />
+  <link rel="icon" type="image/x-icon" href="icons/dataverse.ico" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+
+  <!-- Google Analytics Module -->
+  <script type="module" src="js/analytics.js"></script>
+</head>
+<body>
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+  <!-- Global Header -->
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="brand-link" title="DataVerse Home">
+        <img src="icons/dataverse_logo.svg" alt="DataVerse Logo" class="brand-logo-img" width="32" height="32" />
+        <span>DataVerse</span>
+      </a>
+
+      <nav class="site-nav" aria-label="Main Navigation">
+        <a href="index.html">Overview</a>
+        <a href="features.html">Features</a>
+        <a href="demo.html">Interactive Demo</a>
+        <a href="download.html">Download</a>
+        <a href="docs.html">Documentation</a>
+        <a href="faq.html">FAQ</a>
+        <a href="support.html">Support</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="demo.html" class="btn btn-primary btn-sm" data-track="demo-launch" data-track-source="nav-header">
+          <span>Try Demo</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </a>
+        <button type="button" class="menu-toggle" aria-label="Toggle Navigation Menu" aria-expanded="false">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main id="main-content">
+
+    <section class="section" style="padding-top: 50px; padding-bottom: 40px;">
+      <div class="container" style="max-width: 820px;">
+        <div class="section-header">
+          <div class="eyebrow">Trust &amp; Transparency</div>
+          <h1>Privacy Policy &amp; <span class="gradient-text">Data Architecture</span></h1>
+          <p>
+            Effective Date: October 19, 2026 &bull; Version 1.0.0
+          </p>
+        </div>
+
+        <div class="card" style="background: #0c1220; border: 1px solid var(--border-subtle); padding: 36px 32px; border-radius: var(--radius-lg); display: flex; flex-direction: column; gap: 28px;">
+
+          <!-- 1. Fundamental Principle -->
+          <div>
+            <h2 style="font-size: 1.25rem; color: var(--accent-cyan); margin-bottom: 10px;">1. Our Core Principle: Your Data Belongs to You</h2>
+            <p style="color: var(--text-secondary); font-size: 0.9375rem; line-height: 1.7; margin: 0;">
+              DataVerse was built from the ground up for organizations with strict compliance, confidentiality, and data sovereignty requirements. We believe that asking questions of your data should never force you to compromise proprietary records or customer information.
+            </p>
+          </div>
+
+          <!-- 2. Windows Desktop Edition -->
+          <div>
+            <h2 style="font-size: 1.25rem; color: var(--success); margin-bottom: 10px;">2. Windows Desktop Application: 100% Air-Gapped</h2>
+            <div style="background: rgba(16, 185, 129, 0.08); border-left: 3px solid var(--success); padding: 14px 18px; border-radius: 4px; margin-bottom: 12px; font-size: 0.875rem; color: var(--text-primary);">
+              <strong>Zero Network Transmission:</strong> The desktop installer (<code>DataVerse_Setup_v1.0.exe</code>) operates in complete isolation.
+            </div>
+            <ul style="padding-left: 20px; color: var(--text-secondary); font-size: 0.875rem; display: flex; flex-direction: column; gap: 8px; margin: 0;">
+              <li><strong>Local Execution:</strong> The Python application, SQLite database engine, natural language parser, and WebView2 desktop window execute entirely within local process memory on your workstation.</li>
+              <li><strong>Zero Telemetry:</strong> The desktop binary contains no tracking beacons, phone-home mechanisms, or automated update pings.</li>
+              <li><strong>Offline Operation:</strong> You can pull your network cable or disable Wi-Fi and DataVerse continues to function with 100% feature parity.</li>
+            </ul>
+          </div>
+
+          <!-- 3. Web Studio Edition -->
+          <div>
+            <h2 style="font-size: 1.25rem; color: var(--accent-purple); margin-bottom: 10px;">3. Cloud Web Studio: Ephemeral Session Sandboxes</h2>
+            <p style="color: var(--text-secondary); font-size: 0.9375rem; line-height: 1.7; margin-bottom: 10px;">
+              For visitors using the hosted web studio (<code>https://dataverse-studio.netlify.app</code>):
+            </p>
+            <ul style="padding-left: 20px; color: var(--text-secondary); font-size: 0.875rem; display: flex; flex-direction: column; gap: 8px; margin: 0;">
+              <li><strong>Isolated Temporary Databases:</strong> Uploaded CSV or SQLite files are stored in temporary files tied strictly to an ephemeral session identifier.</li>
+              <li><strong>No Long-Term Retention:</strong> We do not log, persist, or back up uploaded database rows. When your session terminates or times out, temporary database files are automatically purged from the host container.</li>
+              <li><strong>Encrypted in Transit:</strong> All communications between the browser client and the backend API are encrypted using modern Transport Layer Security (TLS 1.3 / HTTPS).</li>
+            </ul>
+          </div>
+
+          <!-- 4. Zero-Bypass Safety Invariants -->
+          <div>
+            <h2 style="font-size: 1.25rem; color: var(--warning); margin-bottom: 10px;">4. Zero-Bypass Security &amp; Read-Only Invariants</h2>
+            <p style="color: var(--text-secondary); font-size: 0.9375rem; line-height: 1.7; margin: 0;">
+              To prevent accidental deletion or corruption of underlying data sources, generated SQL queries pass through mandatory abstract syntax tree (AST) verification and SQLite's native C-level <code>set_authorizer</code> hook. Any instruction attempting <code>DROP</code>, <code>DELETE</code>, <code>UPDATE</code>, <code>INSERT</code>, <code>ALTER</code>, or external file attachment is blocked unconditionally before bytecode compilation.
+            </p>
+          </div>
+
+          <!-- 5. Formspree Contact Form -->
+          <div>
+            <h2 style="font-size: 1.25rem; color: var(--text-primary); margin-bottom: 10px;">5. Contact &amp; Support Inquiries (Formspree)</h2>
+            <p style="color: var(--text-secondary); font-size: 0.9375rem; line-height: 1.7; margin: 0;">
+              When you submit a message through our support portal (<code>support.html</code>), the information you provide (name, email address, category, subject, and message text) is transmitted securely via <strong>Formspree</strong> (Form endpoint: <code>xzedwwlv</code>). This data is utilized solely by the project maintainers to evaluate your inquiry and provide assistance. We do not sell, rent, or distribute your email address to third-party marketing brokers.
+            </p>
+          </div>
+
+          <!-- 6. Website Analytics -->
+          <div>
+            <h2 style="font-size: 1.25rem; color: var(--text-primary); margin-bottom: 10px;">6. Website Analytics (Google Analytics 4)</h2>
+            <p style="color: var(--text-secondary); font-size: 0.9375rem; line-height: 1.7; margin-bottom: 10px;">
+              The public product website utilizes Google Analytics 4 (Measurement ID: <code>G-H7BHJ4W523</code>) to assess aggregate visitor traffic, documentation engagement, and download click counts.
+            </p>
+            <ul style="padding-left: 20px; color: var(--text-secondary); font-size: 0.875rem; display: flex; flex-direction: column; gap: 8px; margin: 0;">
+              <li><strong>IP Anonymization:</strong> IP addresses are anonymized automatically by default in Google Analytics 4.</li>
+              <li><strong>No Data Content Tracked:</strong> We strictly prohibit tracking personal identification, database cell contents, table contents, or confidential query values.</li>
+              <li><strong>Opt-Out:</strong> You may disable cookies or use browser privacy extensions (e.g. uBlock Origin) without impacting your ability to browse the site or use the software.</li>
+            </ul>
+          </div>
+
+          <!-- 7. Open Source License -->
+          <div>
+            <h2 style="font-size: 1.25rem; color: var(--text-primary); margin-bottom: 10px;">7. Open Source Licensing &amp; Auditing</h2>
+            <p style="color: var(--text-secondary); font-size: 0.9375rem; line-height: 1.7; margin: 0;">
+              DataVerse is open source software licensed under the permissive <strong>MIT License</strong>. You are encouraged to inspect our complete codebase, security filters, and authorizer implementations on our public GitHub repository: <a href="https://github.com/shaik-irfan-basha/DataVerse" target="_blank" rel="noopener noreferrer" style="color: var(--accent-cyan);">github.com/shaik-irfan-basha/DataVerse</a>.
+            </p>
+          </div>
+
+        </div>
+
+        <div style="text-align: center; margin-top: 32px;">
+          <a href="support.html" class="btn btn-secondary btn-md">
+            <span>Have Privacy Questions? Contact Maintainers</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <img src="icons/dataverse_logo.svg" alt="DataVerse Logo" width="28" height="28" />
+            <span style="font-weight: 700; color: #fff; font-size: 1.125rem;">DataVerse</span>
+          </div>
+          <p>Enterprise natural-language data intelligence platform with zero-bypass SQL security, self-healing recovery, and conversational data preparation.</p>
+          <div style="display: flex; gap: 12px; margin-top: 16px;">
+            <a href="https://github.com/shaik-irfan-basha/DataVerse" target="_blank" rel="noopener noreferrer" title="GitHub Repository" style="color: var(--text-muted);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="features.html">Features</a></li>
+            <li><a href="demo.html">Interactive Demo</a></li>
+            <li><a href="download.html">Download Desktop</a></li>
+            <li><a href="release-notes.html">Release Notes</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="docs.html">Documentation</a></li>
+            <li><a href="docs.html#getting-started">Getting Started</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="https://github.com/shaik-irfan-basha/DataVerse" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Support &amp; Trust</h4>
+          <ul>
+            <li><a href="support.html">Contact &amp; Support</a></li>
+            <li><a href="support.html?type=bug">Report a Bug</a></li>
+            <li><a href="privacy.html">Privacy &amp; Data Trust</a></li>
+            <li><a href="docs.html#troubleshooting">Troubleshooting</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 DataVerse. Open-source under MIT License.</div>
+        <div class="footer-bottom-links">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="release-notes.html">v1.0.0 Release</a>
+          <a href="support.html">Formspree Support</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

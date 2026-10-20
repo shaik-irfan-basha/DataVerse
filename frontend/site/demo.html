@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interactive Demo — DataVerse Natural-Language Data Intelligence</title>
+  <meta name="description" content="Explore DataVerse in your browser. Experience live natural-language to SQL conversion, ambiguity clarification, conversational data cleaning, and instant visualization with preloaded sample datasets." />
+  <meta name="google-site-verification" content="N_0YgkrZaG-GsiVOXh9qH1raQb7GiT2dQWYxhd4t444" />
+  <link rel="canonical" href="https://dataverse-studio.netlify.app/site/demo.html" />
+
+  <!-- OpenGraph / Social Cards -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://dataverse-studio.netlify.app/site/demo.html" />
+  <meta property="og:title" content="Interactive Demo — DataVerse" />
+  <meta property="og:description" content="Test live natural-language to SQL, conversational cleaning, and auto-visualization with sample e-commerce data." />
+  <meta property="og:image" content="https://dataverse-studio.netlify.app/icons/icon-512.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="icons/favicon.svg" />
+  <link rel="icon" type="image/x-icon" href="icons/dataverse.ico" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+
+  <!-- Google Analytics Module -->
+  <script type="module" src="js/analytics.js"></script>
+</head>
+<body>
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+  <!-- Global Header -->
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="brand-link" title="DataVerse Home">
+        <img src="icons/dataverse_logo.svg" alt="DataVerse Logo" class="brand-logo-img" width="32" height="32" />
+        <span>DataVerse</span>
+      </a>
+
+      <nav class="site-nav" aria-label="Main Navigation">
+        <a href="index.html">Overview</a>
+        <a href="features.html">Features</a>
+        <a href="demo.html" class="active">Interactive Demo</a>
+        <a href="download.html">Download</a>
+        <a href="docs.html">Documentation</a>
+        <a href="faq.html">FAQ</a>
+        <a href="support.html">Support</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="/site/demo/studio/" class="btn btn-primary btn-sm" data-track="demo-launch" data-track-source="nav-header">
+          <span>Launch Web Studio</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </a>
+        <button type="button" class="menu-toggle" aria-label="Toggle Navigation Menu" aria-expanded="false">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main id="main-content">
+
+    <!-- Page Header -->
+    <section class="section" style="padding-top: 50px; padding-bottom: 30px;">
+      <div class="container">
+        <div class="section-header" style="max-width: 820px;">
+          <div class="eyebrow">Hands-On Evaluation</div>
+          <h1>Experience DataVerse <span class="gradient-text">Live in Your Browser</span></h1>
+          <p>
+            Test DataVerse without installing anything. The web studio runs our production FastAPI engine on Render connected to a modern client-side PWA, configured with zero-friction synthetic datasets and complete sandbox isolation.
+          </p>
+        </div>
+
+        <!-- Launch Gateway Banner -->
+        <div class="card" style="background: linear-gradient(135deg, rgba(0, 245, 255, 0.08) 0%, rgba(139, 92, 246, 0.08) 100%); border: 1px solid rgba(0, 245, 255, 0.3); padding: 36px 32px; border-radius: var(--radius-lg); margin-bottom: 50px; text-align: center;">
+          <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); padding: 4px 14px; border-radius: var(--radius-full); color: var(--success); font-size: 0.8125rem; font-weight: 600; margin-bottom: 20px;">
+            <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--success);"></span>
+            Live Production Cloud Studio Online
+          </div>
+          <h2 style="font-size: 1.75rem; margin-bottom: 12px; color: var(--text-primary);">Ready to Query Your Data?</h2>
+          <p style="max-width: 640px; margin: 0 auto 28px; color: var(--text-secondary); font-size: 1rem;">
+            Click below to open the full DataVerse Web Studio in a secure workspace. You can drag and drop your own CSV/SQLite files or immediately click "Load Sample Data" to begin querying.
+          </p>
+          <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
+            <a href="/site/demo/studio/" class="btn btn-primary btn-lg" id="btn-launch-studio-direct" data-track="demo-launch" data-track-source="demo-page-cta">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              <span>Launch Live Web Studio</span>
+            </a>
+            <a href="/site/demo/studio/" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-lg" data-track="demo-launch" data-track-source="demo-page-newtab">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              <span>Open in New Tab</span>
+            </a>
+            <a href="download.html" class="btn btn-secondary btn-lg" data-track="download-installer">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              <span>Download Desktop App</span>
+            </a>
+          </div>
+          <div style="margin-top: 18px; font-size: 0.8125rem; color: var(--text-muted);">
+            Opens securely in a new browser tab &bull; No credit card or registration required &bull; Auto-expiring session
+          </div>
+        </div>
+
+        <!-- Guided Walkthrough / Starter Prompts -->
+        <div style="margin-bottom: 50px;">
+          <h2 style="font-size: 1.5rem; margin-bottom: 8px;">Curated Test Cases &amp; Starter Prompts</h2>
+          <p style="color: var(--text-secondary); margin-bottom: 24px;">
+            When you enter the studio, click <strong>"Load Sample Data"</strong> (or upload <code>sample_sales.csv</code>) and try running these queries to test DataVerse's unique multi-tiered intelligence:
+          </p>
+
+          <div class="grid grid-2">
+            <!-- Prompt 1 -->
+            <div class="card">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+                <span class="badge badge-cyan">Aggregations &amp; Charts</span>
+                <span style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono);">Test 01</span>
+              </div>
+              <h3 style="font-size: 1.125rem; margin-bottom: 8px; color: var(--accent-cyan); font-family: var(--font-mono);">
+                "What are total sales by region?"
+              </h3>
+              <p style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 14px;">
+                Tests single-table grouping, SUM aggregations, and automatic publication-grade bar chart generation.
+              </p>
+              <div style="background: #0b0f19; padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); font-family: var(--font-mono); font-size: 0.8125rem; color: var(--text-muted);">
+                <span style="color: var(--accent-purple);">Generated SQL:</span><br />
+                <span style="color: #60a5fa;">SELECT</span> region, <span style="color: #60a5fa;">SUM</span>(sales) <span style="color: #60a5fa;">AS</span> total_sales<br />
+                <span style="color: #60a5fa;">FROM</span> sales_data <span style="color: #60a5fa;">GROUP BY</span> region;
+              </div>
+            </div>
+
+            <!-- Prompt 2 -->
+            <div class="card">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+                <span class="badge badge-amber">Ambiguity Clarification</span>
+                <span style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono);">Test 02</span>
+              </div>
+              <h3 style="font-size: 1.125rem; margin-bottom: 8px; color: var(--warning); font-family: var(--font-mono);">
+                "Show me the good products."
+              </h3>
+              <p style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 14px;">
+                Tests the Clarification Engine. The system refuses to hallucinate what "good" means, instead presenting schema-grounded choices (highest sales vs. lowest sales vs. sales ranking).
+              </p>
+              <div style="background: #0b0f19; padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); font-family: var(--font-mono); font-size: 0.8125rem; color: var(--text-muted);">
+                <span style="color: var(--warning);">Clarification Prompt:</span><br />
+                <span style="color: var(--text-primary);">&bull; Products with highest sales</span><br />
+                <span style="color: var(--text-primary);">&bull; Products ranked by total sales</span>
+              </div>
+            </div>
+
+            <!-- Prompt 3 -->
+            <div class="card">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+                <span class="badge badge-purple">Relational JOINs</span>
+                <span style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono);">Test 03</span>
+              </div>
+              <h3 style="font-size: 1.125rem; margin-bottom: 8px; color: var(--accent-purple); font-family: var(--font-mono);">
+                "Top 5 customers by total order spend"
+              </h3>
+              <p style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 14px;">
+                When multi-table databases are connected, DataVerse automatically resolves primary/foreign keys to generate clean INNER JOINs with descending LIMITs.
+              </p>
+              <div style="background: #0b0f19; padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); font-family: var(--font-mono); font-size: 0.8125rem; color: var(--text-muted);">
+                <span style="color: var(--accent-purple);">Generated SQL:</span><br />
+                <span style="color: #60a5fa;">SELECT</span> c.name, <span style="color: #60a5fa;">SUM</span>(o.amount) <span style="color: #60a5fa;">FROM</span> customers c<br />
+                <span style="color: #60a5fa;">JOIN</span> orders o <span style="color: #60a5fa;">ON</span> c.id = o.customer_id<br />
+                <span style="color: #60a5fa;">GROUP BY</span> c.id <span style="color: #60a5fa;">ORDER BY</span> 2 <span style="color: #60a5fa;">DESC LIMIT</span> 5;
+              </div>
+            </div>
+
+            <!-- Prompt 4 -->
+            <div class="card">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+                <span class="badge badge-green">Conversational Cleaning</span>
+                <span style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono);">Test 04</span>
+              </div>
+              <h3 style="font-size: 1.125rem; margin-bottom: 8px; color: var(--success); font-family: var(--font-mono);">
+                "Fill missing region with 'Unknown' and trim whitespace"
+              </h3>
+              <p style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 14px;">
+                Switch to the Cleaning tab to run natural language data repairs. Review before/after diffs in real time with single-click undo.
+              </p>
+              <div style="background: #0b0f19; padding: 12px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); font-family: var(--font-mono); font-size: 0.8125rem; color: var(--text-muted);">
+                <span style="color: var(--success);">Clean Execution:</span><br />
+                <span style="color: var(--text-primary);">&bull; 4 missing cells populated with "Unknown"</span><br />
+                <span style="color: var(--text-primary);">&bull; 12 whitespace anomalies trimmed</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Security & Sandbox Guarantees -->
+        <div class="card" style="margin-bottom: 50px; background: #0f172a; border: 1px solid var(--border-subtle);">
+          <h2 style="font-size: 1.25rem; margin-bottom: 16px; display: flex; align-items: center; gap: 10px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            Interactive Demo Sandbox &amp; Security Invariants
+          </h2>
+          <div class="grid grid-3">
+            <div>
+              <h4 style="font-size: 0.9375rem; color: var(--text-primary); margin-bottom: 6px;">Zero-Bypass C-Authorizer</h4>
+              <p style="font-size: 0.8125rem; color: var(--text-muted);">
+                The backend employs SQLite's native C authorizer hook at the driver layer. Any attempt to run DDL, DML, or attach files is blocked before bytecode execution.
+              </p>
+            </div>
+            <div>
+              <h4 style="font-size: 0.9375rem; color: var(--text-primary); margin-bottom: 6px;">Ephemeral Session Isolation</h4>
+              <p style="font-size: 0.8125rem; color: var(--text-muted);">
+                Each session receives an isolated in-memory/temp database. Data uploaded in the web demo is strictly bound to your browser session and purged when closed.
+              </p>
+            </div>
+            <div>
+              <h4 style="font-size: 0.9375rem; color: var(--text-primary); margin-bottom: 6px;">Clickjacking Protection</h4>
+              <p style="font-size: 0.8125rem; color: var(--text-muted);">
+                DataVerse enforces strict <code>X-Frame-Options: DENY</code> and <code>X-Content-Type-Options: nosniff</code> security headers, safeguarding your session from frame embedding.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cloud vs Desktop Decision Matrix -->
+        <div style="text-align: center; max-width: 720px; margin: 0 auto;">
+          <h2 style="font-size: 1.5rem; margin-bottom: 12px;">Need Complete Air-Gapped Privacy?</h2>
+          <p style="color: var(--text-secondary); margin-bottom: 24px;">
+            While the Web Studio is perfect for quick queries and team evaluation, your organization can also run DataVerse as a completely standalone, offline Windows desktop application with zero external network access.
+          </p>
+          <a href="download.html" class="btn btn-secondary btn-lg" data-track="download-installer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            <span>Explore Windows Desktop Installer</span>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <img src="icons/dataverse_logo.svg" alt="DataVerse Logo" width="28" height="28" />
+            <span style="font-weight: 700; color: #fff; font-size: 1.125rem;">DataVerse</span>
+          </div>
+          <p>Enterprise natural-language data intelligence platform with zero-bypass SQL security, self-healing recovery, and conversational data preparation.</p>
+          <div style="display: flex; gap: 12px; margin-top: 16px;">
+            <a href="https://github.com/shaik-irfan-basha/DataVerse" target="_blank" rel="noopener noreferrer" title="GitHub Repository" style="color: var(--text-muted);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="features.html">Features</a></li>
+            <li><a href="demo.html">Interactive Demo</a></li>
+            <li><a href="download.html">Download Desktop</a></li>
+            <li><a href="release-notes.html">Release Notes</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="docs.html">Documentation</a></li>
+            <li><a href="docs.html#getting-started">Getting Started</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="https://github.com/shaik-irfan-basha/DataVerse" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Support &amp; Trust</h4>
+          <ul>
+            <li><a href="support.html">Contact &amp; Support</a></li>
+            <li><a href="support.html?type=bug">Report a Bug</a></li>
+            <li><a href="privacy.html">Privacy &amp; Data Trust</a></li>
+            <li><a href="docs.html#troubleshooting">Troubleshooting</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 DataVerse. Open-source under MIT License.</div>
+        <div class="footer-bottom-links">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="release-notes.html">v1.0.0 Release</a>
+          <a href="support.html">Formspree Support</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

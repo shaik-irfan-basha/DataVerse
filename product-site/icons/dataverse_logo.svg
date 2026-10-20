@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Geometric D Outer Ring Gradient (Cyan to Precision Cobalt) -->
+    <linearGradient id="dv-outer-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00F5FF"/>
+      <stop offset="35%" stop-color="#00C8FF"/>
+      <stop offset="70%" stop-color="#0080FF"/>
+      <stop offset="100%" stop-color="#0052D4"/>
+    </linearGradient>
+
+    <!-- Bar 1: Base Tier (Ingestion / Raw Data) -->
+    <linearGradient id="dv-bar1" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#0044B8"/>
+      <stop offset="100%" stop-color="#0077FF"/>
+    </linearGradient>
+
+    <!-- Bar 2: Mid Tier (Analytics / Schema Intelligence) -->
+    <linearGradient id="dv-bar2" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#0066E6"/>
+      <stop offset="100%" stop-color="#00B8FF"/>
+    </linearGradient>
+
+    <!-- Bar 3: Peak Tier (AI Synthesis / Insights) -->
+    <linearGradient id="dv-bar3" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#0099FF"/>
+      <stop offset="100%" stop-color="#00F5FF"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 1. Geometric "D" Outer Envelope -->
+  <!-- Outer perimeter with rounded corners, hollowed interior forming the "D" bowl -->
+  <path d="M 88,64
+           L 264,64
+           C 374,64 444,136 444,256
+           C 444,376 374,448 264,448
+           L 88,448
+           C 74,448 64,438 64,424
+           L 64,88
+           C 64,74 74,64 88,64 Z
+           M 124,120
+           L 124,392
+           L 258,392
+           C 334,392 384,336 384,256
+           C 384,176 334,120 258,120
+           Z"
+        fill="url(#dv-outer-grad)"
+        fill-rule="evenodd"/>
+
+  <!-- 2. Ascending Data Intelligence Bars (3 Rising Columns Inside the "D") -->
+  <!-- Bar 1 (Left): Height 120 -->
+  <rect x="154" y="272" width="40" height="120" rx="8" fill="url(#dv-bar1)"/>
+
+  <!-- Bar 2 (Middle): Height 192 -->
+  <rect x="214" y="200" width="40" height="192" rx="8" fill="url(#dv-bar2)"/>
+
+  <!-- Bar 3 (Right): Height 264 -->
+  <rect x="274" y="128" width="40" height="264" rx="8" fill="url(#dv-bar3)"/>
+
+  <!-- 3. Intelligence Peak Vertex Accent (Crisp Geometric Focal Point) -->
+  <circle cx="294" cy="128" r="7" fill="#FFFFFF"/>
+  <circle cx="294" cy="128" r="4" fill="#00F5FF"/>
+</svg>
